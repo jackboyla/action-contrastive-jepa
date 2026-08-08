@@ -1,0 +1,22 @@
+defaults:
+  - lewm
+  - _self_
+
+output_model_name: lewm_direct_h
+
+wm:
+  type: lewm_direct_h
+  prediction_mode: direct_horizon
+  history_size: 3
+  horizon: 5
+  num_preds: ${wm.horizon}
+
+loss:
+  horizon_weights:
+    schedule: uniform
+    normalize: false
+
+wandb:
+  config:
+    project: multi-future-lewm
+    name: ${output_model_name}

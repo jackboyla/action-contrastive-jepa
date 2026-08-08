@@ -1,0 +1,41 @@
+defaults:
+  - lewm
+  - _self_
+
+output_model_name: lewm_ms_mtm
+
+wm:
+  type: lewm_ms_mtm
+  prediction_mode: masked_multi_step
+  history_size: 3
+  horizon: 5
+  num_preds: ${wm.horizon}
+
+# Shared inverse head for all endpoint gaps:
+# (z_t, z_{t+k}, e_k) -> a_t, k in [1, 5].
+inverse:
+  hidden_dim: 512
+  depth: 2
+  dropout: 0.0
+  horizon_embed_dim: 32
+
+loss:
+  # SIGReg is intentionally OFF. The anti-collapse pressure is the masked
+  # random-gap action completion task, not marginal latent regularization.
+  sigreg:
+    weight: 0.0
+  horizon_weights:
+    schedule: uniform
+    normalize: false
+  masked:
+    inverse_weight: 1.0
+    inverse_warmup_epochs: 0
+    inverse_min_horizon: 1
+    inverse_max_horizon: ${wm.horizon}
+    inverse_train_mode: random
+    inverse_eval_mode: all
+
+wandb:
+  config:
+    project: masked-transition-lewm
+    name: ${output_model_name}

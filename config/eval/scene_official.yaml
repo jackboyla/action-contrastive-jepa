@@ -1,0 +1,52 @@
+defaults:
+  - launcher: local
+  - solver: cem
+  - _self_
+
+# Official OGBench Visual Scene fixed-goal evaluation. Unlike scene.yaml, this
+# does not sample start/goal pairs from the dataset; it runs task1..task5 from
+# the registered OGBench singletask environments.
+world:
+  env_name: visual-scene-singletask-task1-v0
+  num_envs: ${eval.env_batch_size}
+  max_episode_steps: ${eval.max_episode_steps}
+  history_size: 1
+  frame_skip: 1
+  width: 64
+  height: 64
+
+dataset:
+  stats: ${eval.dataset_name}
+  keys_to_cache:
+    - action
+
+seed: 42
+policy: random
+
+plan_config:
+  horizon: 5
+  receding_horizon: 5
+  action_block: 5
+
+eval:
+  protocol: official_scene
+  # Episodes per task. Official public tables average over task1..task5; use a
+  # small override for smoke tests before spending full-budget evaluations.
+  num_eval: 50
+  # Starting episode index for chunked official evals. Chunking keeps long
+  # official Scene sweeps recoverable if a Modal client connection drops.
+  episode_start: 0
+  env_batch_size: 1
+  task_ids: [1, 2, 3, 4, 5]
+  env_template: visual-scene-singletask-task{task_id}-v0
+  max_episode_steps: 750
+  eval_budget: ${eval.max_episode_steps}
+  img_size: 224
+  dataset_name: ogbench/visual_scene_play
+  progress_bar: true
+
+output:
+  filename: ogb_scene_official_results.txt
+  save_video: false
+  save_planning_artifacts: false
+  planning_artifacts_dir: null

@@ -1,0 +1,44 @@
+defaults:
+  - launcher: local
+  - solver: cem
+  - _self_
+
+world:
+  history_size: 1
+
+dataset:
+  stats: ${eval.dataset_name}
+  keys_to_cache:
+    - action
+
+seed: 42
+policy: random
+
+plan_config:
+  horizon: 5
+  receding_horizon: 5
+  action_block: 5
+
+eval:
+  protocol: ogb_online
+  num_eval: 50
+  env_batch_size: 5
+  goal_offset_steps: 25
+  eval_budget: 1000
+  max_episode_steps: null
+  img_size: 224
+  dataset_name: ???
+  ogb_dataset_name: ???
+  synthetic_pixels: null
+  env_kwargs: {}
+  success_distance_tolerance: 0.5
+  pixel_success_channel_tolerance: 8
+  pixel_success_mismatch_tolerance: 64
+  progress_bar: true
+  progress_refresh_s: 1.0
+
+output:
+  filename: ogb_generic_results.txt
+  save_video: false
+  save_planning_artifacts: false
+  planning_artifacts_dir: null

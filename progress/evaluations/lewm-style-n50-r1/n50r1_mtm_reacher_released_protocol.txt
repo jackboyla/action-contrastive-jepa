@@ -1,0 +1,62 @@
+
+==== CONFIG ====
+cache_dir: null
+solver:
+  _target_: stable_worldmodel.solver.CEMSolver
+  model: ???
+  batch_size: 1
+  num_samples: 300
+  var_scale: 1.0
+  n_steps: 30
+  topk: 30
+  device: cuda
+  seed: ${seed}
+world:
+  env_name: swm/ReacherDMControl-v0
+  num_envs: ${eval.num_eval}
+  max_episode_steps: ???
+  history_size: 1
+  frame_skip: 1
+  task: qpos_match
+dataset:
+  stats: ${eval.dataset_name}
+  keys_to_cache:
+  - action
+seed: 42
+policy: reacher/lewm_masked/lewm_masked_epoch_10
+plan_config:
+  horizon: 5
+  receding_horizon: 5
+  action_block: 5
+eval:
+  num_eval: 50
+  env_batch_size: 10
+  goal_offset_steps: 25
+  eval_budget: 50
+  img_size: 224
+  dataset_name: dmc/reacher_random
+  callables:
+  - method: set_state
+    args:
+      qpos:
+        value: qpos
+      qvel:
+        value: qvel
+  - method: set_target_qpos
+    args:
+      target_qpos:
+        value: goal_qpos
+output:
+  filename: n50r1_mtm_reacher_released_protocol.txt
+  save_video: false
+  save_planning_artifacts: false
+  planning_artifacts_dir: null
+
+==== RESULTS ====
+metrics: {'success_rate': 74.0, 'episode_successes': array([ True,  True,  True, False, False,  True,  True, False,  True,
+        True,  True,  True,  True, False, False,  True,  True,  True,
+        True,  True,  True, False,  True,  True,  True,  True, False,
+        True,  True,  True,  True,  True,  True,  True,  True,  True,
+       False,  True, False, False,  True, False,  True,  True,  True,
+        True,  True,  True, False, False]), 'seeds': None}
+evaluation_time: 353.25223422050476 seconds

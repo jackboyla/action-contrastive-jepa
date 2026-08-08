@@ -1,0 +1,28 @@
+defaults:
+  - lewm_masked_h
+  - _self_
+
+output_model_name: lewm_byol
+
+wm:
+  type: lewm_byol
+  prediction_mode: byol_wm
+
+# BYOL-WM: no inverse dynamics, no SIGReg.
+# Anti-collapse comes from the EMA target encoder asymmetry (BYOL mechanism).
+# Stochastic horizon k ~ Uniform{min_k, max_k} forces encoding of slow state.
+loss:
+  sigreg:
+    weight: 0.0
+  masked:
+    inverse_weight: 0.0
+    inverse_warmup_epochs: 0
+  byol:
+    momentum: 0.996
+    min_k: 1
+    max_k: ${wm.horizon}
+
+wandb:
+  config:
+    project: masked-transition-lewm
+    name: ${output_model_name}

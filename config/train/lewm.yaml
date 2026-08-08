@@ -1,0 +1,169 @@
+defaults:
+  # Keep this file's values as the base config, then merge the selected dataset
+  # config under config/train/data/*.yaml.
+  - _self_
+  - data: pusht
+
+# Name used for saved checkpoints/object files, e.g. lewm_epoch_10_object.ckpt.
+output_model_name: lewm
+# Output directory relative to STABLEWM_HOME. Hydra supplies a job id unless
+# Modal/local launch commands override this with a stable experiment path.
+subdir: ${hydra:job.id}
+
+# Shared dataloader worker count. Referenced by loader.num_workers below.
+num_workers: 8
+# Fraction of the HDF5 dataset used for training; the rest is validation.
+train_split: 0.9
+# Fixed split/init seed for reproducibility.
+seed: 3072
+# ViT input resolution and patch size. 224/14 matches the released LeWM setup.
+img_size: 224
+patch_size: 14
+# Hugging Face ViT scale passed to stable_pretraining.backbone.utils.vit_hf.
+encoder_scale: tiny
+# Save pickled JEPA objects at epoch boundaries for eval.py policy loading.
+dump_object: True
+
+runtime:
+  # Prefer faster matmul kernels where PyTorch allows it.
+  float32_matmul_precision: high
+  # Let cuDNN benchmark conv kernels for the fixed image shape.
+  cudnn_benchmark: true
+  # Avoid shared-memory exhaustion in Modal multiprocessing dataloaders.
+  sharing_strategy: file_system
+  # Keep raw uint8 image preprocessing on GPU instead of CPU dataloader workers.
+  gpu_image_preprocess: true
+  # Optional 1-indexed epoch milestone for graceful early stop while preserving
+  # trainer.max_epochs for the LR schedule. Example: max_epochs=100 with
+  # stop_after_epoch=30 uses the 100-epoch cosine schedule but stops at epoch 30.
+  stop_after_epoch: null
+
+trainer:
+  # Important: this also sizes the LinearWarmupCosineAnnealingLR horizon.
+  # For reproduction-style Reacher runs, use max_epochs=100 and optionally
+  # runtime.stop_after_epoch to evaluate intermediate checkpoints.
+  max_epochs: 10
+  devices: auto
+  accelerator: gpu
+  # bf16 is fast and stable on A100/L40S/H100-class GPUs.
+  precision: bf16-mixed
+  # Clip global gradient norm through Lightning.
+  gradient_clip_val: 1.0
+  log_every_n_steps: 25
+
+checkpoint:
+  # Custom checkpoint callback writes resumable Lightning weights and metadata.
+  enabled: true
+  # Save latest weights periodically by optimizer step and wall-clock time.
+  step_interval: 1000
+  time_interval_seconds: 600
+  # Track the best weights according to monitor/mode.
+  save_best: true
+  monitor: validate/loss
+  mode: min
+  # 0 means do not keep a rolling history of latest step checkpoints.
+  keep_last_n: 0
+  # Save latest/best at each train epoch end.
+  save_on_train_epoch_end: true
+  # Save pickled model objects every N epochs for eval.py.
+  object_epoch_interval: 1
+
+resume:
+  # auto resumes from the latest checkpoint in subdir when one exists.
+  mode: auto
+  # Explicit checkpoint path override; null means infer from subdir.
+  ckpt_path: null
+  # Refuse to restart a non-empty run dir without a resume checkpoint.
+  prevent_restart_existing: true
+  # Keep false for normal resumes. Set true only when an intentional runtime or
+  # experiment-control override trips config compatibility checks.
+  allow_config_mismatch: false
+
+logging:
+  # JSONL/W&B scalar cadence for train-step metrics.
+  log_every_n_steps: 25
+  # Compute/log gradient norm every N steps; 0 disables it.
+  grad_norm_every_n_steps: 100
+  progress_bar: true          # console progress bar with ETA (replaces tqdm bar)
+  progress_refresh_steps: 25  # how often (in steps) to print the train progress line
+
+early_stopping:
+  # Enabled for routine runs, usually disabled for strict reproduction sweeps.
+  enabled: true
+  monitor: validate/loss
+  mode: min
+  patience: 3
+  min_delta: 0.0
+  # Do not stop before this many completed epochs.
+  min_epochs: 5
+  strict: false
+
+loader:
+  # Main memory/throughput knob. Larger batches may OOM depending on GPU.
+  batch_size: 128
+  num_workers: ${num_workers}
+  # Keep worker processes alive between epochs.
+  persistent_workers: True
+  # Number of batches each worker preloads.
+  prefetch_factor: 4
+  # Speed CPU-to-GPU transfer.
+  pin_memory: True
+
+optimizer:
+  type: AdamW
+  # Released/reproduction LR.
+  lr: 5e-5
+  weight_decay: 1e-3
+
+scheduler:
+  # stable-pretraining fills warmup/cosine lengths from Lightning's estimated
+  # stepping batches, so max_epochs/max_steps/batch_size change the LR curve.
+  type: LinearWarmupCosineAnnealingLR
+  interval: step
+  frequency: 1
+
+wandb:
+  # auto enables W&B when WANDB_API_KEY is available; otherwise local JSONL only.
+  enabled: auto
+  config:
+    entity: null
+    project: lewm
+    # Run identity. Use stable subdir/name values when resuming on Modal.
+    name: ${output_model_name}
+    id: ${subdir}
+    resume: allow
+    log_model: False
+
+wm:
+  type: lewm
+  # autoregressive uses ARPredictor for one-step latent rollout. The masked
+  # config overrides this to masked_transition while preserving the planner path.
+  prediction_mode: autoregressive
+  # Number of encoded context frames fed to the predictor.
+  history_size: 3
+  # Direct-horizon configs override this; AR LeWM keeps horizon/num_preds at 1.
+  horizon: 1
+  num_preds: 1
+  # Latent embedding dimension after the projector.
+  embed_dim: 192
+
+predictor:
+  # Transformer predictor capacity. Keep matched to released LeWM unless doing
+  # a predictor-size ablation.
+  depth: 6
+  heads: 16
+  mlp_dim: 2048
+  dim_head: 64
+  # Predictor dropout was part of the released setup.
+  dropout: 0.1
+  emb_dropout: 0.0
+
+loss:
+  sigreg:
+    # SIGReg anti-collapse weight for baseline LeWM. Masked config sets this to
+    # 0.0 and uses inverse dynamics instead.
+    weight: 0.09
+    kwargs:
+      # Number of bins/projections used by the SIGReg normality test.
+      knots: 17
+      num_proj: 1024

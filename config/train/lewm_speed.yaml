@@ -1,0 +1,31 @@
+defaults:
+  - lewm_mh
+  - _self_
+
+subdir: speed/${hydra:job.id}
+dump_object: false
+
+trainer:
+  max_epochs: 1
+  max_steps: 300
+  limit_val_batches: 2
+  num_sanity_val_steps: 1
+
+checkpoint:
+  enabled: false
+
+resume:
+  mode: never
+  prevent_restart_existing: false
+
+logging:
+  log_every_n_steps: 10
+  grad_norm_every_n_steps: 50
+
+early_stopping:
+  enabled: false
+
+wandb:
+  enabled: auto
+  config:
+    name: ${output_model_name}_speed

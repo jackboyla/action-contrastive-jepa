@@ -1,0 +1,29 @@
+defaults:
+  - lewm
+  - _self_
+
+output_model_name: lewm_accpc
+
+wm:
+  type: lewm_accpc
+  prediction_mode: ac_cpc
+  history_size: 3
+  horizon: 1
+  num_preds: 1
+
+loss:
+  # SIGReg is OFF and there is no MSE forward term. Anti-collapse + block
+  # encoding come entirely from the contrastive (InfoNCE) forward objective:
+  # the predicted future must be identifiable among other trajectories' real
+  # futures, so the encoder is forced to represent whatever distinguishes them.
+  sigreg:
+    weight: 0.0
+  cpc:
+    # InfoNCE temperature. Lower = sharper softmax over cosine sims; 0.07-0.1 is
+    # the standard contrastive range.
+    temperature: 0.1
+
+wandb:
+  config:
+    project: masked-transition-lewm
+    name: ${output_model_name}

@@ -1,0 +1,61 @@
+
+==== CONFIG ====
+cache_dir: null
+solver:
+  _target_: stable_worldmodel.solver.CEMSolver
+  model: ???
+  batch_size: 1
+  num_samples: 300
+  var_scale: 1.0
+  n_steps: 30
+  topk: 30
+  device: cuda
+  seed: ${seed}
+world:
+  env_name: swm/PushT-v1
+  num_envs: ${eval.num_eval}
+  max_episode_steps: ???
+  history_size: 1
+  frame_skip: 1
+dataset:
+  stats: ${eval.dataset_name}
+  keys_to_cache:
+  - action
+  - proprio
+  - state
+seed: 42
+policy: pusht/lewm_ms_mtm/lewm_ms_mtm_epoch_10
+plan_config:
+  horizon: 5
+  receding_horizon: 5
+  action_block: 5
+eval:
+  num_eval: 50
+  env_batch_size: 10
+  goal_offset_steps: 25
+  eval_budget: 50
+  img_size: 224
+  dataset_name: pusht_expert_train
+  callables:
+  - method: _set_state
+    args:
+      state:
+        value: state
+  - method: _set_goal_state
+    args:
+      goal_state:
+        value: goal_state
+output:
+  filename: n50r2_msmtm_pusht_probe_protocol.txt
+  save_video: false
+  save_planning_artifacts: false
+  planning_artifacts_dir: null
+
+==== RESULTS ====
+metrics: {'success_rate': 60.0, 'episode_successes': array([False, False,  True, False, False, False,  True,  True, False,
+       False,  True,  True,  True, False, False, False, False,  True,
+        True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True,  True,  True,  True,  True,  True,  True, False, False,
+        True,  True,  True, False, False,  True, False,  True,  True,
+       False,  True, False, False, False]), 'seeds': None}
+evaluation_time: 594.213276386261 seconds

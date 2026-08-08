@@ -1,0 +1,38 @@
+defaults:
+  - lewm
+  - _self_
+
+output_model_name: lewm_masked_ms_inverse
+
+wm:
+  type: lewm_masked_ms_inverse
+  prediction_mode: masked_endpoint_inverse
+  history_size: 3
+  horizon: 5
+  num_preds: 1
+
+# Horizon-conditioned inverse head:
+# (z_t, z_{t+k}, e_k) -> a_t, k in [1, 5].
+inverse:
+  hidden_dim: 512
+  depth: 2
+  dropout: 0.0
+  horizon_embed_dim: 32
+
+loss:
+  # SIGReg OFF. The forward task stays the standard one-step MTM/LeWM loss;
+  # representation pressure comes from random-gap action discrimination.
+  sigreg:
+    weight: 0.0
+  masked:
+    inverse_weight: 1.0
+    inverse_warmup_epochs: 0
+    inverse_min_horizon: 1
+    inverse_max_horizon: ${wm.horizon}
+    inverse_train_mode: random
+    inverse_eval_mode: all
+
+wandb:
+  config:
+    project: masked-transition-lewm
+    name: ${output_model_name}

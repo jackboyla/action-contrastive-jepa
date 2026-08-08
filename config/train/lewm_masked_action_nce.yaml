@@ -1,0 +1,16 @@
+defaults:
+  - lewm_masked
+  - _self_
+
+output_model_name: lewm_masked_action_nce
+
+loss:
+  masked:
+    inverse_loss_type: action_nce
+    action_nce_temperature: 0.1
+    inverse_weight: 0.30
+
+wandb:
+  config:
+    project: masked-transition-lewm
+    name: ${output_model_name}

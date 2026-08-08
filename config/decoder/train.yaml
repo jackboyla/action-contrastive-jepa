@@ -1,0 +1,51 @@
+task: tworoom
+policy: ${task}/lewm
+dataset_name: null
+cache_dir: null
+output_dir: null
+output_name: decoder
+device: auto
+seed: 42
+img_size: 224
+train_split: 0.95
+max_samples: null
+
+model:
+  architecture: cls_transformer
+  # Paper appendix / author gist defaults for the diagnostic CLS decoder.
+  # ref https://gist.github.com/lucas-maes/57804ad5e347368e7a219719336c31de
+  patch_size: 16
+  dim: 256
+  heads: 8
+  depth: 3
+
+loader:
+  batch_size: 32
+  num_workers: 4
+  persistent_workers: true
+  pin_memory: true
+
+optimizer:
+  lr: 3e-4
+  weight_decay: 1e-4
+
+trainer:
+  max_epochs: 5
+  log_every_n_steps: 20
+  precision: fp16
+  gradient_clip_val: 1.0
+  resume_checkpoint: null
+  limit_train_batches: null
+  limit_val_batches: 32
+  save_every_epochs: 1
+
+scheduler:
+  enabled: true
+  type: cosine
+
+loss:
+  target_space: rgb
+  l1_weight: 0.0
+  mse_weight: 1.0
+  topk_mse_weight: 0.0
+  topk_fraction: 0.0

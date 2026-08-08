@@ -1,0 +1,37 @@
+defaults:
+  - lewm
+  - _self_
+
+output_model_name: lewm_masked
+
+wm:
+  type: lewm_masked
+  prediction_mode: masked_transition
+  history_size: 3
+  horizon: 1
+  num_preds: 1
+
+# Inverse-dynamics head: (z_t, z_{t+1}) -> a_t. This is the only structural
+# addition over LeWM and the entire anti-collapse mechanism.
+inverse:
+  hidden_dim: 512
+  depth: 2
+  dropout: 0.0
+
+loss:
+  # SIGReg is intentionally OFF. Non-collapse comes from the inverse-dynamics
+  # task, not from forcing the latent marginal into an isotropic Gaussian. The
+  # kwargs are inherited from lewm.yaml but never used at weight 0.
+  sigreg:
+    weight: 0.0
+  masked:
+    mask_mode: both        # "both" trains forward+inverse every step (recommended);
+                           # "random" masks one element per batch (literal E_m[.]).
+    inverse_weight: 1.0    # scales the inverse-dynamics term against the forward MSE
+    inverse_warmup_epochs: 0 # linearly ramp inverse weight from 0 over N epochs
+    forward_prob: 0.5      # P(pick forward task) when mask_mode=random
+
+wandb:
+  config:
+    project: masked-transition-lewm
+    name: ${output_model_name}

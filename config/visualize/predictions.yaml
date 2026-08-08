@@ -1,0 +1,27 @@
+task: tworoom
+policy: ${task}/lewm
+cache_dir: null
+device: auto
+seed: 42
+
+# If null, these are inferred from the checkpoint/eval task config where possible.
+context_size: null
+horizon: null
+dataset_name: null
+frameskip: null
+img_size: null
+rollout_mode: auto
+
+num_rollouts: 4
+output_dir: null
+
+decoder:
+  path: null
+  batch_size: 32
+
+render:
+  cell_size: 128
+  save_gif: true
+  fps: 3
+  # GIF loop count. 0 means loop forever in the GIF format.
+  loop: 0

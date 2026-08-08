@@ -1,0 +1,18 @@
+defaults:
+  - lewm_masked
+  - _self_
+
+output_model_name: lewm_masked_recon
+
+# Reconstruction auxiliary: decode the planning latent back to a 64x64 frame.
+# Grounded anti-collapse — the target (the frame) contains block orientation, so
+# the encoder cannot discard it the way the dynamics/inverse objective allows.
+loss:
+  reconstruction:
+    weight: 1.0
+    out_size: 64
+
+wandb:
+  config:
+    project: masked-transition-lewm
+    name: ${output_model_name}

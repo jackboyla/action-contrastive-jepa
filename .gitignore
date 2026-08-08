@@ -1,0 +1,28 @@
+.vscode
+.venv
+.stable_worldmodel/
+__pycache__/
+.pytest_cache/
+*.pyc
+outputs/
+*_results.txt
+digest.txt
+progress/evaluations
+
+# Local Claude Code tooling, settings, and git worktrees
+.claude/
+.mcp.json
+.DS_Store
+
+# Local kanban board.
+.yakanban/
+
+# Paper source lives in the companion repo action-contrastive-jepa-paper.
+# This also keeps third-party paper text and LaTeX build artifacts out.
+paper/
+*.aux
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.synctex.gz
