@@ -15,7 +15,7 @@ so the deployed model — encoder, predictor, planner, compute — is unchanged.
 </p>
 
 <p align="center">
-  <b>[ Paper (arXiv, coming soon) ]</b>
+  <b>Paper - https://arxiv.org/abs/2608.17542</b>
 </p>
 
 > **Forked from [`lucas-maes/le-wm`](https://github.com/lucas-maes/le-wm)**
