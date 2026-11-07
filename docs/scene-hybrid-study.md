@@ -2,24 +2,26 @@
 
 ## Status
 
-As of 2026-11-07 12:12 UTC, hybrid seed 3072 completed ten epochs and
-68,970 optimizer steps, including final validation. Its final epoch-10
-checkpoint loads on CPU and all floating tensors are finite (311 state
-tensors; 74,250,087 bytes). No planning or probe result is available.
-The other two hybrid seeds, six fresh standalone baselines, 18 planning
-evaluations and nine probes remain pending.
+As of 2026-11-07 16:11 UTC, status is **Inprogress**, blocker **none**.
+Training: **2/9 complete, 1 running, 6 pending**. Planning: **0/18**.
+Probes: **0/9**. This PR is **draft, not merged**; the study is unfinished.
 
-The first run took about 2 hours 10 minutes after acquiring GPU0.
-The coordinated resource hold ended on November 7 at 13:42 UTC. The original
-queues resumed without restarting training. At 13:51 UTC, hybrid seed 1 has acquired GPU0 and reached 1,900/68,970
-steps at about 9 steps/s. All 76 logged training records are finite and both
-loss terms are positive. Seed 1 should finish around 16:00–16:10 UTC. The
-follow-up driver remains waiting for all three hybrid seeds.
+Hybrid seeds 3072 and 1 each completed ten epochs and 68,970 steps with
+exit code 0. Both final checkpoints load on CPU and all floating tensors
+are finite (311 state tensors each). Seed 1 finished at 15:58 UTC.
+Seed 2 acquired GPU0 after the fair-tuning job and passed step 100/68,970
+at 16:11 UTC. Estimated completion: 18:20–18:30 UTC.
 
-Eight training runs remain (roughly 17–18 GPU-hours at measured throughput),
-followed by planning and probes (roughly 6–8 hours based on prior runs).
-Allow approximately 32–44 hours from release including shared-GPU waits;
-this estimate depends on the other study's job durations.
+No planning or probe results are available. The six standalone runs remain
+pending. Cross-study default NCE and conditional fair-default final runs
+are being checked before baseline launch; no reuse has been approved.
+One-epoch screening checkpoints are ineligible. Any reuse requires a
+complete config, seed, update-count, checkpoint, environment and provenance
+audit and parent coordination.
+
+The first two hybrid runs each took about 2 hours 10 minutes after acquiring
+GPU0. Allow approximately 32–44 hours from the November 7 13:42 release for
+the whole study, including shared-GPU waits; this estimate remains uncertain.
 
 The masked-transition implementation already adds SIGReg when its weight
 is positive. The new config inherits Action-NCE and sets SIGReg to 0.09.
