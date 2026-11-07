@@ -1,0 +1,22 @@
+[
+  {
+    "path": "reacher/lewm_masked_vicreg/lewm_masked_vicreg_epoch_10_object.ckpt",
+    "sha256": "fae0ff4a93afb958c8f5d178d282377afa273a681f577bc3e145e157e5715689",
+    "bytes": 74214770
+  },
+  {
+    "path": "reacher/lewm_base_e100/lewm_epoch_9_object.ckpt",
+    "sha256": "8f100cdf9c3a79d3e37772f207661640f69a96d046784c5741f0325e7a619425",
+    "bytes": 72341745
+  },
+  {
+    "path": "reacher/lewm_base_e100/lewm_epoch_10_object.ckpt",
+    "sha256": "e34a5fdfd0de2e001710cbb37ab9d8c077d5298f623a9f9d62430d06ce3ac15b",
+    "bytes": 72342056
+  },
+  {
+    "path": "reacher/mtm_action_nce_e10_s1/lewm_masked_action_nce_epoch_10_object.ckpt",
+    "sha256": "1d7501072f9600a65c5783135344865250b4e8368b2fb38787dbf9210e74b2c3",
+    "bytes": 74216302
+  }
+]

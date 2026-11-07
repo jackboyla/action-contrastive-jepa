@@ -1,0 +1,12 @@
+{
+  "best_checkpoint": "lewm_best_weights.ckpt",
+  "best_score": 0.14465171098709106,
+  "best_step": 601412,
+  "epoch": 50,
+  "global_step": 639800,
+  "latest_checkpoint": "lewm_weights.ckpt",
+  "mode": "min",
+  "monitor": "validate/loss",
+  "reason": "fit_end",
+  "time": 1780893642.2326071
+}
