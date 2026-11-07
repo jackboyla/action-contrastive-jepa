@@ -103,6 +103,8 @@ image = (
         ignore=[
             ".git",
             ".venv",
+            ".venv-rebuttal",
+            "progress",
             "__pycache__",
             "*.pyc",
             ".stable_worldmodel",
@@ -1608,3 +1610,102 @@ def upload(local_path: str, remote_path: str = "/") -> None:
             batch.put_file(local, remote)
 
     print(f"Uploaded {local} to modal volume {VOLUME_NAME}:{remote}")
+
+
+@app.function(cpu=CPU_COUNT, memory=MEMORY_MB, timeout=7 * 3600, retries=0,
+              volumes={str(STABLEWM_HOME): volume})
+def run_e6_supervisor() -> dict:
+    """Verify frozen assets, then run two evaluations at a time within 12 GPU-hours."""
+    import json
+    from experiments.e6.runner import jobs, verify_assets, sha256, PROTOCOL
+
+    volume.reload()
+    output = STABLEWM_HOME / 'evaluations/e6-short-v1'
+    output.mkdir(parents=True, exist_ok=False)
+    status = {'state': 'preflight', 'protocol_sha256': sha256(PROTOCOL), 'calls': [],
+              'completed': [], 'failures': []}
+
+    def save():
+        (output / 'status.json').write_text(json.dumps(status, indent=2) + '\n')
+        volume.commit()
+
+    save()
+    try:
+        status['assets'] = verify_assets(STABLEWM_HOME)
+        # Imports are checked without allocating a GPU. EGL is checked by the first job.
+        subprocess.run(['python', '-c', 'import eval'], cwd=REPO_DIR, check=True)
+    except Exception as error:
+        status.update(state='preflight_failed', error=repr(error))
+        save()
+        raise
+    save()
+    pending = jobs()
+    # Six wall-clock hours at <=2 L4 includes queue and idle time conservatively.
+    # Reserve two minutes for container shutdown at the five-second idle timeout.
+    deadline = time.monotonic() + 6 * 3600 - 120
+    status['state'] = 'running'
+    for start in range(0, len(pending), 2):
+        calls = []
+        wave_started = time.monotonic()
+        try:
+            for job in pending[start:start + 2]:
+                call = run_e6_job.spawn(job=job)
+                calls.append((job, call))
+                status['calls'].append({'job': job['name'], 'call_id': call.object_id})
+                print('E6 CALL', job['name'], call.object_id, flush=True)
+            save()
+            for job, call in calls:
+                try:
+                    record = call.get(timeout=max(0, deadline - time.monotonic()))
+                    status['completed'].append(record)
+                except Exception as error:
+                    status['failures'].append({'job': job['name'], 'error': repr(error)})
+                    status['state'] = 'failed'
+            save()
+        except Exception as error:
+            status['failures'].append({'wave_start': start, 'error': repr(error)})
+            status['state'] = 'failed'
+            save()
+        finally:
+            if status['state'] == 'failed' or time.monotonic() >= deadline:
+                for _, call in calls:
+                    call.cancel(terminate_containers=True)
+        if status['state'] == 'failed':
+            break
+        if start == 0:
+            # First two predeclared jobs count toward the 27, regardless of scores.
+            projected = (time.monotonic() - wave_started) * len(pending) * 1.15
+            status['projected_gpu_seconds'] = projected
+            print('E6 PROJECTED GPU HOURS', projected / 3600, flush=True)
+            if projected > 12 * 3600:
+                status['state'] = 'budget_blocked'
+                break
+        if time.monotonic() >= deadline:
+            status['state'] = 'budget_blocked'
+            break
+    else:
+        status['state'] = 'complete'
+    save()
+    return status
+
+
+@app.function(gpu='L4', cpu=CPU_COUNT, memory=MEMORY_MB, timeout=7200, retries=0,
+              max_containers=2, scaledown_window=5,
+              volumes={str(STABLEWM_HOME): volume})
+def run_e6_job(job: dict) -> dict:
+    from experiments.e6.runner import run_job
+
+    volume.reload()
+    os.environ['OMP_NUM_THREADS'] = '2'
+    os.environ['OPENBLAS_NUM_THREADS'] = '2'
+    try:
+        return run_job(job, STABLEWM_HOME,
+                       STABLEWM_HOME / 'evaluations/e6-short-v1' / job['name'])
+    finally:
+        volume.commit()
+
+
+@app.local_entrypoint()
+def e6() -> None:
+    """Launch the frozen original-checkpoint short-goal sweep; no automatic retries."""
+    run_e6_supervisor.remote()

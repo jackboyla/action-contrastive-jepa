@@ -1349,6 +1349,8 @@ def run(cfg: DictConfig):
             transform=transform,
         )
         world.set_policy(policy)
+        if str(cfg.policy) == "random" and cfg.eval.get("random_action_seed") is not None:
+            policy.seed = int(cfg.eval.random_action_seed) + batch_start
 
         progress = None
         if progress_enabled:
@@ -1400,6 +1402,19 @@ def run(cfg: DictConfig):
 
     metrics = aggregate_eval_metrics(batch_metrics)
     end_time = time.time()
+
+    if cfg.output.get("metadata_path"):
+        metadata_path = Path(cfg.output.metadata_path)
+        metadata_path.parent.mkdir(parents=True, exist_ok=True)
+        metadata_path.write_text(json.dumps(_to_jsonable({
+            "config": OmegaConf.to_container(cfg, resolve=True),
+            "start_rows": random_episode_indices,
+            "goal_rows": random_episode_indices + int(cfg.eval.goal_offset_steps),
+            "episode_ids": eval_episodes,
+            "start_steps": eval_start_idx,
+            "metrics": metrics,
+            "evaluation_seconds": end_time - start_time,
+        }), indent=2) + "\n")
 
     if artifact_dir is not None:
         if cfg.output.get("save_video", True):
