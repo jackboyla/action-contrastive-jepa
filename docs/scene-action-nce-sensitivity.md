@@ -16,8 +16,9 @@ is provisionally 37–47 hours including the completed 1h42m resource delay,
 pending measured larger-batch throughput. The proposed second GPU1 slot was
 cancelled before it delayed training. All holds are lifted; the original
 queue is active and paper studies have GPU priority. Seed1 has passed17,400
-updates. Root disk has27GiB free after an unrelated download; study artifacts
-remain about79MiB against the6GiB budget.
+updates. At15:49UTC root disk has478GiB free after an external storage change; study
+artifacts remain about84MiB against the6GiB budget. No cleanup was performed
+by this study. Seed1 remains active with122,600/137,950updates.
 
 The first evaluation used CUDA on GPU1 but EGL graphics on GPU0. Subsequent
 evaluations explicitly select EGL device1, whose UUID matches physicalGPU1.
