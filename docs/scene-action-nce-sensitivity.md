@@ -2,12 +2,18 @@
 
 ## Status
 
-As of 2026-11-07 14:08 UTC, **1/15 training runs and 1/15 evaluations** are
-complete. Batch64, temperature .10, training seed3072 achieved **68/100**
-successes on the prescribed short-goal tasks. Evaluation took 524 seconds
-and exited 0; all outcomes, task IDs and configuration checks passed.
-This is one seed/setting, with no grid-wide conclusion yet. The next B64
-training run (seed1) is active and has passed 1,100 updates on GPU1.
+As of 2026-11-07 16:20 UTC, **2/15 training runs and 2/15 evaluations** are
+complete. At batch64/temperature.10, training seed3072 achieved68/100 and
+seed1 achieved72/100 successes. Both used identical100task row/episode/start
+identifiers. Saved configs, finalepoch10/updatecounts and boolean outcomes
+passed audit. Seed1 evaluation took464seconds and exited0. These are partial
+results; no grid-wide or seed-aggregate conclusion is drawn.
+
+Seed2 B64 training is active onGPU1 and has passed7,900updates. Seed1's live
+graphics placement was not sampled because its evaluation ended between
+scheduled checks. A read-only observer now records process/device evidence
+during subsequent evaluations; the explicit EGLsetting and prior standalone
+render verification remain in place.
 
 The first training took 7,976 seconds for 137,950 updates. Its final checkpoint
 passed CPU loading and finite-weight checks. The coordinated hold ended at
