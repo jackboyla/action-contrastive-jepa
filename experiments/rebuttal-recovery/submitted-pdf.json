@@ -1,0 +1,35 @@
+{
+  "status": "unavailable_after_bounded_search",
+  "forum": "rM6SFNpHl2",
+  "submission_number": 7476,
+  "local_candidate": {
+    "label": "local submission candidate; upload identity unverified",
+    "sha256": "cb006e1f7fd4736c6b87322ae34a0ef510a60310b00a6aeb3146028a74dca69e",
+    "pages": 16,
+    "metadata": {
+      "/Producer": "pdfTeX-1.40.29",
+      "/Author": "",
+      "/Title": "",
+      "/Subject": "",
+      "/Creator": "LaTeX with hyperref",
+      "/Keywords": "",
+      "/CreationDate": "D:20260901121308Z",
+      "/ModDate": "D:20260901121308Z",
+      "/Trapped": "/False",
+      "/PTEX.Fullbanner": "This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) kpathsea version 6.4.2"
+    },
+    "text_sha256": "28d577ec07ea7001febb77c022a4f461b944e549ac97d7e2f5ef8b325bc1c5b5"
+  },
+  "candidate_is_verified_upload": false,
+  "revision_pdf_hash": null,
+  "search": [
+    "OpenReview API v2 note and note edits: 403",
+    "OpenReview API v1 note: 403",
+    "OpenReview PDF by forum ID: 403",
+    "OpenReview revisions page: 200 application shell, no revision metadata",
+    "Mac network API v2 note: 403",
+    "Prior local November 6 forum snapshot: September 1 submission / October 5 modification, no immutable PDF revision identity",
+    "Local submission candidate PDF metadata and repository PDF history before rebuttal inspected"
+  ],
+  "limit": "Candidate differs in bytes and extracted text from inspected pre-rebuttal repository PDFs; neither candidate nor revised PDF establishes submitted content. Original submitted source cannot be selected without upload revision metadata."
+}

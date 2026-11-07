@@ -1,0 +1,99 @@
+
+==== CONFIG ====
+cache_dir: null
+solver:
+  _target_: stable_worldmodel.solver.CEMSolver
+  model: ???
+  batch_size: 1
+  num_samples: 300
+  var_scale: 1.0
+  n_steps: 30
+  topk: 30
+  device: cuda
+  seed: ${seed}
+world:
+  env_name: swm/OGBScene-v0
+  num_envs: ${eval.num_eval}
+  max_episode_steps: ???
+  history_size: 1
+  frame_skip: 1
+  env_type: scene
+  ob_type: states
+  multiview: false
+  width: 64
+  height: 64
+  visualize_info: false
+  terminate_at_goal: true
+dataset:
+  stats: ${eval.dataset_name}
+  keys_to_cache:
+  - action
+seed: 42
+policy: scene/lewm_sigreg_e10_s2
+plan_config:
+  horizon: 5
+  receding_horizon: 5
+  action_block: 5
+eval:
+  num_eval: 50
+  env_batch_size: 10
+  goal_offset_steps: 25
+  eval_budget: 50
+  img_size: 224
+  dataset_name: ogbench/visual_scene_play
+  callables:
+  - method: set_state
+    args:
+      qpos:
+        value: qpos
+      qvel:
+        value: qvel
+      button_state_0:
+        value: button_state_0
+      button_state_1:
+        value: button_state_1
+  - method: set_cube_target_pos
+    args:
+      cube_id:
+        value: 0
+        in_dataset: false
+      target_pos:
+        value: goal_privileged_block_0_pos
+      target_quat:
+        value: goal_privileged_block_0_quat
+  - method: set_target_button_state
+    args:
+      button_id:
+        value: 0
+        in_dataset: false
+      target_state:
+        value: goal_button_state_0
+  - method: set_target_button_state
+    args:
+      button_id:
+        value: 1
+        in_dataset: false
+      target_state:
+        value: goal_button_state_1
+  - method: set_target_drawer_pos
+    args:
+      target_pos:
+        value: goal_privileged_drawer_pos
+  - method: set_target_window_pos
+    args:
+      target_pos:
+        value: goal_privileged_window_pos
+output:
+  filename: scene_sigreg_e10_s2_n50.txt
+  save_video: false
+  save_planning_artifacts: false
+  planning_artifacts_dir: null
+
+==== RESULTS ====
+metrics: {'success_rate': 60.0, 'episode_successes': array([ True, False,  True, False,  True, False,  True, False,  True,
+        True, False,  True, False, False, False,  True,  True, False,
+        True,  True,  True,  True,  True,  True,  True, False,  True,
+        True, False, False, False, False,  True, False,  True, False,
+        True, False,  True, False,  True,  True,  True, False, False,
+        True,  True,  True,  True,  True]), 'seeds': None}
+evaluation_time: 771.1132624149323 seconds

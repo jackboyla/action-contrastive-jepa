@@ -1,0 +1,230 @@
+[
+  {
+    "path": "scene-short/scene_action_nce_e10_s1_n50.txt",
+    "sha256": "1f65b5b7e1d02d8a5d175320e4ee46be9f85d2865755e17efd957067783b3ea0",
+    "source_sha256": "1f65b5b7e1d02d8a5d175320e4ee46be9f85d2865755e17efd957067783b3ea0",
+    "transformation": "none"
+  },
+  {
+    "path": "scene-short/scene_action_nce_e10_s2_n50.txt",
+    "sha256": "1912202e50b049323521f695e84bd639c7334a6a2a58625e50323ba547639679",
+    "source_sha256": "1912202e50b049323521f695e84bd639c7334a6a2a58625e50323ba547639679",
+    "transformation": "none"
+  },
+  {
+    "path": "scene-short/scene_action_nce_e10_s3072_n50.txt",
+    "sha256": "58b97c99c318ec8ce3ec4a75083cb843147550eca7e271bca4cec1621b78303b",
+    "source_sha256": "58b97c99c318ec8ce3ec4a75083cb843147550eca7e271bca4cec1621b78303b",
+    "transformation": "none"
+  },
+  {
+    "path": "scene-short/scene_mtm_mse_e10_s1_n50.txt",
+    "sha256": "ca2fac994b322c887189565f189e792fc8593d2ab943a2876cd51b6b805bdab0",
+    "source_sha256": "ca2fac994b322c887189565f189e792fc8593d2ab943a2876cd51b6b805bdab0",
+    "transformation": "none"
+  },
+  {
+    "path": "scene-short/scene_mtm_mse_e10_s2_n50.txt",
+    "sha256": "c0be601f0b95bb14ac057a1a9cca9936243039c77bc1f3f71814e7abd070ed9f",
+    "source_sha256": "c0be601f0b95bb14ac057a1a9cca9936243039c77bc1f3f71814e7abd070ed9f",
+    "transformation": "none"
+  },
+  {
+    "path": "scene-short/scene_mtm_mse_e10_s3072_n50.txt",
+    "sha256": "bc3910d78fd92240ae5518f9d9d6839ce737424d7f20b41a6ac0aafbd4ac47d0",
+    "source_sha256": "bc3910d78fd92240ae5518f9d9d6839ce737424d7f20b41a6ac0aafbd4ac47d0",
+    "transformation": "none"
+  },
+  {
+    "path": "scene-short/scene_sigreg_e10_s1_n50.txt",
+    "sha256": "635826417e2cb50cfcd1f5937cad0ca1f21ef5d5fbbe662d1f2bd924dbf6c10b",
+    "source_sha256": "635826417e2cb50cfcd1f5937cad0ca1f21ef5d5fbbe662d1f2bd924dbf6c10b",
+    "transformation": "none"
+  },
+  {
+    "path": "scene-short/scene_sigreg_e10_s2_n50.txt",
+    "sha256": "cd2777de8c2870351963504e6428bc52d7473ea664c76a6cca558cff38d318d1",
+    "source_sha256": "cd2777de8c2870351963504e6428bc52d7473ea664c76a6cca558cff38d318d1",
+    "transformation": "none"
+  },
+  {
+    "path": "scene-short/scene_sigreg_e10_s3072_n50.txt",
+    "sha256": "576bd7565481738aaff1cecd2e4ee558729e4edaf05e7d9878edc927761f435b",
+    "source_sha256": "576bd7565481738aaff1cecd2e4ee558729e4edaf05e7d9878edc927761f435b",
+    "transformation": "none"
+  },
+  {
+    "path": "sampling/sigreg_3072.txt",
+    "sha256": "0ca9d60ea51c60ea61d55e0ab4d8809bf2713c651972e213588f1838d943fc8e",
+    "source_sha256": "f4fee92a1e6f812ada001640372cfae738817e36b76d93857eb8da7e26608a56",
+    "transformation": "verbatim sampling array and adjacent policy line excerpt; other log lines omitted"
+  },
+  {
+    "path": "sampling/sigreg_1.txt",
+    "sha256": "70bb6923b06943dba512f6e80800a8ab7c736997e4e4474faef605ed368e4ad7",
+    "source_sha256": "ec099acaad190c157de5d5121e595e5cb81b33cf77c8ed9d3fe6c80fde5e0f5b",
+    "transformation": "verbatim sampling array and adjacent policy line excerpt; other log lines omitted"
+  },
+  {
+    "path": "sampling/sigreg_2.txt",
+    "sha256": "b03becebafcab57b8e5c02090e2a9e40df98f14099c007397084dc879abac5c8",
+    "source_sha256": "89c2bde4cefa09f19d625b23fc383e09a6447128724d6adc6bf197dd39ee97c7",
+    "transformation": "verbatim sampling array and adjacent policy line excerpt; other log lines omitted"
+  },
+  {
+    "path": "sampling/masked_action_nce_3072.txt",
+    "sha256": "2bd4859d3dd3ebc7af6b18ee5c2e71e8f2b07bb6b5a36720169c087ae379d940",
+    "source_sha256": "8dd94cb3f718d375d9208651c9e59062794065564564c0fd09c1c064f3694ff8",
+    "transformation": "verbatim sampling array and adjacent policy line excerpt; other log lines omitted"
+  },
+  {
+    "path": "sampling/masked_action_nce_1.txt",
+    "sha256": "5f87f406468fcc000f8e0eb921b8d87c2780a015f22fa7e25034614ec607d657",
+    "source_sha256": "4465627d1766f2e69db85993cebe45e0ce1626524daa2ae40229aff1cadcaee4",
+    "transformation": "verbatim sampling array and adjacent policy line excerpt; other log lines omitted"
+  },
+  {
+    "path": "sampling/masked_action_nce_2.txt",
+    "sha256": "b8d85788daa0c0f6bd2d5afd817c745bf6b977bb0e2b56899900d48ff1df699a",
+    "source_sha256": "2b6c5f4d2783aa803948205b6225a76908ec85d22446120e18cafdc8c018f9db",
+    "transformation": "verbatim sampling array and adjacent policy line excerpt; other log lines omitted"
+  },
+  {
+    "path": "sampling/random.txt",
+    "sha256": "c3207be45bd771fb181869974c359213c1cb4842196724aacfc638f89dc99f83",
+    "source_sha256": "000b7823edaefcba5596028701566975a466b54cd324969c0d5c099e8dc54e8c",
+    "transformation": "verbatim sampling array and adjacent policy line excerpt; other log lines omitted"
+  },
+  {
+    "path": "reacher/lewm_masked_vicreg/config.yaml",
+    "sha256": "fd0f9ccad2439a93076cb354c4afc3230091f8a86232bb38370933727f6167fd",
+    "source_sha256": "cae8339a19b9fe9d678306598cd0f8316a28b9e8c6243dcc5e54515f5226955c",
+    "transformation": "omit wandb tracking settings; YAML reserialization only"
+  },
+  {
+    "path": "reacher/lewm_masked_vicreg/checkpoint_state.json",
+    "sha256": "08baf40af8334e8b17709297390da09298129b28885549b20fdc240f9257c250",
+    "source_sha256": "08baf40af8334e8b17709297390da09298129b28885549b20fdc240f9257c250",
+    "transformation": "none"
+  },
+  {
+    "path": "reacher/lewm_base_e100/config.yaml",
+    "sha256": "221ea15f786bd2a44fdd71c6ec353f54a07793ea562eaa970e972a194c019042",
+    "source_sha256": "82517722edfe74d1a92cfb1c023ea794a28b66913340eaccfb09a52e458ceabd",
+    "transformation": "omit wandb tracking settings; YAML reserialization only"
+  },
+  {
+    "path": "reacher/lewm_base_e100/checkpoint_state.json",
+    "sha256": "0d7d933bc7918009eb47ba78244551c8359ca65e4bb8735a5299d401f0f63a2f",
+    "source_sha256": "0d7d933bc7918009eb47ba78244551c8359ca65e4bb8735a5299d401f0f63a2f",
+    "transformation": "none"
+  },
+  {
+    "path": "reacher/lewm_masked/config.yaml",
+    "sha256": "3260c3c7aa98674d2afebc35fe5736ac9b6d50ac3618206c099fac5b87ce8cfe",
+    "source_sha256": "b2bd7898f5dd629a560919948a2c7b1ecd55ad2a5fe7db0dc6fe298152aae4ef",
+    "transformation": "omit wandb tracking settings; YAML reserialization only"
+  },
+  {
+    "path": "reacher/lewm_masked/checkpoint_state.json",
+    "sha256": "57c1028928cb2379ff10de7f0908784f27de5aea96938aaaa086e31a23044bbd",
+    "source_sha256": "57c1028928cb2379ff10de7f0908784f27de5aea96938aaaa086e31a23044bbd",
+    "transformation": "none"
+  },
+  {
+    "path": "reacher/lewm_masked_s1/config.yaml",
+    "sha256": "dda9064ffd57c3765ea66563d46209573a654ac46edc8a6c41c40e0292a3af95",
+    "source_sha256": "711d379215058f8e56f751330ea25fbb2060dbdf12188ae3f198e263de7f38b0",
+    "transformation": "omit wandb tracking settings; YAML reserialization only"
+  },
+  {
+    "path": "reacher/lewm_masked_s1/checkpoint_state.json",
+    "sha256": "fa4905721e0e8f84469941f56412008f5f085396a94cd88b6c910f741b0c22ee",
+    "source_sha256": "fa4905721e0e8f84469941f56412008f5f085396a94cd88b6c910f741b0c22ee",
+    "transformation": "none"
+  },
+  {
+    "path": "reacher/lewm_masked_s2/config.yaml",
+    "sha256": "7ed9aec560733aa9e48acec1e2176c29d0af7ec16ec550ceebcd09ad12679a83",
+    "source_sha256": "35b2eb0d596e3dcd5648b0e7098dea8f256a00c6fa592cea8d3ef6a1157ae637",
+    "transformation": "omit wandb tracking settings; YAML reserialization only"
+  },
+  {
+    "path": "reacher/lewm_masked_s2/checkpoint_state.json",
+    "sha256": "a2a6653cd26c91106d976d6d14513c592c84a44eeecca4bb6bbd77f8e549bb8b",
+    "source_sha256": "a2a6653cd26c91106d976d6d14513c592c84a44eeecca4bb6bbd77f8e549bb8b",
+    "transformation": "none"
+  },
+  {
+    "path": "reacher/mtm_action_nce_e10_s1/config.yaml",
+    "sha256": "bf54f3ec7c0cccb650a8125632d1ce6cba8d532831f2367dad937c82a618404a",
+    "source_sha256": "2831c10be5a8f5d6391a3d131a7bafd594f6a2903752c084cafd4b7bfa8ea2bd",
+    "transformation": "omit wandb tracking settings; YAML reserialization only"
+  },
+  {
+    "path": "reacher/mtm_action_nce_e10_s1/checkpoint_state.json",
+    "sha256": "34dd76e754115e05fa38c084fa99abb4b7749624e09098bfca5c79b8fec5ac0c",
+    "source_sha256": "34dd76e754115e05fa38c084fa99abb4b7749624e09098bfca5c79b8fec5ac0c",
+    "transformation": "none"
+  },
+  {
+    "path": "reacher/lewm_base_e100_ep9_reacher_n200.txt",
+    "sha256": "20cb4901e1ab3180b2c0d30d2fb8b5a2660da472da5f12bb47fa34e6337688bf",
+    "source_sha256": "20cb4901e1ab3180b2c0d30d2fb8b5a2660da472da5f12bb47fa34e6337688bf",
+    "transformation": "none"
+  },
+  {
+    "path": "reacher/mtm_action_nce_e10_s1_n200.txt",
+    "sha256": "85e7f4d27bc050afcfc5adc6cd065a0f604d567de5e42a4a828baf4409cc488c",
+    "source_sha256": "85e7f4d27bc050afcfc5adc6cd065a0f604d567de5e42a4a828baf4409cc488c",
+    "transformation": "none"
+  },
+  {
+    "path": "reacher/lewm_masked_reacher_n200_results.txt",
+    "sha256": "4f9e912fcb9ddf9864ff5bd5e056ab7ddedfae591a1423d749bd42f2adaee97a",
+    "source_sha256": "4f9e912fcb9ddf9864ff5bd5e056ab7ddedfae591a1423d749bd42f2adaee97a",
+    "transformation": "none"
+  },
+  {
+    "path": "reacher/lewm_base_reacher_n200_results.txt",
+    "sha256": "6672b62d2443f580f16746bc001f48b8496f60818a42f32f341f688a322865f0",
+    "source_sha256": "6672b62d2443f580f16746bc001f48b8496f60818a42f32f341f688a322865f0",
+    "transformation": "none"
+  },
+  {
+    "path": "reacher/lewm_masked_vicreg/lewm_masked_vicreg_ep10_reacher_n200.txt",
+    "sha256": "18e8b9d14de7c0dbd00ed4a43e85e7b7c300446fe209f5430bdd9e9396032157",
+    "source_sha256": "18e8b9d14de7c0dbd00ed4a43e85e7b7c300446fe209f5430bdd9e9396032157",
+    "transformation": "none"
+  },
+  {
+    "path": "reacher/lewm_masked_s2_n200.txt",
+    "sha256": "cb5c5e087cba76a1229a1646f80c25915a12ba112c8208fba88d0d72f6308ad2",
+    "source_sha256": "215f8e683c5cccab704e976e7cb3e3dfa87573b3a03a354197f073efe866f70c",
+    "transformation": "verbatim seed-2 CONFIG/RESULTS block from append-only multi-evaluation file; other evaluations omitted"
+  },
+  {
+    "path": "checkpoint-identities.json",
+    "sha256": "bdb98c27dd1c7e5f6506349dc0b6e3894bf73e8ba6cd19ba8ac98784bb8a1eae",
+    "source_sha256": null,
+    "transformation": "SHA-256 and byte counts of four read-only recovered checkpoint files; no binaries included"
+  },
+  {
+    "path": "probe-refit.json",
+    "sha256": "e41b74ab2aa5701495c238352185fa664252867bbd161263b1d976b14094b1d8",
+    "source_sha256": null,
+    "transformation": "CPU ridge fits and participation ratios recomputed from original NPZ; source hashes recorded in file"
+  },
+  {
+    "path": "submitted-pdf.json",
+    "sha256": "eb717fe56f9cbb6984f692b5a494d47e32858f903afd7b03c91f0ae2172de257",
+    "source_sha256": null,
+    "transformation": "Bounded retrieval status and metadata from unverified local submission candidate"
+  },
+  {
+    "path": "reacher/lewm_base_e100/fit-start.jsonl",
+    "sha256": "c3e1438f1ea3d0731339c719a372c52f806489ae3426d34c5b81424d09506a62",
+    "source_sha256": "885f7be838db7becb13cfd5b213425acd79151c47a5747b6710bdf56e4335313",
+    "transformation": "verbatim first fit_start event; later events omitted"
+  }
+]
