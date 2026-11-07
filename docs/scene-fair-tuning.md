@@ -44,21 +44,24 @@ screening epochs and sixty confirmation epochs, plus 18 evaluations.
 
 ## Status and verified evidence
 
-As of November 7, 2026, 13:43 UTC:
+As of November 7, 2026, 13:50 UTC:
 
 - SIGReg coefficient 0.09, seed 3072 completed its one-epoch screen: 6,897
   updates in 12 minutes 31 seconds, exit 0. Configuration, finite recorded
   metrics, and the sole epoch-1 object checkpoint passed the local audit.
-- The coordinator released the resource hold at 13:42 UTC and resumed the
-  original queue and lock waiter. The first validation process is now active
-  on GPU0; simulator initialization is logged. No completed validation score
-  or selected coefficient is available yet. No driver was restarted.
-- Five screen trainings, six confirmation trainings, and all 18 evaluations
-  remain. No failures have been observed so far.
-- Local study artifacts occupy about 69 MiB. Root disk has 43 GiB free.
-  Provisional completion is November 8–9 morning UTC, including uncertain
-  evaluation time and shared-GPU waits. The resource reservation ended early;
-  timing will be revised after the first evaluation completes. This is not a deadline.
+- Its seed-44 validation completed with **23/50 successes (46%)** in 273.24
+  seconds. The audit checked all 50 Boolean outcomes, the reported rate,
+  resolved evaluation settings, and exact sampled rows against the goal audit.
+  This is one screening result, not a final comparison or selected coefficient.
+- The coordinator released the resource hold at 13:42 UTC. The original queue
+  completed validation and now waits for the shared GPU0 lock to train SIGReg
+  coefficient 0.03 while the hybrid study trains. No driver was restarted.
+- Five screen trainings, six confirmation trainings, and 17 evaluations remain.
+  No failures have been observed so far. Selection awaits all six screen trials.
+- Local study artifacts occupy about 69 MiB. Root disk has 42 GiB free.
+  Provisional completion is November 8–9 morning UTC. The first short evaluation
+  took about 4.6 minutes; harder-goal evaluation and further shared-GPU waits
+  remain unmeasured. This is an estimate, not a deadline.
 
 The goal audit reproduces `eval.py`'s seeded row selection. Validation versus
 each final protocol shares zero exact start rows and zero exact goal rows,
