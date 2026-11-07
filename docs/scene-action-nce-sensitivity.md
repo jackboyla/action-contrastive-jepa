@@ -2,12 +2,17 @@
 
 ## Status
 
-As of 2026-11-07 10:29 UTC, the first of 15 training runs is in epoch 4
-(42,400/137,950 optimizer updates). No run or evaluation is complete. The
-existing GPU1 queue continues in tmux; do not launch a second copy.
+As of 2026-11-07 10:55 UTC, the first of 15 training runs is in epoch 6
+(69,300/137,950 updates). No run or evaluation is complete. A coordinated
+resource hold stops the queue driver while allowing the current trainer to
+finish. Another workload then has both GPUs reserved for about three hours.
+The queue will resume only after explicit release by the coordinator; the
+intentional hold is not a training failure. Do not launch a duplicate queue.
+
 At roughly 17.3 updates/s for batch 64, the whole study is provisionally
-35–45 hours including evaluation. Larger-batch throughput, validation,
-and lock contention can change this estimate. No scientific result is available.
+38–48 hours including evaluation and the expected three-hour hold.
+Larger-batch throughput, validation, lock contention, and the actual release
+time can change this estimate. No scientific result is available.
 
 ## Frozen protocol
 
