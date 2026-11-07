@@ -40,11 +40,16 @@ the remaining matrix stays pending. A separate six-hour wall-clock deadline
 starts before the first GPU submission, includes queue time, and bounds total
 GPU time at concurrency two, with shutdown allowance.
 Infrastructure failures pause further launches and retain every attempted
-outcome; no score controls scheduling. An attempt directory belongs to one supervisor call. On preemption the same
+outcome; no score controls scheduling. An attempt directory belongs to one
+supervisor call. On preemption the same
 call reattaches to saved worker call IDs, skips recorded completions and retains
 its original deadline. A separate invocation cannot take over that directory.
 A dispatch intent without a saved call ID is ambiguous: the supervisor fails
 closed for manual reconciliation instead of spawning another job.
+Every worker also receives the persisted deadline. It rejects late starts and
+terminates its evaluator process group at that deadline, even if the supervisor
+loses its dispatch receipt. The shutdown allowance covers worker startup and
+teardown; the process timer does not measure provider billing overhead.
 
 Modal provides bounded capacity when local GPUs are occupied. A failed or
 budget-blocked run retains its completed cells; inspect them before planning

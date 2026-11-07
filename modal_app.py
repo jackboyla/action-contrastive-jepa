@@ -1671,6 +1671,19 @@ def run_e6_supervisor(attempt: str, prior_gpu_seconds: float = 0) -> dict:
     pending = jobs()
     deadline = status['deadline_unix']
     for start in range(0, len(pending), 2):
+        # Reapply the pilot gate from durable results before dispatch, including
+        # after a restart between committing a completion and checking its cost.
+        elapsed = [record['elapsed_seconds'] for record in status['completed']]
+        spent = prior_gpu_seconds + sum(elapsed)
+        remaining = len(pending) - len(elapsed)
+        projected = spent + (max(elapsed) * remaining * 1.15 if elapsed else 0)
+        status['spent_gpu_seconds'] = spent
+        status['projected_gpu_seconds'] = projected
+        if projected > 12 * 3600 or time.time() >= deadline:
+            status['state'] = 'budget_blocked'
+            save()
+            cancel_unfinished()
+            break
         completed_names = {record['job']['name'] for record in status['completed']}
         wave = [job for job in pending[start:start + 2] if job['name'] not in completed_names]
         if not wave:
@@ -1691,7 +1704,7 @@ def run_e6_supervisor(attempt: str, prior_gpu_seconds: float = 0) -> dict:
                     receipt = {'job': job['name'], 'call_id': None}
                     status['calls'].append(receipt)
                     save()
-                    call = run_e6_job.spawn(job=job, attempt=attempt)
+                    call = run_e6_job.spawn(job=job, attempt=attempt, deadline_unix=deadline)
                     receipt['call_id'] = call.object_id
                     save()
                 calls.append((job, call))
@@ -1728,15 +1741,17 @@ def run_e6_supervisor(attempt: str, prior_gpu_seconds: float = 0) -> dict:
 @app.function(gpu='L4', cpu=CPU_COUNT, memory=MEMORY_MB, timeout=7200, retries=0,
               max_containers=2, scaledown_window=5,
               volumes={str(STABLEWM_HOME): volume})
-def run_e6_job(job: dict, attempt: str) -> dict:
+def run_e6_job(job: dict, attempt: str, deadline_unix: float) -> dict:
     from experiments.e6.runner import run_job
 
+    if time.time() >= deadline_unix:
+        raise TimeoutError('E6 attempt deadline expired before worker start')
     volume.reload()
     os.environ['OMP_NUM_THREADS'] = '2'
     os.environ['OPENBLAS_NUM_THREADS'] = '2'
     try:
         return run_job(job, STABLEWM_HOME,
-                       STABLEWM_HOME / 'evaluations' / attempt / job['name'])
+                       STABLEWM_HOME / 'evaluations' / attempt / job['name'], deadline_unix)
     finally:
         volume.commit()
 
