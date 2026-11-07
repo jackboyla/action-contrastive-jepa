@@ -1614,13 +1614,16 @@ def upload(local_path: str, remote_path: str = "/") -> None:
 
 @app.function(cpu=CPU_COUNT, memory=MEMORY_MB, timeout=7 * 3600, retries=0,
               volumes={str(STABLEWM_HOME): volume})
-def run_e6_supervisor(attempt: str, prior_gpu_seconds: float = 0) -> dict:
+def run_e6_supervisor(attempt: str, prior_gpu_seconds: float = 0, resume_from: str = "") -> dict:
     """Resume this supervisor's recorded calls without extending its budget."""
     import json
     import re
+    import shutil
+    from experiments.e6.summarize import summarize
     from experiments.e6.runner import jobs, verify_assets, sha256, PROTOCOL
 
-    if not re.fullmatch(r"[a-zA-Z0-9_-]+", attempt):
+    if (not re.fullmatch(r"[a-zA-Z0-9_-]+", attempt)
+            or (resume_from and not re.fullmatch(r"[a-zA-Z0-9_-]+", resume_from))):
         raise ValueError('Use a single directory name for the attempt')
     if not 0 <= prior_gpu_seconds < 12 * 3600 - 240:
         raise ValueError('Prior allocated GPU time must leave shutdown allowance')
@@ -1631,13 +1634,34 @@ def run_e6_supervisor(attempt: str, prior_gpu_seconds: float = 0) -> dict:
         status = json.loads((output / 'status.json').read_text())
         if (status['owner_call_id'] != owner
                 or status['protocol_sha256'] != sha256(PROTOCOL)
-                or status['prior_gpu_seconds'] != prior_gpu_seconds):
+                or status['prior_gpu_seconds'] != prior_gpu_seconds
+                or status.get('resume_from', '') != resume_from):
             raise ValueError('Attempt belongs to another call or protocol; reconcile before relaunch')
     else:
         output.mkdir(parents=True, exist_ok=False)
         status = {'state': 'preflight', 'protocol_sha256': sha256(PROTOCOL),
                   'owner_call_id': owner, 'prior_gpu_seconds': prior_gpu_seconds,
-                  'calls': [], 'completed': [], 'failures': []}
+                  'calls': [], 'completed': [], 'failures': [], 'resume_from': resume_from}
+        if resume_from:
+            previous = STABLEWM_HOME / 'evaluations' / resume_from
+            previous_status = json.loads((previous / 'status.json').read_text())
+            if (previous_status['state'] != 'failed'
+                    or previous_status['protocol_sha256'] != status['protocol_sha256']
+                    or prior_gpu_seconds < previous_status['prior_gpu_seconds']):
+                raise ValueError('Continuation requires a failed matching attempt and cumulative reserve')
+            records = previous_status['completed']
+            names = [record['job']['name'] for record in records]
+            audited = {row['job'] for row in summarize(previous)['rows'] if row['state'] == 'complete'}
+            if len(names) != len(set(names)) or set(names) != audited:
+                raise ValueError('Reconcile every completed cell before continuation')
+            for record in records:
+                source = previous / record['job']['name']
+                if json.loads((source / 'runtime.json').read_text()) != record:
+                    raise ValueError('Completed runtime differs from supervisor receipt')
+                # Preserve original commands, task IDs and source hashes byte for byte.
+                shutil.copytree(source, output / record['job']['name'])
+            status.update(completed=records, deadline_unix=previous_status['deadline_unix'],
+                          previous_status_sha256=sha256(previous / 'status.json'))
 
     def save():
         path = output / 'status.json'
@@ -1665,7 +1689,8 @@ def run_e6_supervisor(attempt: str, prior_gpu_seconds: float = 0) -> dict:
             save()
             raise
         # Persist wall time so preemption cannot reset the allocation bound.
-        status['deadline_unix'] = time.time() + (12 * 3600 - prior_gpu_seconds) / 2 - 120
+        new_deadline = time.time() + (12 * 3600 - prior_gpu_seconds) / 2 - 120
+        status['deadline_unix'] = min(status.get('deadline_unix', new_deadline), new_deadline)
         status['state'] = 'running'
         save()
     pending = jobs()
@@ -1708,7 +1733,7 @@ def run_e6_supervisor(attempt: str, prior_gpu_seconds: float = 0) -> dict:
                     receipt['call_id'] = call.object_id
                     save()
                 calls.append((job, call))
-                print('E6 CALL', job['name'], call.object_id, flush=True)
+                print('E6 CALL', job['name'], receipt['call_id'], flush=True)
             for job, call in calls:
                 record = call.get(timeout=max(0, deadline - time.time()))
                 status['completed'].append(record)
@@ -1757,9 +1782,9 @@ def run_e6_job(job: dict, attempt: str, deadline_unix: float) -> dict:
 
 
 @app.local_entrypoint()
-def e6(attempt: str, prior_gpu_seconds: float = 0) -> None:
+def e6(attempt: str, prior_gpu_seconds: float = 0, resume_from: str = "") -> None:
     """Launch a new attempt only after reconciling previous calls and GPU usage."""
-    run_e6_supervisor.remote(attempt=attempt, prior_gpu_seconds=prior_gpu_seconds)
+    run_e6_supervisor.remote(attempt=attempt, prior_gpu_seconds=prior_gpu_seconds, resume_from=resume_from)
 
 
 @app.function(cpu=CPU_COUNT, memory=MEMORY_MB, timeout=86400, retries=0,

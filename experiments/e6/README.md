@@ -72,3 +72,13 @@ attempt, verify the previous app has no running or pending workers, retain its
 raw receipts, and reconcile every completed cell. Never rerun accepted cells.
 `--prior-gpu-seconds` reduces both the projection budget and the wall deadline.
 The runner does not automatically restart incomplete worker evaluations.
+
+After stopping and reconciling a failed app, `--resume-from <previous-attempt>`
+starts a distinct attempt with the audited completed cells copied byte for byte.
+It keeps their original commands, source hashes and task IDs, records the previous
+status hash, and uses the earlier deadline. The prior-time reserve must cover
+all earlier failed or uncertain GPU work; accepted worker runtimes are counted
+separately. The supervisor rejects unrecorded completions and reduced reserves.
+This option does not stop the previous app: verify its queued and running calls
+are gone before launching. Incomplete cells remain in the failed attempt for
+audit and run fresh only after this reconciliation.
