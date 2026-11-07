@@ -44,7 +44,7 @@ screening epochs and sixty confirmation epochs, plus 18 evaluations.
 
 ## Status and verified evidence
 
-As of November 7, 2026, 14:08 UTC:
+As of November 7, 2026, 16:20 UTC:
 
 - SIGReg coefficient 0.09, seed 3072 completed its one-epoch screen: 6,897
   updates in 12 minutes 31 seconds, exit 0. Configuration, finite recorded
@@ -53,15 +53,20 @@ As of November 7, 2026, 14:08 UTC:
   seconds. The audit checked all 50 Boolean outcomes, the reported rate,
   resolved evaluation settings, and exact sampled rows against the goal audit.
   This is one screening result, not a final comparison or selected coefficient.
-- The coordinator released the resource hold at 13:42 UTC. The original queue
-  completed validation and now waits for the shared GPU0 lock to train SIGReg
-  coefficient 0.03 while the hybrid study trains. No driver was restarted.
+- SIGReg coefficient 0.03 completed its screen at 16:10 UTC: 6,897 updates
+  in 12 minutes 31 seconds, exit 0. Config, final checkpoint and finite-metric
+  audits passed. Its validation is queued behind the hybrid seed-2 training
+  job on GPU0; that job estimates lock release around 18:17 UTC.
+- Completed counts: screening training **2/6**, validation **1/6**, confirmation
+  training **0/6**, final evaluation **0/12**. No study GPU job is active during
+  this lock wait; the original queue remains live. Study status: **Inprogress**;
+  next-job dependency: hybrid training's GPU0 lock. PR remains **draft, not merged**.
 - Paper studies now have GPU priority through completion; no further borrowed
   slots are planned until the coordinator releases that priority. This study
   keeps its GPU0-only lock discipline, frozen schedule and existing queue.
-- Five screen trainings, six confirmation trainings, and 17 evaluations remain.
+- Four screen trainings, six confirmation trainings, and 17 evaluations remain.
   No failures have been observed so far. Selection awaits all six screen trials.
-- Local study artifacts occupy about 69 MiB. Root disk has 27 GiB free.
+- Local study artifacts occupy about 139 MiB. Root disk has 478 GiB free.
   Provisional completion is November 8–9 morning UTC. The first short evaluation
   took about 4.6 minutes; harder-goal evaluation and further shared-GPU waits
   remain unmeasured. This is an estimate, not a deadline.
