@@ -42,47 +42,14 @@ and training seeds within each protocol. Training seeds are not independent
 goal sets. No historical training runs are reused: the study budgets six
 screening epochs and sixty confirmation epochs, plus 18 evaluations.
 
-## Status and verified evidence
-
-As of November 7, 2026, 16:26 UTC:
-
-- SIGReg coefficient 0.09, seed 3072 completed its one-epoch screen: 6,897
-  updates in 12 minutes 31 seconds, exit 0. Configuration, finite recorded
-  metrics, and the sole epoch-1 object checkpoint passed the local audit.
-- Its seed-44 validation completed with **23/50 successes (46%)** in 273.24
-  seconds. The audit checked all 50 Boolean outcomes, the reported rate,
-  resolved evaluation settings, and exact sampled rows against the goal audit.
-  This is one screening result, not a final comparison or selected coefficient.
-- SIGReg coefficient 0.03 completed its screen at 16:10 UTC: 6,897 updates
-  in 12 minutes 31 seconds, exit 0. Config, final checkpoint and finite-metric
-  audits passed. Its validation is queued behind the hybrid seed-2 training
-  job on GPU0; that job estimates lock release around 18:21 UTC. The 0.03 training run received the lock between
-  hybrid seeds 1 and 2; only its validation is now waiting.
-- Completed counts: screening training **2/6**, validation **1/6**, confirmation
-  training **0/6**, final evaluation **0/12**. No study GPU job is active during
-  this lock wait; the original queue remains live. Study status: **Inprogress**;
-  next-job dependency: hybrid training's GPU0 lock. PR remains **draft, not merged**.
-- Paper studies now have GPU priority through completion; no further borrowed
-  slots are planned until the coordinator releases that priority. This study
-  keeps its GPU0-only lock discipline, frozen schedule and existing queue.
-- Four screen trainings, six confirmation trainings, and 17 evaluations remain.
-  No failures have been observed so far. Selection awaits all six screen trials.
-- Local study artifacts occupy about 139 MiB. Root disk has 478 GiB free.
-  Provisional completion is November 8–9 morning UTC. The first short evaluation
-  took about 4.6 minutes; harder-goal evaluation and further shared-GPU waits
-  remain unmeasured. At 16:26 UTC, wall time since launch was about 6 hours
-  38 minutes, including the coordinated hold and lock waits; completed training
-  used 25 minutes 2 seconds and validation used 4 minutes 33 seconds. Remaining
-  training alone is about 13 hours 21 minutes at the observed SIGReg speed.
-  Potential cross-study sharing is not credited in this estimate: fair settings
-  have not been selected or verified for reuse. This is an estimate, not a deadline.
+## Task overlap
 
 The goal audit reproduces `eval.py`'s seeded row selection. Validation versus
 each final protocol shares zero exact start rows and zero exact goal rows,
 but shares two source trajectories. Training uses a random split within the
 same corpus. This is **not a held-out trajectory test**. The overlap audit
-records all sampled row and trajectory IDs locally; matching these against
-actual evaluation logs remains pending.
+records all sampled row and trajectory IDs. Match them against actual
+evaluation logs before reporting results.
 
 ## Reproduce individual jobs
 
@@ -136,27 +103,10 @@ with resumable/best checkpoint writes disabled. Treat failed or nonfinite
 runs as failures to investigate, not candidates to drop. Record retries and
 their extra compute. Do not start another copy of the active queue.
 
-## Pending result audit and manuscript addition
+## Result audit and reporting
 
 Before reporting results, verify all resolved configs, completed update counts,
 final checkpoint epochs, finite metrics, complete Boolean episode outcomes,
 reported success rates, selection/tie breaking, and identical sampled tasks.
 Report every screen and all three final training seeds, mean and sample SD;
 do not infer significance or robustness from this design.
-
-Conditional manuscript text, to fill only after the full audit:
-
-> We compared SIGReg and Action-NCE after equal-budget coefficient screening
-> on Scene. Each objective received three one-epoch trials with seed 3072;
-> validation success selected one coefficient using a fixed tie rule. We then
-> trained each selected setting for ten epochs with seeds 3072, 1, and 2 and
-> evaluated the final checkpoints on matched short- and harder-goal tasks.
-> [Insert all screening scores, selected coefficients, and final per-seed
-> results with mean and sample SD.] Tuning is exploratory: validation and
-> final goals share source trajectories with each other and the training
-> corpus, and final goals had prior experimental exposure. Training-seed
-> variation does not measure uncertainty over independent goal sets.
-
-No paper, Google Doc, or Overleaf edits accompany this study PR. Scheduled
-30-minute checks maintain the queue, audit results, and update this document
-and the draft PR on material changes; monitoring ends after final delivery.
