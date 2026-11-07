@@ -1,0 +1,37 @@
+{
+  "default": {
+    "batch_size": 128,
+    "temperature": 0.1,
+    "optimizer_steps": 6897,
+    "fresh_training": true,
+    "other_config_equal": true
+  },
+  "tau020": {
+    "batch_size": 128,
+    "temperature": 0.2,
+    "optimizer_steps": 6897,
+    "fresh_training": true,
+    "other_config_equal": true
+  },
+  "tau005": {
+    "batch_size": 128,
+    "temperature": 0.05,
+    "optimizer_steps": 6897,
+    "fresh_training": true,
+    "other_config_equal": true
+  },
+  "batch256": {
+    "batch_size": 256,
+    "temperature": 0.1,
+    "optimizer_steps": 3448,
+    "fresh_training": true,
+    "other_config_equal": true
+  },
+  "batch64": {
+    "batch_size": 64,
+    "temperature": 0.1,
+    "optimizer_steps": 13795,
+    "fresh_training": true,
+    "other_config_equal": true
+  }
+}

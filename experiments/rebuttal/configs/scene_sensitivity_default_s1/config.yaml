@@ -1,0 +1,115 @@
+output_model_name: lewm_masked_action_nce
+subdir: rebuttal/scene_sensitivity_default_s1
+num_workers: 2
+train_split: 0.9
+seed: 1
+img_size: 224
+patch_size: 14
+encoder_scale: tiny
+dump_object: true
+runtime:
+  float32_matmul_precision: high
+  cudnn_benchmark: true
+  sharing_strategy: file_system
+  gpu_image_preprocess: true
+  stop_after_epoch: null
+trainer:
+  max_epochs: 1
+  devices: auto
+  accelerator: gpu
+  precision: bf16-mixed
+  gradient_clip_val: 1.0
+  log_every_n_steps: 25
+checkpoint:
+  enabled: true
+  step_interval: 2000
+  time_interval_seconds: 600
+  save_best: true
+  monitor: validate/loss
+  mode: min
+  keep_last_n: 0
+  save_on_train_epoch_end: true
+  object_epoch_interval: 1
+resume:
+  mode: auto
+  ckpt_path: null
+  prevent_restart_existing: true
+  allow_config_mismatch: false
+logging:
+  log_every_n_steps: 25
+  grad_norm_every_n_steps: 100
+  progress_bar: true
+  progress_refresh_steps: 100
+early_stopping:
+  enabled: false
+  monitor: validate/loss
+  mode: min
+  patience: 3
+  min_delta: 0.0
+  min_epochs: 5
+  strict: false
+loader:
+  batch_size: 128
+  num_workers: 2
+  persistent_workers: true
+  prefetch_factor: 2
+  pin_memory: true
+optimizer:
+  type: AdamW
+  lr: 5.0e-05
+  weight_decay: 0.001
+scheduler:
+  type: LinearWarmupCosineAnnealingLR
+  interval: step
+  frequency: 1
+wandb:
+  enabled: false
+  config:
+    entity: null
+    project: masked-transition-lewm
+    name: lewm_masked_action_nce
+    id: rebuttal/scene_sensitivity_default_s1
+    resume: allow
+    log_model: false
+wm:
+  type: lewm_masked
+  prediction_mode: masked_transition
+  history_size: 3
+  horizon: 1
+  num_preds: 1
+  embed_dim: 192
+  action_dim: 5
+predictor:
+  depth: 6
+  heads: 16
+  mlp_dim: 2048
+  dim_head: 64
+  dropout: 0.1
+  emb_dropout: 0.0
+loss:
+  sigreg:
+    weight: 0.0
+    kwargs:
+      knots: 17
+      num_proj: 1024
+  masked:
+    mask_mode: both
+    inverse_weight: 0.3
+    inverse_warmup_epochs: 0
+    forward_prob: 0.5
+    inverse_loss_type: action_nce
+    action_nce_temperature: 0.1
+data:
+  dataset:
+    num_steps: 4
+    frameskip: 5
+    name: ogbench/visual_scene_play
+    keys_to_load:
+    - pixels
+    - action
+    keys_to_cache:
+    - action
+inverse:
+  hidden_dim: 512
+  depth: 2
+  dropout: 0.0

@@ -1,0 +1,37 @@
+{
+  "paths": {
+    "archived": "progress/reviews/sd-audit/raw/scene/scene_action_nce_e10_s3072_n50.txt",
+    "batch10": "progress/evaluations/rebuttal-scene-eval/nce3072_reproduction42_batch10.txt",
+    "batch5": "progress/evaluations/rebuttal-scene-eval/nce3072_reproduction42.txt"
+  },
+  "successes": {
+    "archived": 40,
+    "batch10": 39,
+    "batch5": 36
+  },
+  "comparisons": {
+    "batch10": {
+      "changed_episode_indices_zero_based": [
+        33,
+        34,
+        37
+      ],
+      "new_wins": 1,
+      "new_losses": 2
+    },
+    "batch5": {
+      "changed_episode_indices_zero_based": [
+        7,
+        17,
+        25,
+        33,
+        34,
+        38,
+        40,
+        45
+      ],
+      "new_wins": 2,
+      "new_losses": 6
+    }
+  }
+}
