@@ -16,8 +16,12 @@ Whole-study runtime is provisionally 37–47 hours, pending measured evaluation
 and larger-batch throughput. No planning result is available yet.
 
 Resource check found CUDA computation on GPU1 but MuJoCo EGL graphics memory
-on GPU0. Explicit EGL device selection needs correction for subsequent
-evaluations; the current process and other workloads have been preserved.
+on GPU0 in the first evaluation. Installed MuJoCo selects rendering with
+`MUJOCO_EGL_DEVICE_ID`, independently of CUDA visibility. EGL device 1's UUID
+matches physical GPU1 on this workstation. Subsequent evaluations now have
+that explicit setting; a locked render diagnostic is queued to verify actual
+process/device allocation after the current evaluation. No result rerun is
+planned solely for placement.
 
 ## Frozen protocol
 
@@ -64,6 +68,8 @@ or completed run directory.
 export STABLEWM_HOME=/path/to/existing/cache
 export PYTHONPATH="$PWD"
 export CUDA_VISIBLE_DEVICES=1 MUJOCO_GL=egl
+# Verified on this workstation by EGL UUID vs nvidia-smi UUID; recheck elsewhere.
+export MUJOCO_EGL_DEVICE_ID=1
 export OMP_NUM_THREADS=4 OPENBLAS_NUM_THREADS=4 MKL_NUM_THREADS=4
 python_bin=/path/to/existing/venv/bin/python
 gpu_lock=/path/to/shared/gpu1.lock
@@ -91,6 +97,15 @@ flock "$gpu_lock" "$python_bin" eval.py --config-name scene \
   output.filename="$PWD/progress/evaluations/scene-full10/${setting}_s${train_seed}.txt" \
   > "progress/logs/${setting}_s${train_seed}-eval.log" 2>&1
 ```
+
+MuJoCo indexes `eglQueryDevicesEXT()` for `MUJOCO_EGL_DEVICE_ID`; do not assume
+CUDA ordinals remap that list. Match EGL device UUIDs to `nvidia-smi` using
+[EGL_EXT_device_persistent_id](https://registry.khronos.org/EGL/extensions/EXT/EGL_EXT_device_persistent_id.txt),
+then verify a render process appears only on the intended physical GPU.
+For an already-running queue whose environment cannot be changed, the same
+supported variable can be set through Hydra's `hydra.job.env_set` in a local
+configuration override before the next evaluation. Machine-specific ordinals
+are not project defaults.
 
 Execute long jobs in tmux. Acquire the shared GPU1 lock separately for each
 train/evaluation job. Check GPU activity, other processes, disk, and logs before
