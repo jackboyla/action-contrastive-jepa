@@ -160,3 +160,36 @@ Main-text replacement template:
 These are proposed additions only. The paper, Google Doc, and Overleaf have
 not been edited. The earlier one-epoch results must not be relabeled as these
 pending ten-epoch results.
+
+## Shared-baseline amendment — 2026-11-07
+
+Sensitivity is the sole producer of the default Action-NCE checkpoints
+(batch128, temperature.10, coefficient.30; seeds3072,1,2). The hybrid study
+will consume the same audited finalepoch10 checkpoints rather than train
+separate default NCE replicas. These are shared baselines, not independent
+training replications. The sensitivity queue, grid, schedule, evaluation,
+and final-checkpoint rule remain unchanged. No default checkpoint is complete
+or accepted yet.
+
+Each seed has a pre-training snapshot of its full resolved config (including
+the dataset-derived action dimension), raw and normalized-AST source hashes,
+Python/package versions, shared dataset SHA256 and file identity, GPU
+model/ordinal/UUID/driver, and thread/environment settings. The producer
+checks the live launch environment and final provenance against that snapshot.
+A completion attestation requires training exit0, fit_end at epoch10 and
+68,970updates, no resume, and the final checkpoint's SHA256 and byte size.
+The consumer independently validates the manifest and artifacts before use.
+
+Only run identity (`subdir`, `wandb.config.id/name`) is normalized in config
+comparison. Source AST comparison permits docstring-only differences.
+Different physical GPU ordinals and import paths are recorded; GPU model,
+software and thread controls must match. Provenance is not described as
+byte-identical across studies. One-epoch screening checkpoints never qualify.
+
+Producer checkpoints live at
+`rebuttal/scene_full10_default_s<seed>/lewm_masked_action_nce_epoch_10_object.ckpt`
+in the existing cache. Local atomic manifests are
+`progress/evaluations/shared-nce-s<seed>-launch.json` (predeclared only) and
+`shared-nce-s<seed>.json` (complete only after checks). No dataset or model
+copies are needed. Fair-study confirmations require a separate identity
+check after coefficient selection; this amendment does not alter selection.
