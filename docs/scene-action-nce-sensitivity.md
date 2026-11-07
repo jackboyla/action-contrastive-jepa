@@ -2,12 +2,17 @@
 
 ## Status
 
-As of 2026-11-07 10:55 UTC, the first of 15 training runs is in epoch 6
-(69,300/137,950 updates). No run or evaluation is complete. A coordinated
-resource hold stops the queue driver while allowing the current trainer to
-finish. Another workload then has both GPUs reserved for about three hours.
-The queue will resume only after explicit release by the coordinator; the
-intentional hold is not a training failure. Do not launch a duplicate queue.
+As of 2026-11-07 12:19 UTC, **1/15 training runs and 0/15 evaluations** are
+complete. Batch64, temperature .10, seed3072 finished all ten epochs and
+137,950 updates at 12:01 UTC in 7,976 seconds (2h13m). The final checkpoint
+is 74,247,854 bytes; CPU loading and finite-weight checks pass. Saved config
+and events confirm the prescribed settings and training from scratch.
+There is no planning success result yet.
+
+The queue driver remains intentionally stopped for a coordinated resource
+hold. Another workload is using both GPUs. Evaluation and further training
+wait for explicit release by the coordinator. This is not a training failure;
+do not launch a duplicate queue.
 
 At roughly 17.3 updates/s for batch 64, the whole study is provisionally
 38–48 hours including evaluation and the expected three-hour hold.
