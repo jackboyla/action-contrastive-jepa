@@ -407,19 +407,30 @@ def test_masked_forward_effective_rank_detects_collapse():
 
 
 def test_masked_forward_optional_sigreg_weight_adds_regularizer():
+    from hydra import compose, initialize_config_dir
+    from module import SIGReg
+
     torch.manual_seed(0)
+    with initialize_config_dir(config_dir=str(ROOT / "config" / "train"), version_base=None):
+        cfg = compose(config_name="lewm_masked_action_nce_sigreg")
+    assert cfg.loss.masked.inverse_weight == 0.30
+    assert cfg.loss.sigreg.weight == 0.09
     embed_dim = 6
     model = _make_jepa(LearnableEncoder(embed_dim, in_features=3 * 2 * 2), embed_dim, embed_dim)
-    sigreg = lambda emb: emb.pow(2).mean()
-    harness = SimpleNamespace(model=model, sigreg=sigreg, log_dict=lambda *a, **k: None)
-    cfg = _cfg()
-    cfg.loss.sigreg = {"weight": 0.2}
-
+    harness = SimpleNamespace(model=model, sigreg=SIGReg(**cfg.loss.sigreg.kwargs),
+                              log_dict=lambda *a, **k: None)
     out = masked_transition_forward(harness, _batch(embed_dim=embed_dim), "fit", cfg)
-
-    assert "sigreg_loss" in out
-    expected = out["forward_loss"] + out["inverse_loss"] + 0.2 * out["sigreg_loss"]
-    assert torch.allclose(out["loss"], expected)
+    terms = [out["forward_loss"], 0.30 * out["inverse_loss"], 0.09 * out["sigreg_loss"]]
+    assert torch.allclose(out["loss"], sum(terms))
+    params = tuple(model.encoder.parameters())
+    gradients = [torch.autograd.grad(term, params, retain_graph=True) for term in terms]
+    for term, grads in zip(terms, gradients):
+        assert torch.isfinite(term) and term > 0
+        assert all(torch.isfinite(g).all() for g in grads)
+        assert sum(g.abs().sum() for g in grads) > 0
+    total = torch.autograd.grad(out["loss"], params)
+    for i, grad in enumerate(total):
+        torch.testing.assert_close(grad, sum(g[i] for g in gradients), atol=1e-6, rtol=1e-4)
 
 
 def test_masked_forward_inverse_weight_warmup_uses_current_epoch():
