@@ -1,5 +1,8 @@
 # E6: short-goal evaluation variability
 
+The [completed results](results/README.md) include all 27 model evaluations,
+the seeded random control, both seed-variability axes and raw scientific evidence.
+
 Frozen before evaluation on 2026-11-07. `protocol.json` identifies the nine
 original Scene epoch-10 checkpoints by SHA-256, checked against the original
 checkpoint records published in PR #5. New tuning, sensitivity and hybrid

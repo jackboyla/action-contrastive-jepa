@@ -1,0 +1,54 @@
+{
+  "job": {
+    "method": "masked_action_nce",
+    "training_seed": 2,
+    "checkpoint": "scene/lewm_masked_action_nce_e10_s2/lewm_masked_action_nce_epoch_10_object.ckpt",
+    "sha256": "414c816aa39bce8f01b0f1d78e1575183e043b1cb36b631ee0c967b312b4cbc2",
+    "training_config_sha256": "f0185876aea81e486c94cea33c5d925d737c073d7d6b0a9a027ea3b425583b96",
+    "eval_seed": 44,
+    "episodes": 50,
+    "name": "masked_action_nce_train2_eval44"
+  },
+  "command": [
+    "python",
+    "eval.py",
+    "--config-name=scene",
+    "policy=scene/lewm_masked_action_nce_e10_s2/lewm_masked_action_nce_epoch_10",
+    "seed=44",
+    "eval.num_eval=50",
+    "eval.env_batch_size=10",
+    "eval.goal_offset_steps=25",
+    "eval.eval_budget=50",
+    "plan_config.horizon=5",
+    "plan_config.receding_horizon=5",
+    "plan_config.action_block=5",
+    "solver.num_samples=300",
+    "solver.n_steps=30",
+    "solver.topk=30",
+    "solver.batch_size=1",
+    "output.save_video=false",
+    "output.save_planning_artifacts=false",
+    "output.filename=/workspace/long-horizon-world-model/.stable_worldmodel/evaluations/e6-short-v4/masked_action_nce_train2_eval44/outcomes.txt",
+    "+output.metadata_path=/workspace/long-horizon-world-model/.stable_worldmodel/evaluations/e6-short-v4/masked_action_nce_train2_eval44/tasks.json"
+  ],
+  "protocol_sha256": "f2b5c337ce4d66f4e9dbc1c0c54a8348ff5f65e0c7212de2ff9ea1704d68baf3",
+  "python": "3.10.17",
+  "platform": "Linux-4.19.0-gvisor-x86_64-with-glibc2.36",
+  "started_unix": 1794091111.7899106,
+  "environment": {
+    "MODAL_TASK_ID": "ta-01M6W2214KXKYQJ8C9P74NJDQR",
+    "MODAL_CLOUD_PROVIDER": "CLOUD_PROVIDER_GCP",
+    "MUJOCO_GL": "egl",
+    "STABLEWM_HOME": "/workspace/long-horizon-world-model/.stable_worldmodel",
+    "OMP_NUM_THREADS": "2"
+  },
+  "source_sha256": {
+    "eval.py": "1d31673af80102a58e83763089be99c7d986151f060b7e7178e1009cc599f7ff",
+    "jepa.py": "3318948f56a754af61c169fbb77a0f516d2c30c44f715449d45800f97c2cbfcd",
+    "module.py": "c4291ee87fe7fcb0d62be43afb9f907547a7d7fd59ca937449968f27b4e019b4",
+    "modal_app.py": "a1041b9a554c26426d66a08141fd9898e306da4fb9a2ace707d88ba1ae14a304",
+    "experiments/e6/runner.py": "b534cd3212ca1c786d05390e745db28195ffc1749fda35491687db994adcbdbc"
+  },
+  "returncode": 0,
+  "elapsed_seconds": 557.7331445217133
+}
