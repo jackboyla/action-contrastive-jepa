@@ -12,4 +12,6 @@ Three follow-up studies are in progress. Results and manuscript additions are pe
 
 All studies use final checkpoints and report every predeclared setting. Training seeds repeat evaluation goals; they do not multiply the number of independent goals. The fair-tuning validation and final tasks share source trajectories and the training corpus, so that study is exploratory. Batch sensitivity holds epochs fixed, which changes optimizer-update counts. The hybrid experiment tests fixed coefficients, not an optimally tuned combination.
 
+The completed [action-block proximity diagnostic](../experiments/action-proximity/README.md) provides Scene/Reacher counts, sampled IDs and a raw-data recount command. It measures action distance, not behavioral equivalence.
+
 The [paper repository](https://github.com/jackboyla/action-contrastive-jepa-paper) contains the completed first-round revisions through commit `5ccc9a3`. These follow-up results will enter the manuscript only after verification. No replies have been submitted to OpenReview by the agents.
