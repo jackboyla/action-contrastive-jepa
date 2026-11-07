@@ -248,37 +248,3 @@ def test_continuation_preserves_cells_cost_and_deadline(tmp_path, monkeypatch, s
     for (job, filename), raw in original_bytes.items():
         assert (previous / job / filename).read_bytes() == raw
         assert (tmp_path / 'evaluations/next' / job / filename).read_bytes() == raw
-
-
-def test_worker_rejects_expired_deadline_before_spawning(tmp_path, monkeypatch):
-    def unexpected_spawn(*args, **kwargs):
-        pytest.fail('An expired worker must not launch an evaluator')
-
-    monkeypatch.setattr(runner.subprocess, 'Popen', unexpected_spawn)
-    with pytest.raises(TimeoutError):
-        runner.run_job(runner.jobs()[-1], tmp_path, tmp_path / 'expired',
-                       deadline_unix=time.time() - 1)
-
-
-def test_worker_deadline_stops_real_evaluator_subprocess(tmp_path, monkeypatch):
-    # Use a CPU sleep instead of a simulator; exercise actual process launch and deadline cleanup.
-    (tmp_path / 'eval.py').write_text("import time\nprint('evaluator started', flush=True)\ntime.sleep(60)\n")
-    monkeypatch.chdir(tmp_path)
-    monkeypatch.setenv('PATH', str(Path(sys.executable).parent) + os.pathsep + os.environ['PATH'])
-    monkeypatch.setattr(runner.subprocess, 'run', lambda *args, **kwargs: SimpleNamespace(stdout=''))
-    original_popen = runner.subprocess.Popen
-    children = []
-
-    def record_spawn(*args, **kwargs):
-        child = original_popen(*args, **kwargs)
-        children.append(child)
-        return child
-
-    monkeypatch.setattr(runner.subprocess, 'Popen', record_spawn)
-    started = time.monotonic()
-    with pytest.raises((RuntimeError, TimeoutError)):
-        runner.run_job(runner.jobs()[-1], tmp_path, tmp_path / 'bounded',
-                       deadline_unix=time.time() + 1)
-    assert time.monotonic() - started < 10
-    assert len(children) == 1 and children[0].poll() is not None
-    assert 'evaluator started' in (tmp_path / 'bounded/eval.log').read_text()

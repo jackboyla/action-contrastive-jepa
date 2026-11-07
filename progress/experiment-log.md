@@ -8678,3 +8678,34 @@ the Scene win belongs to the inverse-dynamics family (both variants beat
 SIGReg decisively), with the contrastive form adding a noise-level 4.7 points
 on Scene on top of its Reacher reliability. Random-policy floor (52.0%) added
 throughout.
+
+
+## 2026-11-07 — E6 worker setup deadline regression
+
+### Intent
+
+Check whether the persisted E6 deadline bounds local setup as well as evaluation.
+The previous timer started after checkpoint hashing and metadata collection.
+
+### Commands
+
+#### Diagnostics
+
+```bash
+python -m pytest tests/test_e6_worker_deadline.py -q
+python -m py_compile experiments/e6/runner.py tests/test_e6_worker_deadline.py tests/test_e6_evaluation.py
+git diff --check
+```
+
+### Artifacts
+
+- Regressions: `tests/test_e6_worker_deadline.py`; two existing worker tests moved from `test_e6_evaluation.py` so the worker checks run without simulator/ML dependencies.
+- CPU fixtures only: a blocked checkpoint FIFO, sleeping metadata commands and descendants, and a stub evaluator. No training, inference, simulator or GPU job.
+
+### Result
+
+Before the fix, all three setup-stall regressions exceeded their independent four-second safety timeout; the normal-success check passed. After the fix, all eight worker checks pass: setup deadlines, normal completion, expired start, evaluator termination, and timer constructor/start failure cleanup. Tested on macOS with Python 3.14.2. Independent source review identified two cleanup gaps in the initial patch; both were corrected and covered before handoff.
+
+### Decision
+
+Keep for execution-owner review. Local setup and evaluation now share a deadline-protected process group, while the evaluation command, result record and frozen protocol remain unchanged. Modal startup, volume reload/commit and provider teardown are outside this local boundary. The broader simulator-dependent E6 suite was not run on this host; no claim of live deployment or remote timeout testing. Existing attempts and accepted cells remain untouched.

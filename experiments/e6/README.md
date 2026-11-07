@@ -47,9 +47,13 @@ its original deadline. A separate invocation cannot take over that directory.
 A dispatch intent without a saved call ID is ambiguous: the supervisor fails
 closed for manual reconciliation instead of spawning another job.
 Every worker also receives the persisted deadline. It rejects late starts and
-terminates its evaluator process group at that deadline, even if the supervisor
-loses its dispatch receipt. The shutdown allowance covers worker startup and
-teardown; the process timer does not measure provider billing overhead.
+encloses checkpoint/source hashing, metadata commands and evaluation in one
+deadline-protected process group. On expiry it kills that group, including
+setup-tool and evaluator descendants, and reaps the direct worker process even
+if the supervisor loses its dispatch receipt. Local success records and the
+evaluation command are unchanged. Modal startup, volume reload/commit and
+provider teardown remain outside this local guard; the shutdown allowance
+does not turn it into a measurement or hard bound of provider billing overhead.
 
 Modal provides bounded capacity when local GPUs are occupied. A failed or
 budget-blocked run retains its completed cells; inspect them before planning
