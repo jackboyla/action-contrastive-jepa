@@ -2,7 +2,7 @@
 
 ## Status
 
-As of 2026-11-07 13:57 UTC, **1/15 training runs and 1/15 evaluations** are
+As of 2026-11-07 14:08 UTC, **1/15 training runs and 1/15 evaluations** are
 complete. Batch64, temperature .10, training seed3072 achieved **68/100**
 successes on the prescribed short-goal tasks. Evaluation took 524 seconds
 and exited 0; all outcomes, task IDs and configuration checks passed.
@@ -12,12 +12,12 @@ training run (seed1) is active and has passed 1,100 updates on GPU1.
 The first training took 7,976 seconds for 137,950 updates. Its final checkpoint
 passed CPU loading and finite-weight checks. The coordinated hold ended at
 13:42 UTC; the original queue resumed without duplication. Whole-study runtime
-is provisionally 38–48 hours including coordinated resource delays, pending
-measured larger-batch throughput. A new GPU1-only hold stops the queue driver
-while the current seed1 trainer finishes (expected about16:00UTC). Another
-workload then has an exclusive30-minute slot; subsequent study jobs require
-explicit coordinator release. The completed EGL diagnostic has no remaining
-waiter, so it cannot take that slot. GPU0 studies continue.
+is provisionally 37–47 hours including the completed 1h42m resource delay,
+pending measured larger-batch throughput. The proposed second GPU1 slot was
+cancelled before it delayed training. All holds are lifted; the original
+queue is active and paper studies have GPU priority. Seed1 has passed17,400
+updates. Root disk has27GiB free after an unrelated download; study artifacts
+remain about79MiB against the6GiB budget.
 
 The first evaluation used CUDA on GPU1 but EGL graphics on GPU0. Subsequent
 evaluations explicitly select EGL device1, whose UUID matches physicalGPU1.
