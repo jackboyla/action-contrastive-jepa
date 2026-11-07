@@ -505,7 +505,7 @@ def masked_transition_forward(self, batch, stage, cfg):
       * mask z_{t+1} -> forward dynamics  (z_t, a_t) -> z_{t+1}   [the LeWM predictor]
       * mask a_t     -> inverse dynamics  (z_t, z_{t+1}) -> a_t   [anti-collapse]
 
-    There is no SIGReg / variance / covariance term. Collapse (f(o) = c) drives
+    SIGReg and other auxiliary terms are optional. Collapse (f(o) = c) drives
     the forward loss to zero but is unattractive because it makes the
     inverse-dynamics task unsolvable: a constant encoder cannot reveal which
     action produced a transition, so distinct states emerge from the requirement
