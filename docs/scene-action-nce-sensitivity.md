@@ -2,26 +2,25 @@
 
 ## Status
 
-As of 2026-11-07 13:43 UTC, **1/15 training runs and 0/15 evaluations** are
-complete. Batch64, temperature .10, seed3072 finished all ten epochs and
-137,950 updates at 12:01 UTC in 7,976 seconds (2h13m). The final checkpoint
-is 74,247,854 bytes; CPU loading and finite-weight checks pass. Saved config
-and events confirm the prescribed settings and training from scratch.
-There is no planning success result yet.
+As of 2026-11-07 13:53 UTC, **1/15 training runs and 1/15 evaluations** are
+complete. Batch64, temperature .10, training seed3072 achieved **68/100**
+successes on the prescribed short-goal tasks. Evaluation took 524 seconds
+and exited 0; all outcomes, task IDs and configuration checks passed.
+This is one seed/setting, with no grid-wide conclusion yet. The next B64
+training run (seed1) is active and has passed 1,100 updates on GPU1.
 
-The coordinator released the hold at 13:42 UTC and resumed the original queue.
-The first evaluation has started; no duplicate jobs were launched. The delay
-between first training completion and evaluation launch was about 1h42m.
-Whole-study runtime is provisionally 37–47 hours, pending measured evaluation
-and larger-batch throughput. No planning result is available yet.
+The first training took 7,976 seconds for 137,950 updates. Its final checkpoint
+passed CPU loading and finite-weight checks. The coordinated hold ended at
+13:42 UTC; the original queue resumed without duplication. Whole-study runtime
+remains provisionally 37–47 hours including the 1h42m delay, pending measured
+larger-batch throughput.
 
-Resource check found CUDA computation on GPU1 but MuJoCo EGL graphics memory
-on GPU0 in the first evaluation. Installed MuJoCo selects rendering with
-`MUJOCO_EGL_DEVICE_ID`, independently of CUDA visibility. EGL device 1's UUID
-matches physical GPU1 on this workstation. Subsequent evaluations now have
-that explicit setting; a locked render diagnostic is queued to verify actual
-process/device allocation after the current evaluation. No result rerun is
-planned solely for placement.
+The first evaluation used CUDA on GPU1 but EGL graphics on GPU0. Subsequent
+evaluations explicitly select EGL device1, whose UUID matches physicalGPU1.
+A locked render diagnostic verified PID2972400 appeared only on GPU1 with
+187MiB of graphics allocation and produced a nonzero image. No placement-only
+rerun is needed. The original evaluation saved complete results and exited0;
+its EGL cleanup warning occurred after saving and does not invalidate them.
 
 ## Frozen protocol
 
