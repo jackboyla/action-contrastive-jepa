@@ -2,20 +2,19 @@
 
 ## Status
 
-As of 2026-11-07 11:11 UTC, hybrid seed3072 is training in epoch 6,
-past 37,000 of 68,970 optimizer steps. No final checkpoint or planning result
-is available. The other two hybrid seeds, six fresh standalone baselines,
-18 planning evaluations and nine probes remain pending. The study is ongoing. Current-seed completion is estimated at 12:12–12:20 UTC;
-The earlier 36–48 hour total estimate excludes the new coordinated hold;
-completion time will be revised after release.
-The latest audit covers 1,480 finite logged training records; both losses remain
-positive. Disk space remains 43 GiB free.
+As of 2026-11-07 12:12 UTC, hybrid seed 3072 completed ten epochs and
+68,970 optimizer steps, including final validation. Its final epoch-10
+checkpoint loads on CPU and all floating tensors are finite (311 state
+tensors; 74,250,087 bytes). No planning or probe result is available.
+The other two hybrid seeds, six fresh standalone baselines, 18 planning
+evaluations and nine probes remain pending.
 
-A coordinated resource hold now prevents the queues from launching further
-jobs. The current trainer continues to completion; another workload then has
-both GPUs for approximately three hours. Queues resume only after explicit
-coordination release. This is an intentional scheduling pause, not a failed
-experiment; the total ETA will be revised after release.
+The first run took about 2 hours 10 minutes after acquiring GPU0.
+A coordinated resource hold keeps the queues stopped while another workload
+uses both GPUs for approximately three hours. Queues resume only after
+explicit coordination release. This is an intentional scheduling pause,
+not an experiment failure. The earlier 36–48 hour total estimate excludes
+this hold and will be revised after release.
 
 The masked-transition implementation already adds SIGReg when its weight
 is positive. The new config inherits Action-NCE and sets SIGReg to 0.09.
