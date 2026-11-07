@@ -4,7 +4,9 @@ import json
 import os
 from pathlib import Path
 import platform
+import signal
 import subprocess
+import threading
 import time
 
 PROTOCOL = Path(__file__).with_name('protocol.json')
@@ -45,7 +47,9 @@ def verify_assets(cache):
     return dict(assets)
 
 
-def run_job(job, cache, output):
+def run_job(job, cache, output, deadline_unix):
+    if time.time() >= deadline_unix:
+        raise TimeoutError('E6 attempt deadline expired before evaluation')
     output.mkdir(parents=True, exist_ok=False)
     checkpoint = job['checkpoint']
     if checkpoint and sha256(cache / checkpoint) != job['sha256']:
@@ -76,17 +80,44 @@ def run_job(job, cache, output):
         (output / name).write_text(result.stdout)
     (output / 'runtime.json').write_text(json.dumps(record, indent=2) + '\n')
     print('E6 EVALUATING', job['name'], command, flush=True)
+    if time.time() >= deadline_unix:
+        raise TimeoutError('E6 attempt deadline expired during setup')
     # The child shares stdout with Modal; retain an independent raw log as well.
     with (output / 'eval.log').open('w') as log:
         process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
-                                   text=True, env={**os.environ, 'PYTHONUNBUFFERED': '1'})
-        for line in process.stdout:
-            print(line, end='', flush=True)
-            log.write(line)
-            log.flush()
-        record['returncode'] = process.wait()
+                                   text=True, start_new_session=True,
+                                   env={**os.environ, 'PYTHONUNBUFFERED': '1'})
+        expired = threading.Event()
+
+        def stop_evaluator():
+            try:
+                os.killpg(process.pid, signal.SIGKILL)
+            except ProcessLookupError:
+                pass
+
+        def expire():
+            expired.set()
+            stop_evaluator()
+
+        timer = threading.Timer(max(0, deadline_unix - time.time()), expire)
+        timer.daemon = True
+        timer.start()
+        try:
+            for line in process.stdout:
+                print(line, end='', flush=True)
+                log.write(line)
+                log.flush()
+            record['returncode'] = process.wait()
+        except BaseException:
+            stop_evaluator()
+            process.wait()
+            raise
+        finally:
+            timer.cancel()
     record['elapsed_seconds'] = time.time() - record['started_unix']
     (output / 'runtime.json').write_text(json.dumps(record, indent=2) + '\n')
+    if expired.is_set():
+        raise TimeoutError('E6 attempt deadline terminated the evaluator process group')
     if record['returncode']:
         raise RuntimeError(f"{job['name']} exited {record['returncode']}")
     result = json.loads((output / 'tasks.json').read_text())

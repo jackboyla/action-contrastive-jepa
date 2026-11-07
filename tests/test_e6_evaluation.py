@@ -1,6 +1,9 @@
 import ast
 import json
+import os
 from pathlib import Path
+import sys
+import time
 from types import SimpleNamespace
 
 import gymnasium as gym
@@ -81,7 +84,8 @@ def test_dataset_metadata_names_the_goal_rows_loaded_from_hdf5(dataset_evaluatio
     assert metadata["metrics"]["episode_successes"] == [True] * cfg.eval.num_eval
 
 
-def test_supervisor_projection_excludes_provider_queue_delay(tmp_path, monkeypatch):
+@pytest.mark.parametrize("interruption", [None, "completed_cell", "ambiguous_dispatch", "pilot_budget"])
+def test_supervisor_projection_and_restart_receipts(tmp_path, monkeypatch, interruption):
     # Execute the shipped body without importing Modal decorators or contacting its service.
     module = ast.parse((ROOT / "modal_app.py").read_text())
     function = next(node for node in module.body
@@ -89,7 +93,10 @@ def test_supervisor_projection_excludes_provider_queue_delay(tmp_path, monkeypat
     function.decorator_list = []
     code = compile(ast.fix_missing_locations(ast.Module(body=[function], type_ignores=[])),
                    str(ROOT / "modal_app.py"), "exec")
-    now, calls = [0.], []
+    now, calls, interrupted = [0.], [], [False]
+
+    class Preempted(BaseException):
+        pass
 
     class Call:
         def __init__(self, job):
@@ -97,31 +104,107 @@ def test_supervisor_projection_excludes_provider_queue_delay(tmp_path, monkeypat
             self.object_id = job["name"]
 
         def get(self, timeout):
+            if interruption == "completed_cell" and self is calls[1] and not interrupted[0]:
+                interrupted[0] = True
+                raise Preempted()
             if self is calls[0]:
                 now[0] += 1500  # Provider delay, before either GPU starts working.
-            now[0] += 10
-            return {"job": self.job, "elapsed_seconds": 10}
+            elapsed = 3600 if interruption == "pilot_budget" else 10
+            now[0] += elapsed
+            return {"job": self.job, "elapsed_seconds": elapsed}
 
         def cancel(self, **kwargs):
             pytest.fail("Successful jobs should not be cancelled")
 
-    def spawn(job):
+    def spawn(job, attempt, deadline_unix):
+        saved = json.loads((tmp_path / "evaluations/test-attempt/status.json").read_text())
+        assert deadline_unix == saved['deadline_unix']
         call = Call(job)
         calls.append(call)
+        if interruption == "ambiguous_dispatch" and not interrupted[0]:
+            interrupted[0] = True
+            raise Preempted()
         return call
+
+    def commit():
+        status = json.loads((tmp_path / "evaluations/test-attempt/status.json").read_text())
+        if interruption == "pilot_budget" and len(status['completed']) == 2 and not interrupted[0]:
+            interrupted[0] = True
+            raise Preempted()
 
     monkeypatch.setattr(runner, "verify_assets", lambda cache: {})
     namespace = {
         "STABLEWM_HOME": tmp_path, "REPO_DIR": ROOT,
-        "time": SimpleNamespace(monotonic=lambda: now[0]),
-        "volume": SimpleNamespace(reload=lambda: None, commit=lambda: None),
+        "time": SimpleNamespace(time=lambda: now[0]),
+        "modal": SimpleNamespace(current_function_call_id=lambda: "supervisor-1",
+                                 FunctionCall=SimpleNamespace(from_id=lambda ident: next(
+                                     call for call in calls if call.object_id == ident))),
+        "volume": SimpleNamespace(reload=lambda: None, commit=commit),
         "subprocess": SimpleNamespace(run=lambda *args, **kwargs: None),
         "run_e6_job": SimpleNamespace(spawn=spawn),
     }
     exec(code, namespace)
-    status = namespace["run_e6_supervisor"]()
+    run = namespace["run_e6_supervisor"]
+    if interruption:
+        with pytest.raises(Preempted):
+            run("test-attempt", prior_gpu_seconds=600)
+        before = json.loads((tmp_path / "evaluations/test-attempt/status.json").read_text())
+    status = run("test-attempt", prior_gpu_seconds=600)
+    if interruption:
+        assert status['deadline_unix'] == before['deadline_unix']
+    if interruption == "ambiguous_dispatch":
+        assert status['state'] == 'failed'
+        assert len(calls) == 1
+        assert 'Ambiguous dispatch' in status['failures'][0]['error']
+        return
+    if interruption == "pilot_budget":
+        assert status['state'] == 'budget_blocked'
+        assert len(calls) == 2
+        assert len(status['completed']) == 2
+        assert status['projected_gpu_seconds'] > 12 * 3600
+        return
     assert status["state"] == "complete"
     assert [call.job for call in calls] == runner.jobs()
     assert len(status["completed"]) == 28
-    assert status["spent_gpu_seconds"] == 280
-    assert status["projected_gpu_seconds"] == 280
+    assert status["spent_gpu_seconds"] == 880
+    assert status["projected_gpu_seconds"] == 880
+
+    assert run("test-attempt", prior_gpu_seconds=600) == status
+    assert len(calls) == 28
+    namespace['modal'].current_function_call_id = lambda: 'different-supervisor'
+    with pytest.raises(ValueError, match='another call'):
+        run("test-attempt", prior_gpu_seconds=600)
+
+
+def test_worker_rejects_expired_deadline_before_spawning(tmp_path, monkeypatch):
+    def unexpected_spawn(*args, **kwargs):
+        pytest.fail('An expired worker must not launch an evaluator')
+
+    monkeypatch.setattr(runner.subprocess, 'Popen', unexpected_spawn)
+    with pytest.raises(TimeoutError):
+        runner.run_job(runner.jobs()[-1], tmp_path, tmp_path / 'expired',
+                       deadline_unix=time.time() - 1)
+
+
+def test_worker_deadline_stops_real_evaluator_subprocess(tmp_path, monkeypatch):
+    # Use a CPU sleep instead of a simulator; exercise actual process launch and deadline cleanup.
+    (tmp_path / 'eval.py').write_text("import time\nprint('evaluator started', flush=True)\ntime.sleep(60)\n")
+    monkeypatch.chdir(tmp_path)
+    monkeypatch.setenv('PATH', str(Path(sys.executable).parent) + os.pathsep + os.environ['PATH'])
+    monkeypatch.setattr(runner.subprocess, 'run', lambda *args, **kwargs: SimpleNamespace(stdout=''))
+    original_popen = runner.subprocess.Popen
+    children = []
+
+    def record_spawn(*args, **kwargs):
+        child = original_popen(*args, **kwargs)
+        children.append(child)
+        return child
+
+    monkeypatch.setattr(runner.subprocess, 'Popen', record_spawn)
+    started = time.monotonic()
+    with pytest.raises((RuntimeError, TimeoutError)):
+        runner.run_job(runner.jobs()[-1], tmp_path, tmp_path / 'bounded',
+                       deadline_unix=time.time() + 1)
+    assert time.monotonic() - started < 10
+    assert len(children) == 1 and children[0].poll() is not None
+    assert 'evaluator started' in (tmp_path / 'bounded/eval.log').read_text()

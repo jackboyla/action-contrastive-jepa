@@ -1614,76 +1614,122 @@ def upload(local_path: str, remote_path: str = "/") -> None:
 
 @app.function(cpu=CPU_COUNT, memory=MEMORY_MB, timeout=7 * 3600, retries=0,
               volumes={str(STABLEWM_HOME): volume})
-def run_e6_supervisor() -> dict:
-    """Verify frozen assets, then run two evaluations at a time within 12 GPU-hours."""
+def run_e6_supervisor(attempt: str, prior_gpu_seconds: float = 0) -> dict:
+    """Resume this supervisor's recorded calls without extending its budget."""
     import json
+    import re
     from experiments.e6.runner import jobs, verify_assets, sha256, PROTOCOL
 
+    if not re.fullmatch(r"[a-zA-Z0-9_-]+", attempt):
+        raise ValueError('Use a single directory name for the attempt')
+    if not 0 <= prior_gpu_seconds < 12 * 3600 - 240:
+        raise ValueError('Prior allocated GPU time must leave shutdown allowance')
     volume.reload()
-    output = STABLEWM_HOME / 'evaluations/e6-short-v1'
-    output.mkdir(parents=True, exist_ok=False)
-    status = {'state': 'preflight', 'protocol_sha256': sha256(PROTOCOL), 'calls': [],
-              'completed': [], 'failures': []}
+    output = STABLEWM_HOME / 'evaluations' / attempt
+    owner = modal.current_function_call_id()
+    if output.exists():
+        status = json.loads((output / 'status.json').read_text())
+        if (status['owner_call_id'] != owner
+                or status['protocol_sha256'] != sha256(PROTOCOL)
+                or status['prior_gpu_seconds'] != prior_gpu_seconds):
+            raise ValueError('Attempt belongs to another call or protocol; reconcile before relaunch')
+    else:
+        output.mkdir(parents=True, exist_ok=False)
+        status = {'state': 'preflight', 'protocol_sha256': sha256(PROTOCOL),
+                  'owner_call_id': owner, 'prior_gpu_seconds': prior_gpu_seconds,
+                  'calls': [], 'completed': [], 'failures': []}
 
     def save():
-        (output / 'status.json').write_text(json.dumps(status, indent=2) + '\n')
+        path = output / 'status.json'
+        temporary = path.with_suffix('.tmp')
+        temporary.write_text(json.dumps(status, indent=2) + '\n')
+        temporary.replace(path)
         volume.commit()
 
+    def cancel_unfinished():
+        completed = {record['job']['name'] for record in status['completed']}
+        for receipt in status['calls']:
+            if receipt['call_id'] and receipt['job'] not in completed:
+                modal.FunctionCall.from_id(receipt['call_id']).cancel(terminate_containers=True)
+
+    if status['state'] in {'complete', 'failed', 'preflight_failed', 'budget_blocked'}:
+        cancel_unfinished()
+        return status
     save()
-    try:
-        status['assets'] = verify_assets(STABLEWM_HOME)
-        # Imports are checked without allocating a GPU. EGL is checked by the first job.
-        subprocess.run(['python', '-c', 'import eval'], cwd=REPO_DIR, check=True)
-    except Exception as error:
-        status.update(state='preflight_failed', error=repr(error))
+    if status['state'] == 'preflight':
+        try:
+            status['assets'] = verify_assets(STABLEWM_HOME)
+            subprocess.run(['python', '-c', 'import eval'], cwd=REPO_DIR, check=True)
+        except Exception as error:
+            status.update(state='preflight_failed', error=repr(error))
+            save()
+            raise
+        # Persist wall time so preemption cannot reset the allocation bound.
+        status['deadline_unix'] = time.time() + (12 * 3600 - prior_gpu_seconds) / 2 - 120
+        status['state'] = 'running'
         save()
-        raise
-    save()
     pending = jobs()
-    # Six wall-clock hours at <=2 L4 includes queue and idle time conservatively.
-    # Reserve two minutes for container shutdown at the five-second idle timeout.
-    deadline = time.monotonic() + 6 * 3600 - 120
-    status['state'] = 'running'
+    deadline = status['deadline_unix']
     for start in range(0, len(pending), 2):
+        # Reapply the pilot gate from durable results before dispatch, including
+        # after a restart between committing a completion and checking its cost.
+        elapsed = [record['elapsed_seconds'] for record in status['completed']]
+        spent = prior_gpu_seconds + sum(elapsed)
+        remaining = len(pending) - len(elapsed)
+        projected = spent + (max(elapsed) * remaining * 1.15 if elapsed else 0)
+        status['spent_gpu_seconds'] = spent
+        status['projected_gpu_seconds'] = projected
+        if projected > 12 * 3600 or time.time() >= deadline:
+            status['state'] = 'budget_blocked'
+            save()
+            cancel_unfinished()
+            break
+        completed_names = {record['job']['name'] for record in status['completed']}
+        wave = [job for job in pending[start:start + 2] if job['name'] not in completed_names]
+        if not wave:
+            continue
         calls = []
         try:
-            for job in pending[start:start + 2]:
-                call = run_e6_job.spawn(job=job)
+            for job in wave:
+                receipt = next((x for x in status['calls'] if x['job'] == job['name']), None)
+                if receipt is not None:
+                    if not receipt['call_id']:
+                        raise RuntimeError(f"Ambiguous dispatch for {job['name']}; reconcile manually")
+                    call = modal.FunctionCall.from_id(receipt['call_id'])
+                else:
+                    if time.time() >= deadline:
+                        status['state'] = 'budget_blocked'
+                        break
+                    # A crash between dispatch and receipt must never silently duplicate work.
+                    receipt = {'job': job['name'], 'call_id': None}
+                    status['calls'].append(receipt)
+                    save()
+                    call = run_e6_job.spawn(job=job, attempt=attempt, deadline_unix=deadline)
+                    receipt['call_id'] = call.object_id
+                    save()
                 calls.append((job, call))
-                status['calls'].append({'job': job['name'], 'call_id': call.object_id})
                 print('E6 CALL', job['name'], call.object_id, flush=True)
-            save()
             for job, call in calls:
-                try:
-                    record = call.get(timeout=max(0, deadline - time.monotonic()))
-                    status['completed'].append(record)
-                except Exception as error:
-                    status['failures'].append({'job': job['name'], 'error': repr(error)})
-                    status['state'] = 'failed'
-            save()
+                record = call.get(timeout=max(0, deadline - time.time()))
+                status['completed'].append(record)
+                save()
         except Exception as error:
             status['failures'].append({'wave_start': start, 'error': repr(error)})
             status['state'] = 'failed'
             save()
         finally:
-            if status['state'] == 'failed' or time.monotonic() >= deadline:
-                for _, call in calls:
-                    call.cancel(terminate_containers=True)
-        if status['state'] == 'failed':
+            if status['state'] in {'failed', 'budget_blocked'} or time.time() >= deadline:
+                cancel_unfinished()
+        if status['state'] in {'failed', 'budget_blocked'}:
             break
-        # Worker runtimes exclude provider queue delays. Recheck every wave;
-        # the wall deadline separately bounds total allocation at concurrency two.
         elapsed = [record['elapsed_seconds'] for record in status['completed']]
-        spent = sum(elapsed)
+        spent = prior_gpu_seconds + sum(elapsed)
         remaining = len(pending) - len(elapsed)
         projected = spent + max(elapsed) * remaining * 1.15
         status['spent_gpu_seconds'] = spent
         status['projected_gpu_seconds'] = projected
         print('E6 PROJECTED GPU HOURS', projected / 3600, flush=True)
-        if projected > 12 * 3600:
-            status['state'] = 'budget_blocked'
-            break
-        if time.monotonic() >= deadline:
+        if projected > 12 * 3600 or time.time() >= deadline:
             status['state'] = 'budget_blocked'
             break
     else:
@@ -1695,20 +1741,22 @@ def run_e6_supervisor() -> dict:
 @app.function(gpu='L4', cpu=CPU_COUNT, memory=MEMORY_MB, timeout=7200, retries=0,
               max_containers=2, scaledown_window=5,
               volumes={str(STABLEWM_HOME): volume})
-def run_e6_job(job: dict) -> dict:
+def run_e6_job(job: dict, attempt: str, deadline_unix: float) -> dict:
     from experiments.e6.runner import run_job
 
+    if time.time() >= deadline_unix:
+        raise TimeoutError('E6 attempt deadline expired before worker start')
     volume.reload()
     os.environ['OMP_NUM_THREADS'] = '2'
     os.environ['OPENBLAS_NUM_THREADS'] = '2'
     try:
         return run_job(job, STABLEWM_HOME,
-                       STABLEWM_HOME / 'evaluations/e6-short-v1' / job['name'])
+                       STABLEWM_HOME / 'evaluations' / attempt / job['name'], deadline_unix)
     finally:
         volume.commit()
 
 
 @app.local_entrypoint()
-def e6() -> None:
-    """Launch the frozen original-checkpoint short-goal sweep; no automatic retries."""
-    run_e6_supervisor.remote()
+def e6(attempt: str, prior_gpu_seconds: float = 0) -> None:
+    """Launch a new attempt only after reconciling previous calls and GPU usage."""
+    run_e6_supervisor.remote(attempt=attempt, prior_gpu_seconds=prior_gpu_seconds)
