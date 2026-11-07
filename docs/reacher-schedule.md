@@ -32,10 +32,19 @@ for each seed 3072, 1, 2. Print it before launching:
 python scripts/reacher_schedule.py --results progress/evaluations/e1
 ```
 
-Record these commands, resolved Hydra configs, code/runtime versions and dataset
-identity before training. Keep `STABLEWM_HOME` and all environment settings fixed
-across runs. Validate the dataset-derived optimizer-step count and freeze the
-200 task identities before evaluating any model. Retain final checkpoint hashes,
+Before training, freeze the commands, resolved configs, source/package versions,
+dataset hash, optimizer-step counts and 200 task identities:
+
+```bash
+python scripts/prepare_reacher_schedule.py --results progress/evaluations/e1 \
+  --cache "$STABLEWM_HOME" --manifest progress/e1-manifest.json \
+  --data-audit progress/evaluations/e1/data-audit.json
+```
+
+Preparation reads the dataset once for its SHA256 and refuses existing output
+files or run directories. Set the training environment before preparation and
+keep `STABLEWM_HOME` and all environment settings fixed across runs. Run the
+printed commands from the repository root. Retain final checkpoint hashes,
 resolved configs, events, raw evaluation files, exit statuses and runtime logs.
 The audit rejects incomplete runs, changed configs, duplicate appended results,
 wrong step counts or unequal task identities:
