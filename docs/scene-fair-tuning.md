@@ -44,23 +44,21 @@ screening epochs and sixty confirmation epochs, plus 18 evaluations.
 
 ## Status and verified evidence
 
-As of November 7, 2026, 10:55 UTC:
+As of November 7, 2026, 13:43 UTC:
 
 - SIGReg coefficient 0.09, seed 3072 completed its one-epoch screen: 6,897
   updates in 12 minutes 31 seconds, exit 0. Configuration, finite recorded
   metrics, and the sole epoch-1 object checkpoint passed the local audit.
-- The queue and pending validation lock waiter are intentionally paused for
-  a coordinated resource reservation. Current trainers finish untouched, then
-  the challenge study uses both GPUs for about three hours (expected to start
-  around 12:15 UTC). Resume requires an explicit release from the coordinator;
-  this pause is not an experiment failure. No validation scores or selected
-  coefficients are available.
+- The coordinator released the resource hold at 13:42 UTC and resumed the
+  original queue and lock waiter. The first validation process is now active
+  on GPU0; simulator initialization is logged. No completed validation score
+  or selected coefficient is available yet. No driver was restarted.
 - Five screen trainings, six confirmation trainings, and all 18 evaluations
   remain. No failures have been observed so far.
 - Local study artifacts occupy about 69 MiB. Root disk has 43 GiB free.
   Provisional completion is November 8–9 morning UTC, including uncertain
-  evaluation time and shared-GPU waits, now including the additional three-hour
-  reservation. Timing will be revised after explicit release; this is not a deadline.
+  evaluation time and shared-GPU waits. The resource reservation ended early;
+  timing will be revised after the first evaluation completes. This is not a deadline.
 
 The goal audit reproduces `eval.py`'s seeded row selection. Validation versus
 each final protocol shares zero exact start rows and zero exact goal rows,
