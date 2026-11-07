@@ -2,22 +2,22 @@
 
 ## Status
 
-As of 2026-11-07 12:19 UTC, **1/15 training runs and 0/15 evaluations** are
+As of 2026-11-07 13:43 UTC, **1/15 training runs and 0/15 evaluations** are
 complete. Batch64, temperature .10, seed3072 finished all ten epochs and
 137,950 updates at 12:01 UTC in 7,976 seconds (2h13m). The final checkpoint
 is 74,247,854 bytes; CPU loading and finite-weight checks pass. Saved config
 and events confirm the prescribed settings and training from scratch.
 There is no planning success result yet.
 
-The queue driver remains intentionally stopped for a coordinated resource
-hold. Another workload is using both GPUs. Evaluation and further training
-wait for explicit release by the coordinator. This is not a training failure;
-do not launch a duplicate queue.
+The coordinator released the hold at 13:42 UTC and resumed the original queue.
+The first evaluation has started; no duplicate jobs were launched. The delay
+between first training completion and evaluation launch was about 1h42m.
+Whole-study runtime is provisionally 37–47 hours, pending measured evaluation
+and larger-batch throughput. No planning result is available yet.
 
-At roughly 17.3 updates/s for batch 64, the whole study is provisionally
-38–48 hours including evaluation and the expected three-hour hold.
-Larger-batch throughput, validation, lock contention, and the actual release
-time can change this estimate. No scientific result is available.
+Resource check found CUDA computation on GPU1 but MuJoCo EGL graphics memory
+on GPU0. Explicit EGL device selection needs correction for subsequent
+evaluations; the current process and other workloads have been preserved.
 
 ## Frozen protocol
 
