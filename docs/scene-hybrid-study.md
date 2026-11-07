@@ -11,9 +11,10 @@ evaluations and nine probes remain pending.
 
 The first run took about 2 hours 10 minutes after acquiring GPU0.
 The coordinated resource hold ended on November 7 at 13:42 UTC. The original
-queues resumed without restarting training. At 13:43 UTC, hybrid seed 1 is
-waiting for fair-tuning evaluation to release GPU0's lock. The follow-up
-driver remains waiting for all three hybrid seeds.
+queues resumed without restarting training. At 13:51 UTC, hybrid seed 1 has acquired GPU0 and reached 1,900/68,970
+steps at about 9 steps/s. All 76 logged training records are finite and both
+loss terms are positive. Seed 1 should finish around 16:00–16:10 UTC. The
+follow-up driver remains waiting for all three hybrid seeds.
 
 Eight training runs remain (roughly 17–18 GPU-hours at measured throughput),
 followed by planning and probes (roughly 6–8 hours based on prior runs).
