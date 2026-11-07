@@ -10,11 +10,15 @@ The other two hybrid seeds, six fresh standalone baselines, 18 planning
 evaluations and nine probes remain pending.
 
 The first run took about 2 hours 10 minutes after acquiring GPU0.
-A coordinated resource hold keeps the queues stopped while another workload
-uses both GPUs for approximately three hours. Queues resume only after
-explicit coordination release. This is an intentional scheduling pause,
-not an experiment failure. The earlier 36–48 hour total estimate excludes
-this hold and will be revised after release.
+The coordinated resource hold ended on November 7 at 13:42 UTC. The original
+queues resumed without restarting training. At 13:43 UTC, hybrid seed 1 is
+waiting for fair-tuning evaluation to release GPU0's lock. The follow-up
+driver remains waiting for all three hybrid seeds.
+
+Eight training runs remain (roughly 17–18 GPU-hours at measured throughput),
+followed by planning and probes (roughly 6–8 hours based on prior runs).
+Allow approximately 32–44 hours from release including shared-GPU waits;
+this estimate depends on the other study's job durations.
 
 The masked-transition implementation already adds SIGReg when its weight
 is positive. The new config inherits Action-NCE and sets SIGReg to 0.09.
