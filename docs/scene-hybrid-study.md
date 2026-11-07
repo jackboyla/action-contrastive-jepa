@@ -39,7 +39,9 @@ consumer logic. Active hybrid training and the original three-seed driver
 were untouched. The replacement removes all local NCE training launches.
 Its gate passed CPU fixture checks for absent/incomplete evidence and
 seed/update/hash/config/environment mismatches. No real NCE artifact has
-passed the gate yet.
+passed the gate yet. At 16:35 UTC, all three predeclared launch snapshots
+passed consumer config and provenance validation; completion evidence
+remains pending for every seed.
 
 This avoids three duplicate training runs: about6.5GPU-hours at observed
 throughput and about223MB of final checkpoints. Remaining wall time is
