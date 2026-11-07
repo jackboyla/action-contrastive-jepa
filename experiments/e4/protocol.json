@@ -1,5 +1,6 @@
 {
-  "version": 1,
+  "version": 2,
+  "loader_workers": 8,
   "seeds": [
     3072,
     1,

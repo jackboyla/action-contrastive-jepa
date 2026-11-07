@@ -1789,24 +1789,27 @@ def e6(attempt: str, prior_gpu_seconds: float = 0, resume_from: str = "") -> Non
 
 @app.function(cpu=CPU_COUNT, memory=MEMORY_MB, timeout=86400, retries=0,
               max_containers=1, volumes={str(STABLEWM_HOME): volume})
-def run_e4_supervisor(attempt: str) -> dict:
+def run_e4_supervisor(attempt: str, prior_gpu_seconds: float = 0) -> dict:
     """Bound six fresh trainings by persisted receipts, a pair gate and a deadline."""
     import json
     import re
     from experiments.e4.runner import P, PROTOCOL, jobs, preflight, sha256, check_pair, project
     if not re.fullmatch(r'[a-zA-Z0-9_-]+', attempt):
         raise ValueError('Invalid attempt name')
+    if not 0 <= prior_gpu_seconds < P['gpu_seconds_cap'] - P['max_workers'] * P['shutdown_reserve_seconds']:
+        raise ValueError('Prior GPU time must leave a bounded worker shutdown interval')
     volume.reload()
     output = STABLEWM_HOME / 'e4' / attempt
     owner = modal.current_function_call_id()
     if output.exists():
         status = json.loads((output/'status.json').read_text())
-        if status['owner_call_id'] != owner or status['protocol_sha256'] != sha256(PROTOCOL):
-            raise RuntimeError('Another call/protocol owns this attempt; reconcile, never redispatch')
+        if (status['owner_call_id'] != owner or status['protocol_sha256'] != sha256(PROTOCOL)
+                or status['prior_gpu_seconds'] != prior_gpu_seconds):
+            raise RuntimeError('Another call/protocol/reserve owns this attempt; reconcile, never redispatch')
     else:
         output.mkdir(parents=True, exist_ok=False)
         status = dict(state='preflight', owner_call_id=owner, protocol_sha256=sha256(PROTOCOL),
-                      calls=[], completed=[], failures=[])
+                      prior_gpu_seconds=prior_gpu_seconds, calls=[], completed=[], failures=[])
     def save():
         path = output/'status.json'
         temp = path.with_suffix('.tmp')
@@ -1829,11 +1832,13 @@ def run_e4_supervisor(attempt: str) -> dict:
         except Exception as error:
             status.update(state='preflight_failed',error=repr(error)); save()
             raise
-        status.update(state='running',deadline_unix=time.time()+P['wall_seconds']-600)
+        wall_seconds = min(P['wall_seconds'],
+                           (P['gpu_seconds_cap'] - prior_gpu_seconds) / P['max_workers'])
+        status.update(state='running', deadline_unix=time.time()+wall_seconds-P['shutdown_reserve_seconds'])
         save()
     deadline = status['deadline_unix']
     for start in range(0,6,2):
-        if time.time()>=deadline or project(status['completed'])>P['gpu_seconds_cap']:
+        if time.time()>=deadline or project(status['completed'],prior_gpu_seconds)>P['gpu_seconds_cap']:
             status['state']='budget_blocked'; save(); cancel(); break
         pair = jobs()[start:start+2]
         try:
@@ -1864,8 +1869,8 @@ def run_e4_supervisor(attempt: str) -> dict:
                 for k in ('source_sha256','runtime_source_sha256','packages_sha256','gpu_name'):
                     assert r[k]==ref[k], f'Unmatched study runtime: {k}'
                 assert r['evaluation']['tasks']==ref['evaluation']['tasks']
-            status['spent_gpu_seconds']=sum(r['elapsed_seconds'] for r in status['completed'])
-            status['projected_gpu_seconds']=project(status['completed'])
+            status['spent_gpu_seconds']=prior_gpu_seconds+sum(r['elapsed_seconds'] for r in status['completed'])
+            status['projected_gpu_seconds']=project(status['completed'],prior_gpu_seconds)
             print('E4 PAIR COMPLETE / PROJECTED GPU HOURS',start//2,
                   status['projected_gpu_seconds']/3600,flush=True)
             save()
@@ -1895,5 +1900,5 @@ def run_e4_job(job: dict, attempt: str, deadline_unix: float) -> dict:
 
 
 @app.local_entrypoint()
-def e4(attempt: str) -> None:
-    run_e4_supervisor.remote(attempt=attempt)
+def e4(attempt: str, prior_gpu_seconds: float = 0) -> None:
+    run_e4_supervisor.remote(attempt=attempt, prior_gpu_seconds=prior_gpu_seconds)

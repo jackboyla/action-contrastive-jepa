@@ -20,11 +20,13 @@ def test_frozen_pairs_differ_only_by_variance_and_paths(tmp_path):
         assert c['trainer']['max_epochs']==10 and c['runtime']['stop_after_epoch'] is None
         assert c['resume']['mode']=='never' and c['loss']['sigreg']['weight']==0
         assert c['loss']['masked']['inverse_weight']==1
+        assert c['loader']['num_workers']==8 and c['loader']['prefetch_factor']==2
         c.pop('subdir'); c['runtime'].pop('audit_path'); c['wandb']['config'].pop('id')
         c['loss']['variance_reg'].pop('weight'); configs.append(c)
     for i in range(0,6,2):
         assert configs[i]==configs[i+1]
     assert runner.project([dict(elapsed_seconds=36000)]*2)>runner.P['gpu_seconds_cap']
+    assert runner.project([dict(elapsed_seconds=100)]*6,733)==1933
 
 
 def test_audit_runs_in_real_manual_optimization_and_catches_bad_gradient(tmp_path):
@@ -51,7 +53,7 @@ def test_audit_runs_in_real_manual_optimization_and_catches_bad_gradient(tmp_pat
         model.after_manual_backward()
 
 
-@pytest.mark.parametrize('interruption',[None,'completion','dispatch','budget'])
+@pytest.mark.parametrize('interruption',[None,'completion','dispatch','budget','prior_budget'])
 def test_supervisor_retains_receipts_and_gate_after_preemption(tmp_path,monkeypatch,interruption):
     import ast
     import time
@@ -73,7 +75,8 @@ def test_supervisor_retains_receipts_and_gate_after_preemption(tmp_path,monkeypa
         def get(self,timeout):
             if interruption=='completion' and self is calls[1] and not interrupted[0]:
                 interrupted[0]=True; raise Preempted()
-            return dict(job=self.job,elapsed_seconds=36000 if interruption=='budget' else 100,
+            elapsed = 36000 if interruption=='budget' else 220 if interruption=='prior_budget' else 100
+            return dict(job=self.job,elapsed_seconds=elapsed,
                         source_sha256={},runtime_source_sha256={},packages_sha256='same',gpu_name='same',
                         training={'initialization':{}},evaluation={'tasks':{}})
         def cancel(self,**kwargs):
@@ -101,16 +104,21 @@ def test_supervisor_retains_receipts_and_gate_after_preemption(tmp_path,monkeypa
                    run_e4_job=SimpleNamespace(spawn=spawn))
     exec(compile(ast.fix_missing_locations(ast.Module(body=[fn],type_ignores=[])),'modal_app.py','exec'),namespace)
     run=namespace['run_e4_supervisor']
-    if interruption:
-        with pytest.raises(Preempted):run('test')
-    status=run('test')
+    prior = runner.P['gpu_seconds_cap']-2000 if interruption=='prior_budget' else 733
+    if interruption in {'completion','dispatch','budget'}:
+        with pytest.raises(Preempted):run('test',prior)
+    status=run('test',prior)
+    assert status['prior_gpu_seconds']==prior
+    with pytest.raises(RuntimeError,match='reserve'):
+        run('test',prior-1)
     if interruption=='dispatch':
         assert status['state']=='failed' and len(calls)==1
-    elif interruption=='budget':
+    elif interruption in {'budget','prior_budget'}:
         assert status['state']=='budget_blocked' and len(calls)==2
     else:
         assert status['state']=='complete' and len(calls)==6 and len(status['completed'])==6
-        assert run('test')==status and len(calls)==6
+        assert status['spent_gpu_seconds']==prior+600
+        assert run('test',prior)==status and len(calls)==6
 
 
 def test_worker_deadline_and_existing_output_fail_closed(tmp_path,monkeypatch):

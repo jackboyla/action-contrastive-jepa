@@ -4,8 +4,9 @@ Six fresh trainings pair seeds 3072, 1 and 2: inverse MSE weight 1 versus the
 same model plus `VarianceReg(weight=0.05, gamma=0.1)`. Both have SIGReg weight
 zero, batch size 128, AdamW at 5e-5 and weight decay 1e-3, bf16 mixed precision,
 and a **10-epoch scheduler horizon**. Each completes 127,960 optimizer steps.
-The first seed pair counts toward the six; there is no pilot discard, search,
-checkpoint selection, historical baseline reuse, or E1 control substitution.
+The first seed pair counts toward the six; there is no score-based pilot discard,
+search, checkpoint selection, historical baseline reuse, or E1 control substitution.
+Interrupted attempts remain reported failures; replacement requires reconciliation.
 
 Both arms use `lewm_masked`; only the variance weight and output paths differ
 within each seed. The loss is forward MSE + inverse MSE + weight ×
@@ -16,6 +17,8 @@ not rescale the other losses. The existing runtime preprocessing, split,
 optimizer, scheduler, initialization and loader seed conventions remain shared.
 Initial model tensors, split indices, loader RNG and Torch RNG are hashed before
 training. Actual initialization hashes must match within each pair.
+Both arms use eight loader workers with prefetch factor two within the same
+eight-CPU, 32 GiB worker allocation. Runtime feasibility still requires measurement.
 
 Evaluate only the explicitly named `lewm_masked_epoch_10` checkpoint stem,
 using evaluation seed 42, the 200 frozen start rows in `protocol.json`, batches
@@ -45,7 +48,7 @@ When local GPUs are occupied, launch in a local tmux session with the canonical
 Modal detach pattern:
 
 ```bash
-nohup .venv/bin/modal run --detach modal_app.py::e4 --attempt e4-v1 > /tmp/e4-v1.log 2>&1 &
+nohup .venv/bin/modal run --detach modal_app.py::e4 --attempt e4-run --prior-gpu-seconds 0 > /tmp/e4-run.log 2>&1 &
 ```
 
 The CPU supervisor hashes `dmc/reacher_random.h5` in place on the existing
@@ -68,6 +71,11 @@ A 24-hour wall deadline (including queue waits) and concurrency two bound even
 unreceipted execution below 60 GPU-hours. Each worker has a 10-hour provider
 limit and an earlier process deadline. No automatic retries or alternative GPUs
 are allowed. Workers periodically commit progress and commit again on exit.
+After reconciling and stopping a failed attempt, pass its cumulative allocated
+time and uncertainty through `--prior-gpu-seconds` in a new attempt. Zero is only
+valid before any E4 GPU work. This charge is persisted, included in projections,
+and deducted from the wall bound; reattachment cannot reduce it. This option
+does not cancel old calls or reuse interrupted checkpoints.
 
 After each full pair, the supervisor projects total worker time using elapsed
 worker runtimes, a 25% remaining-work margin and a 600-second startup/shutdown

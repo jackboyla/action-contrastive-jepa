@@ -24,7 +24,7 @@ def commands(job, output, cache):
     train = ['train.py', '--config-name', 'lewm_masked', 'data=reacher',
              f'seed={job["seed"]}', f'subdir={subdir}',
              'trainer.max_epochs=10', 'runtime.stop_after_epoch=null',
-             'loader.batch_size=128', 'num_workers=2', 'loader.prefetch_factor=2',
+             'loader.batch_size=128', f'num_workers={P["loader_workers"]}', 'loader.prefetch_factor=2',
              'loss.masked.inverse_weight=1.0', 'loss.sigreg.weight=0.0',
              f'+loss.variance_reg.weight={job["weight"]}', '+loss.variance_reg.gamma=0.1',
              'resume.mode=never', 'early_stopping.enabled=false',
@@ -216,7 +216,7 @@ def check_pair(records):
     assert a['evaluation']['tasks']==b['evaluation']['tasks'], 'Unmatched consumed tasks'
 
 
-def project(records):
+def project(records, prior_gpu_seconds=0):
     spent = sum(r['elapsed_seconds'] for r in records)
-    return P['shutdown_reserve_seconds'] + spent + (6-len(records))*max(
+    return prior_gpu_seconds + P['shutdown_reserve_seconds'] + spent + (6-len(records))*max(
         (r['elapsed_seconds'] for r in records), default=0)*1.25
