@@ -2,12 +2,13 @@
 
 ## Status
 
-As of 2026-11-07 10:51 UTC, hybrid seed3072 is training in epoch 4,
-past 26,550 of 68,970 optimizer steps. No final checkpoint or planning result
+As of 2026-11-07 11:11 UTC, hybrid seed3072 is training in epoch 6,
+past 37,000 of 68,970 optimizer steps. No final checkpoint or planning result
 is available. The other two hybrid seeds, six fresh standalone baselines,
 18 planning evaluations and nine probes remain pending. The study is ongoing. Current-seed completion is estimated at 12:12–12:20 UTC;
-total elapsed time remains approximately 36–48 hours with shared-GPU contention.
-The latest audit covers 1,062 finite logged training records; both losses remain
+The earlier 36–48 hour total estimate excludes the new coordinated hold;
+completion time will be revised after release.
+The latest audit covers 1,480 finite logged training records; both losses remain
 positive. Disk space remains 43 GiB free.
 
 A coordinated resource hold now prevents the queues from launching further
