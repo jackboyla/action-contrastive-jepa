@@ -27,6 +27,7 @@ def dataset_evaluation(tmp_path, monkeypatch):
         dataset["ep_idx"] = np.repeat(np.arange(2), 80)
         dataset["step_idx"] = np.tile(np.arange(80), 2)
         dataset["row_id"] = np.arange(160)
+        dataset["id"] = np.arange(160)+1000
         dataset["action"] = np.arange(320, dtype=np.float32).reshape(160, 2)
 
     with initialize_config_dir(config_dir=str(ROOT / "config/eval"), version_base=None):
@@ -79,6 +80,7 @@ def test_dataset_metadata_names_the_goal_rows_loaded_from_hdf5(dataset_evaluatio
     evaluation.run.__wrapped__(cfg)
     metadata = json.loads(Path(cfg.output.metadata_path).read_text())
     assert metadata["goal_rows"] == goal_rows
+    assert [c["id"]["goal"] for c in metadata["consumed_chunks"]] == [r+1000 for r in goal_rows]
     assert metadata["config"]["eval"]["goal_offset_steps"] == 25
     assert len(goal_rows) == cfg.eval.num_eval
     assert metadata["metrics"]["episode_successes"] == [True] * cfg.eval.num_eval

@@ -1760,3 +1760,115 @@ def run_e6_job(job: dict, attempt: str, deadline_unix: float) -> dict:
 def e6(attempt: str, prior_gpu_seconds: float = 0) -> None:
     """Launch a new attempt only after reconciling previous calls and GPU usage."""
     run_e6_supervisor.remote(attempt=attempt, prior_gpu_seconds=prior_gpu_seconds)
+
+
+@app.function(cpu=CPU_COUNT, memory=MEMORY_MB, timeout=86400, retries=0,
+              max_containers=1, volumes={str(STABLEWM_HOME): volume})
+def run_e4_supervisor(attempt: str) -> dict:
+    """Bound six fresh trainings by persisted receipts, a pair gate and a deadline."""
+    import json
+    import re
+    from experiments.e4.runner import P, PROTOCOL, jobs, preflight, sha256, check_pair, project
+    if not re.fullmatch(r'[a-zA-Z0-9_-]+', attempt):
+        raise ValueError('Invalid attempt name')
+    volume.reload()
+    output = STABLEWM_HOME / 'e4' / attempt
+    owner = modal.current_function_call_id()
+    if output.exists():
+        status = json.loads((output/'status.json').read_text())
+        if status['owner_call_id'] != owner or status['protocol_sha256'] != sha256(PROTOCOL):
+            raise RuntimeError('Another call/protocol owns this attempt; reconcile, never redispatch')
+    else:
+        output.mkdir(parents=True, exist_ok=False)
+        status = dict(state='preflight', owner_call_id=owner, protocol_sha256=sha256(PROTOCOL),
+                      calls=[], completed=[], failures=[])
+    def save():
+        path = output/'status.json'
+        temp = path.with_suffix('.tmp')
+        temp.write_text(json.dumps(status,indent=2)+'\n')
+        temp.replace(path)
+        volume.commit()
+    def cancel():
+        for receipt in status['calls']:
+            if receipt['call_id'] and receipt['job'] not in {r['job']['name'] for r in status['completed']}:
+                modal.FunctionCall.from_id(receipt['call_id']).cancel(terminate_containers=True)
+    if status['state'] in {'complete','failed','budget_blocked','preflight_failed'}:
+        cancel()
+        return status
+    save()
+    if status['state']=='preflight':
+        try:
+            frozen = preflight(STABLEWM_HOME,output)
+            (output/'frozen.json').write_text(json.dumps(frozen,indent=2)+'\n')
+            subprocess.run(['python','-c','import train, eval'],cwd=REPO_DIR,check=True)
+        except Exception as error:
+            status.update(state='preflight_failed',error=repr(error)); save()
+            raise
+        status.update(state='running',deadline_unix=time.time()+P['wall_seconds']-600)
+        save()
+    deadline = status['deadline_unix']
+    for start in range(0,6,2):
+        if time.time()>=deadline or project(status['completed'])>P['gpu_seconds_cap']:
+            status['state']='budget_blocked'; save(); cancel(); break
+        pair = jobs()[start:start+2]
+        try:
+            calls = []
+            for job in pair:
+                if job['name'] in {r['job']['name'] for r in status['completed']}:
+                    continue
+                receipt = next((r for r in status['calls'] if r['job']==job['name']),None)
+                if receipt:
+                    if not receipt['call_id']:
+                        raise RuntimeError('Ambiguous dispatch; manual reconciliation required')
+                    call = modal.FunctionCall.from_id(receipt['call_id'])
+                else:
+                    receipt = dict(job=job['name'],call_id=None)
+                    status['calls'].append(receipt); save()
+                    call = run_e4_job.spawn(job=job,attempt=attempt,deadline_unix=deadline)
+                    receipt['call_id']=call.object_id; save()
+                calls.append((job,call))
+                print('E4 CALL',job['name'],receipt['call_id'],flush=True)
+            for job,call in calls:
+                record = call.get(timeout=max(0,deadline-time.time()))
+                status['completed'].append(record); save()
+            records = [r for r in status['completed'] if r['job']['name'] in {j['name'] for j in pair}]
+            check_pair(records)
+            # All seeds must consume the same tasks and run in the same software/runtime.
+            for r in status['completed']:
+                ref = status['completed'][0]
+                for k in ('source_sha256','runtime_source_sha256','packages_sha256','gpu_name'):
+                    assert r[k]==ref[k], f'Unmatched study runtime: {k}'
+                assert r['evaluation']['tasks']==ref['evaluation']['tasks']
+            status['spent_gpu_seconds']=sum(r['elapsed_seconds'] for r in status['completed'])
+            status['projected_gpu_seconds']=project(status['completed'])
+            print('E4 PAIR COMPLETE / PROJECTED GPU HOURS',start//2,
+                  status['projected_gpu_seconds']/3600,flush=True)
+            save()
+        except Exception as error:
+            status['failures'].append(dict(pair=start//2,error=repr(error)))
+            status['state']='failed'; save(); cancel(); break
+    else:
+        status['state']='complete'
+    save()
+    return status
+
+
+@app.function(gpu='A100-40GB', cpu=CPU_COUNT, memory=MEMORY_MB, timeout=36000,
+              retries=0, max_containers=2, scaledown_window=5,
+              volumes={str(STABLEWM_HOME): volume})
+def run_e4_job(job: dict, attempt: str, deadline_unix: float) -> dict:
+    from experiments.e4.runner import run_job
+    volume.reload()
+    os.environ['OMP_NUM_THREADS']='2'
+    os.environ['OPENBLAS_NUM_THREADS']='2'
+    os.environ['PYTHONUNBUFFERED']='1'
+    try:
+        return run_job(job,STABLEWM_HOME,STABLEWM_HOME/'e4'/attempt/job['name'],
+                       min(deadline_unix,time.time()+35400),volume.commit)
+    finally:
+        volume.commit()
+
+
+@app.local_entrypoint()
+def e4(attempt: str) -> None:
+    run_e4_supervisor.remote(attempt=attempt)

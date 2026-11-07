@@ -667,3 +667,27 @@ def test_masked_endpoint_action_nce_config_composes():
     assert cfg.loss.masked.inverse_min_horizon == 1
     assert cfg.loss.masked.inverse_max_horizon == cfg.wm.horizon
     assert cfg.data.dataset.num_steps == cfg.wm.history_size + cfg.wm.horizon
+
+
+def test_variance_floor_scales_only_the_added_loss_and_gradient():
+    from module import VarianceReg
+    torch.manual_seed(42)
+    embed_dim = 6
+    model = _make_jepa(LearnableEncoder(embed_dim, in_features=3 * 2 * 2), embed_dim, embed_dim)
+    harness = SimpleNamespace(model=model, log_dict=lambda *a, **k: None)
+    cfg = _cfg()
+    cfg.loss.variance_reg = dict(weight=0.05, gamma=0.1)
+    out = masked_transition_forward(harness, _batch(embed_dim=embed_dim), 'fit', cfg)
+    expected = out['forward_loss'] + out['inverse_loss'] + 0.05*out['variance_reg_loss']
+    torch.testing.assert_close(out['loss'], expected)
+    z = torch.randn(8,4,6)*0.01
+    z.requires_grad_()
+    loss = VarianceReg(.1)(z)
+    torch.testing.assert_close(loss, torch.relu(.1-z.flatten(0,1).std(dim=0)).mean())
+    gradient = torch.autograd.grad(.05*loss,z)[0]
+    assert torch.isfinite(gradient).all() and gradient.abs().sum()>0
+    # Constant dimensions have finite gradients; no epsilon or covariance term is added.
+    z = torch.zeros(8,4,6,requires_grad=True)
+    loss = VarianceReg(.1)(z)
+    torch.testing.assert_close(loss, torch.tensor(.1))
+    assert torch.isfinite(torch.autograd.grad(loss,z)[0]).all()

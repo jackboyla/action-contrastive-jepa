@@ -44,6 +44,28 @@ def _to_jsonable(value):
     return value
 
 
+class ConsumedTaskDataset:
+    """Record endpoints of the chunks actually returned to World.evaluate_from_dataset."""
+
+    def __init__(self, dataset, records):
+        self.dataset = dataset
+        self.records = records
+
+    def __getattr__(self, name):
+        return getattr(self.dataset, name)
+
+    def load_chunk(self, *args, **kwargs):
+        chunks = self.dataset.load_chunk(*args, **kwargs)
+        for chunk in chunks:
+            self.records.append({
+                key: {"start": _to_jsonable(chunk[key][0]),
+                      "goal": _to_jsonable(chunk[key][-1])}
+                for key in ("id", "ep_idx", "episode_idx", "step_idx", "qpos")
+                if key in chunk
+            })
+        return chunks
+
+
 def resolve_device(device: str) -> str:
     if device != "auto":
         return device
@@ -1325,6 +1347,10 @@ def run(cfg: DictConfig):
         f"| eval_budget={cfg.eval.eval_budget} steps/episode",
         flush=True,
     )
+    consumed_chunks = []
+    if cfg.output.get("metadata_path"):
+        dataset = ConsumedTaskDataset(dataset, consumed_chunks)
+
     batch_metrics = []
     start_time = time.time()
     for batch_idx, batch_start in enumerate(
@@ -1414,6 +1440,7 @@ def run(cfg: DictConfig):
             "start_rows": random_episode_indices,
             # World uses the last row of an end-exclusive dataset slice (frameskip=1).
             "goal_rows": random_episode_indices + int(cfg.eval.goal_offset_steps) - 1,
+            "consumed_chunks": consumed_chunks,
             "episode_ids": eval_episodes,
             "start_steps": eval_start_idx,
             "metrics": metrics,
