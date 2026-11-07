@@ -1409,9 +1409,13 @@ def run(cfg):
         forward=partial(forward_fns[prediction_mode], cfg=cfg),
         optim=optimizers,
     )
-    attach_gradient_norm_logger(
-        world_model, int(cfg.logging.get("grad_norm_every_n_steps", 0) or 0)
-    )
+    if cfg.runtime.get("audit_path"):
+        from experiments.e4.audit import attach_audit
+        attach_audit(world_model, train_set, val_set, rnd_gen, Path(cfg.runtime.audit_path))
+    else:
+        attach_gradient_norm_logger(
+            world_model, int(cfg.logging.get("grad_norm_every_n_steps", 0) or 0)
+        )
 
     ##########################
     ##       training       ##
@@ -1535,6 +1539,8 @@ def run(cfg):
         ckpt_path=str(resume_path) if resume_path is not None else None,
         weights_only=False if resume_path is not None else None,
     )
+    if cfg.runtime.get("audit_path"):
+        world_model._e4_flush()
     return
 
 
