@@ -8,6 +8,7 @@ from types import SimpleNamespace
 
 import gymnasium as gym
 import h5py
+import modal
 import numpy as np
 import pytest
 from hydra import compose, initialize_config_dir
@@ -84,8 +85,8 @@ def test_dataset_metadata_names_the_goal_rows_loaded_from_hdf5(dataset_evaluatio
     assert metadata["metrics"]["episode_successes"] == [True] * cfg.eval.num_eval
 
 
-@pytest.mark.parametrize("interruption", [None, "completed_cell", "ambiguous_dispatch", "pilot_budget"])
-def test_supervisor_projection_and_restart_receipts(tmp_path, monkeypatch, interruption):
+@pytest.fixture
+def supervisor_code():
     # Execute the shipped body without importing Modal decorators or contacting its service.
     module = ast.parse((ROOT / "modal_app.py").read_text())
     function = next(node for node in module.body
@@ -93,6 +94,11 @@ def test_supervisor_projection_and_restart_receipts(tmp_path, monkeypatch, inter
     function.decorator_list = []
     code = compile(ast.fix_missing_locations(ast.Module(body=[function], type_ignores=[])),
                    str(ROOT / "modal_app.py"), "exec")
+    return code
+
+
+@pytest.mark.parametrize("interruption", [None, "completed_cell", "ambiguous_dispatch", "pilot_budget"])
+def test_supervisor_projection_and_restart_receipts(tmp_path, monkeypatch, interruption, supervisor_code):
     now, calls, interrupted = [0.], [], [False]
 
     class Preempted(BaseException):
@@ -132,18 +138,25 @@ def test_supervisor_projection_and_restart_receipts(tmp_path, monkeypatch, inter
             interrupted[0] = True
             raise Preempted()
 
+    def from_id(ident):
+        saved_call = next(call for call in calls if call.object_id == ident)
+        handle = modal.FunctionCall.from_id(ident)
+        # Retain the real SDK's lazy identity; replace only network operations.
+        monkeypatch.setattr(handle, "get", saved_call.get)
+        monkeypatch.setattr(handle, "cancel", saved_call.cancel)
+        return handle
+
     monkeypatch.setattr(runner, "verify_assets", lambda cache: {})
     namespace = {
         "STABLEWM_HOME": tmp_path, "REPO_DIR": ROOT,
         "time": SimpleNamespace(time=lambda: now[0]),
         "modal": SimpleNamespace(current_function_call_id=lambda: "supervisor-1",
-                                 FunctionCall=SimpleNamespace(from_id=lambda ident: next(
-                                     call for call in calls if call.object_id == ident))),
+                                 FunctionCall=SimpleNamespace(from_id=from_id)),
         "volume": SimpleNamespace(reload=lambda: None, commit=commit),
         "subprocess": SimpleNamespace(run=lambda *args, **kwargs: None),
         "run_e6_job": SimpleNamespace(spawn=spawn),
     }
-    exec(code, namespace)
+    exec(supervisor_code, namespace)
     run = namespace["run_e6_supervisor"]
     if interruption:
         with pytest.raises(Preempted):
@@ -174,6 +187,65 @@ def test_supervisor_projection_and_restart_receipts(tmp_path, monkeypatch, inter
     namespace['modal'].current_function_call_id = lambda: 'different-supervisor'
     with pytest.raises(ValueError, match='another call'):
         run("test-attempt", prior_gpu_seconds=600)
+
+
+@pytest.mark.parametrize("problem", [None, "unrecorded_completion", "reduced_reserve"])
+def test_continuation_preserves_cells_cost_and_deadline(tmp_path, monkeypatch, supervisor_code, problem):
+    previous = tmp_path / 'evaluations/previous'
+    records, original_bytes = [], {}
+    for job in runner.jobs()[:4]:
+        directory = previous / job['name']
+        directory.mkdir(parents=True)
+        record = dict(job=job, returncode=0, elapsed_seconds=600,
+                      protocol_sha256=runner.sha256(runner.PROTOCOL))
+        tasks = dict(config=dict(seed=42, policy=job['checkpoint'].removesuffix('_object.ckpt'),
+                         eval=dict(num_eval=50, env_batch_size=10, goal_offset_steps=25, eval_budget=50),
+                         solver=dict(num_samples=300, n_steps=30, topk=30, batch_size=1),
+                         plan_config=dict(horizon=5, receding_horizon=5, action_block=5)),
+                     start_rows=list(range(50)), goal_rows=list(range(24, 74)),
+                     episode_ids=[0] * 50, start_steps=list(range(50)),
+                     metrics=dict(episode_successes=[True] * 50), evaluation_seconds=590)
+        for name, data in [('runtime.json', record), ('tasks.json', tasks)]:
+            raw = json.dumps(data).encode()
+            (directory / name).write_bytes(raw)
+            original_bytes[(job['name'], name)] = raw
+        records.append(record)
+    previous_status = dict(state='failed', protocol_sha256=runner.sha256(runner.PROTOCOL),
+                           prior_gpu_seconds=1200, completed=records, deadline_unix=15000)
+    if problem == 'unrecorded_completion':
+        previous_status['completed'] = records[:3]
+    (previous / 'status.json').write_text(json.dumps(previous_status))
+    launched = []
+
+    def spawn(job, attempt, deadline_unix):
+        assert deadline_unix == previous_status['deadline_unix']
+        launched.append(job)
+        return SimpleNamespace(object_id=job['name'],
+                               get=lambda timeout: dict(job=job, elapsed_seconds=10))
+
+    monkeypatch.setattr(runner, 'verify_assets', lambda cache: {})
+    namespace = dict(STABLEWM_HOME=tmp_path, REPO_DIR=ROOT,
+                     time=SimpleNamespace(time=lambda: 1000),
+                     modal=SimpleNamespace(current_function_call_id=lambda: 'new-supervisor'),
+                     volume=SimpleNamespace(reload=lambda: None, commit=lambda: None),
+                     subprocess=SimpleNamespace(run=lambda *args, **kwargs: None),
+                     run_e6_job=SimpleNamespace(spawn=spawn))
+    exec(supervisor_code, namespace)
+    reserve = 600 if problem == 'reduced_reserve' else 1800
+    if problem:
+        with pytest.raises(ValueError, match='Reconcile|cumulative reserve'):
+            namespace['run_e6_supervisor']('next', reserve, 'previous')
+        assert not launched
+        return
+    status = namespace['run_e6_supervisor']('next', reserve, 'previous')
+    assert status['state'] == 'complete'
+    assert status['completed'][:4] == records
+    assert launched == runner.jobs()[4:]
+    assert status['spent_gpu_seconds'] == 1800 + 4 * 600 + 24 * 10
+    assert status['previous_status_sha256'] == runner.sha256(previous / 'status.json')
+    for (job, filename), raw in original_bytes.items():
+        assert (previous / job / filename).read_bytes() == raw
+        assert (tmp_path / 'evaluations/next' / job / filename).read_bytes() == raw
 
 
 def test_worker_rejects_expired_deadline_before_spawning(tmp_path, monkeypatch):
