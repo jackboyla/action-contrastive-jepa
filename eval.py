@@ -1399,6 +1399,9 @@ def run(cfg: DictConfig):
             save_policy_artifacts(policy, batch_task_dirs)
 
     metrics = aggregate_eval_metrics(batch_metrics)
+    metrics["start_row_indices"] = random_episode_indices
+    metrics["start_episode_ids"] = eval_episodes
+    metrics["start_steps"] = eval_start_idx
     end_time = time.time()
 
     if artifact_dir is not None:

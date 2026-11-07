@@ -13,6 +13,8 @@ if str(ROOT) not in sys.path:
 from utils import (
     get_cuda_memory_metrics,
     JsonlMetricsCallback,
+    ModelObjectCallBack,
+    StopAfterEpochCallback,
     ProgressBarCallback,
     ResumableCheckpointCallback,
     resolve_resume_checkpoint,
@@ -46,6 +48,50 @@ def make_loader():
     return torch.utils.data.DataLoader(
         torch.utils.data.TensorDataset(x, y), batch_size=2, shuffle=False
     )
+
+
+def test_epoch_stop_preserves_horizon_and_final_object(tmp_path):
+    from stable_pretraining.optim.lr_scheduler import create_scheduler
+
+    class ScheduledRegression(TinyRegression):
+        def configure_optimizers(self):
+            optimizer = super().configure_optimizers()
+            scheduler = create_scheduler(
+                optimizer, "LinearWarmupCosineAnnealingLR", module=self
+            )
+            return {
+                "optimizer": optimizer,
+                "lr_scheduler": {"scheduler": scheduler, "interval": "step"},
+            }
+
+    model = ScheduledRegression()
+    model.model = model.layer
+    trainer = pl.Trainer(
+        max_epochs=100,
+        accelerator="cpu",
+        logger=False,
+        enable_checkpointing=False,
+        enable_model_summary=False,
+        enable_progress_bar=False,
+        num_sanity_val_steps=0,
+        callbacks=[
+            ModelObjectCallBack(tmp_path, filename="tiny", epoch_interval=10),
+            StopAfterEpochCallback(10),
+        ],
+    )
+    trainer.fit(model, train_dataloaders=make_loader())
+    assert trainer.global_step == 40
+    assert trainer.max_epochs == 100
+    assert trainer.estimated_stepping_batches == 400
+    scheduler = trainer.lr_scheduler_configs[0].scheduler
+    assert scheduler.max_steps == 400
+    assert scheduler.warmup_steps == 4
+    assert scheduler.get_last_lr()[0] > 0.09
+    paths = list(tmp_path.glob("*_object.ckpt"))
+    assert [p.name for p in paths] == ["tiny_epoch_10_object.ckpt"]
+    saved = torch.load(paths[0], map_location="cpu", weights_only=False)
+    for key, value in model.layer.state_dict().items():
+        torch.testing.assert_close(saved.state_dict()[key], value)
 
 
 def test_resolve_resume_checkpoint_uses_state_file(tmp_path):
