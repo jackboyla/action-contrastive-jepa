@@ -44,7 +44,7 @@ screening epochs and sixty confirmation epochs, plus 18 evaluations.
 
 ## Status and verified evidence
 
-As of November 7, 2026, 16:20 UTC:
+As of November 7, 2026, 16:26 UTC:
 
 - SIGReg coefficient 0.09, seed 3072 completed its one-epoch screen: 6,897
   updates in 12 minutes 31 seconds, exit 0. Configuration, finite recorded
@@ -56,7 +56,8 @@ As of November 7, 2026, 16:20 UTC:
 - SIGReg coefficient 0.03 completed its screen at 16:10 UTC: 6,897 updates
   in 12 minutes 31 seconds, exit 0. Config, final checkpoint and finite-metric
   audits passed. Its validation is queued behind the hybrid seed-2 training
-  job on GPU0; that job estimates lock release around 18:17 UTC.
+  job on GPU0; that job estimates lock release around 18:21 UTC. The 0.03 training run received the lock between
+  hybrid seeds 1 and 2; only its validation is now waiting.
 - Completed counts: screening training **2/6**, validation **1/6**, confirmation
   training **0/6**, final evaluation **0/12**. No study GPU job is active during
   this lock wait; the original queue remains live. Study status: **Inprogress**;
@@ -69,7 +70,12 @@ As of November 7, 2026, 16:20 UTC:
 - Local study artifacts occupy about 139 MiB. Root disk has 478 GiB free.
   Provisional completion is November 8–9 morning UTC. The first short evaluation
   took about 4.6 minutes; harder-goal evaluation and further shared-GPU waits
-  remain unmeasured. This is an estimate, not a deadline.
+  remain unmeasured. At 16:26 UTC, wall time since launch was about 6 hours
+  38 minutes, including the coordinated hold and lock waits; completed training
+  used 25 minutes 2 seconds and validation used 4 minutes 33 seconds. Remaining
+  training alone is about 13 hours 21 minutes at the observed SIGReg speed.
+  Potential cross-study sharing is not credited in this estimate: fair settings
+  have not been selected or verified for reuse. This is an estimate, not a deadline.
 
 The goal audit reproduces `eval.py`'s seeded row selection. Validation versus
 each final protocol shares zero exact start rows and zero exact goal rows,
