@@ -76,11 +76,12 @@ reason for choosing evaluation seed 43 instead of headline seed 42 is unresolved
 ## Missing assets
 
 The bundle does not supply weights, dataset contents/hash, a locked historical
-environment, or recovered Reacher archive files. Sensitivity checkpoint hashes
+environment, or historical runtime identities. Recovered Reacher archive files and
+additional task records are in [the recovery bundle](../rebuttal-recovery/README.md). Sensitivity checkpoint hashes
 and per-task IDs beyond those actually stored in the raw files are not invented.
 Evaluation configs embedded in text may contain Hydra interpolations; training
 configs are recovered snapshots, not a claim of fully resolved provenance.
-See [historical audit](historical-audit.md) before coordinating any new runs.
+See the [historical audit](historical-audit.md) for schedule and regularizer limits.
 
 Run `python experiments/rebuttal/check_integrity.py` for a CPU-only hash and
 per-episode success-rate check. No training or evaluation is started.
