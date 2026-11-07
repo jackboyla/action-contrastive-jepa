@@ -16,7 +16,10 @@ seed. The random 200 rows need not equal the models' 50 rows.
 Primary protocol: future goal offset 25, interaction budget 50, CEM 300 samples,
 30 iterations and 30 elites, planner batch size 1, horizon 5, receding horizon 5,
 action block 5, environment batch size 10, 64px simulator renders and 224px model
-input. Random action sampling uses seed `42 + batch_start` for each ten-episode
+input. The dataset loader uses an end-exclusive slice: offset 25 selects the
+goal at start row + 24. Metadata records that consumed row; the evaluator's
+offset argument and behavior remain unchanged.
+Random action sampling uses seed `42 + batch_start` for each ten-episode
 batch; simulator resets retain the dataset evaluator's behavior. These are
 short-goal evaluations, not a repeat of the separate 100-offset/100-budget study.
 
@@ -31,17 +34,18 @@ The CPU supervisor hashes the dataset, all nine checkpoints and their training
 configs before allocating GPUs. It then runs at most two L4 jobs concurrently,
 with no automatic retries and a two-hour timeout per job. The first two
 predeclared evaluations count in the final matrix and estimate cost before
-further launches. If their conservative projection exceeds 12 GPU-hours, the
-remaining matrix stays pending. A six-hour wall-clock deadline from the first
-allocation bounds total GPU time at concurrency two, with shutdown allowance.
+further launches. Each completed wave updates a conservative projection from
+worker runtimes, excluding provider queue delays. If it exceeds 12 GPU-hours,
+the remaining matrix stays pending. A separate six-hour wall-clock deadline
+starts before the first GPU submission, includes queue time, and bounds total
+GPU time at concurrency two, with shutdown allowance.
 Infrastructure failures pause further launches and retain every attempted
 outcome; no score controls scheduling. The output directory must not already
 exist, preventing accidental duplicate launches or overwrites.
 
-Both local GPUs are occupied by higher-priority frozen studies. Modal is the
-bounded fallback; no local queue or study is changed. If setup fails or the
-budget is insufficient, report the blocker and wait for the existing GPU0
-study to finish before any local fallback.
+Modal provides bounded capacity when local GPUs are occupied. A failed or
+budget-blocked run retains its completed cells; inspect them before planning
+any continuation so they are not silently repeated.
 
 Outputs live under `evaluations/e6-short-v1` on the volume: supervisor status,
 call IDs, exact commands, raw logs/outcomes, resolved evaluation configs,

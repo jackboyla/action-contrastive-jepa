@@ -33,7 +33,7 @@ def summarize(root):
         assert len(successes) == job['episodes'] and all(type(x) is bool for x in successes)
         assert len(data['start_rows']) == job['episodes']
         assert len(set(data['start_rows'])) == job['episodes']
-        assert data['goal_rows'] == [x + 25 for x in data['start_rows']]
+        assert data['goal_rows'] == [x + 24 for x in data['start_rows']]
         ids = [data[key] for key in ('start_rows', 'goal_rows', 'episode_ids', 'start_steps')]
         if job['checkpoint']:
             assert matched.setdefault(job['eval_seed'], ids) == ids

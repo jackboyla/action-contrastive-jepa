@@ -1646,7 +1646,6 @@ def run_e6_supervisor() -> dict:
     status['state'] = 'running'
     for start in range(0, len(pending), 2):
         calls = []
-        wave_started = time.monotonic()
         try:
             for job in pending[start:start + 2]:
                 call = run_e6_job.spawn(job=job)
@@ -1672,14 +1671,18 @@ def run_e6_supervisor() -> dict:
                     call.cancel(terminate_containers=True)
         if status['state'] == 'failed':
             break
-        if start == 0:
-            # First two predeclared jobs count toward the 27, regardless of scores.
-            projected = (time.monotonic() - wave_started) * len(pending) * 1.15
-            status['projected_gpu_seconds'] = projected
-            print('E6 PROJECTED GPU HOURS', projected / 3600, flush=True)
-            if projected > 12 * 3600:
-                status['state'] = 'budget_blocked'
-                break
+        # Worker runtimes exclude provider queue delays. Recheck every wave;
+        # the wall deadline separately bounds total allocation at concurrency two.
+        elapsed = [record['elapsed_seconds'] for record in status['completed']]
+        spent = sum(elapsed)
+        remaining = len(pending) - len(elapsed)
+        projected = spent + max(elapsed) * remaining * 1.15
+        status['spent_gpu_seconds'] = spent
+        status['projected_gpu_seconds'] = projected
+        print('E6 PROJECTED GPU HOURS', projected / 3600, flush=True)
+        if projected > 12 * 3600:
+            status['state'] = 'budget_blocked'
+            break
         if time.monotonic() >= deadline:
             status['state'] = 'budget_blocked'
             break

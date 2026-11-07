@@ -1348,9 +1348,9 @@ def run(cfg: DictConfig):
             process=process,
             transform=transform,
         )
-        world.set_policy(policy)
         if str(cfg.policy) == "random" and cfg.eval.get("random_action_seed") is not None:
             policy.seed = int(cfg.eval.random_action_seed) + batch_start
+        world.set_policy(policy)
 
         progress = None
         if progress_enabled:
@@ -1409,7 +1409,8 @@ def run(cfg: DictConfig):
         metadata_path.write_text(json.dumps(_to_jsonable({
             "config": OmegaConf.to_container(cfg, resolve=True),
             "start_rows": random_episode_indices,
-            "goal_rows": random_episode_indices + int(cfg.eval.goal_offset_steps),
+            # World uses the last row of an end-exclusive dataset slice (frameskip=1).
+            "goal_rows": random_episode_indices + int(cfg.eval.goal_offset_steps) - 1,
             "episode_ids": eval_episodes,
             "start_steps": eval_start_idx,
             "metrics": metrics,
