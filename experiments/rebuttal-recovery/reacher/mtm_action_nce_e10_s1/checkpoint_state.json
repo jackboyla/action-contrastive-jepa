@@ -1,0 +1,12 @@
+{
+  "best_checkpoint": "lewm_masked_action_nce_best_weights.ckpt",
+  "best_score": 7.100210666656494,
+  "best_step": 127960,
+  "epoch": 10,
+  "global_step": 127960,
+  "latest_checkpoint": "lewm_masked_action_nce_weights.ckpt",
+  "mode": "min",
+  "monitor": "validate/loss",
+  "reason": "fit_end",
+  "time": 1782173947.9413667
+}

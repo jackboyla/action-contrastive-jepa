@@ -1,0 +1,12 @@
+{
+  "best_checkpoint": "lewm_masked_vicreg_best_weights.ckpt",
+  "best_score": 0.8331272602081299,
+  "best_step": 127960,
+  "epoch": 10,
+  "global_step": 127960,
+  "latest_checkpoint": "lewm_masked_vicreg_weights.ckpt",
+  "mode": "min",
+  "monitor": "validate/loss",
+  "reason": "fit_end",
+  "time": 1781170926.0355675
+}
