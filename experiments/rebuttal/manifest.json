@@ -1,0 +1,387 @@
+[
+  {
+    "file": "results/rebuttal-scene/masked_1.json",
+    "source": "progress/evaluations/rebuttal-scene/masked_1.json",
+    "source_sha256": "8a85acebdde400eedab8ed58aa8adb6cea57bef2d859a50b4f09a3b732906532",
+    "sha256": "c0f7cbde79dbca6b97d41240ce791d3342ab4d2ac28588aac24a207745d6964a",
+    "transform": "repository absolute path replaced with ${REPO_ROOT}; otherwise unchanged"
+  },
+  {
+    "file": "results/rebuttal-scene/masked_1.npz",
+    "source": "progress/evaluations/rebuttal-scene/masked_1.npz",
+    "source_sha256": "db729f39fe61bc5ebb1ecc78c49fb8bbc5931e8c3ac8b91185c4e5604b1adf18",
+    "sha256": "7d901f41dd8a06bc2dc3c9e6c0d4741673054fe9902122e7e0b6ebbab0963299",
+    "transform": "Selected unchanged arrays: frame_ids, split, window_starts, window_episodes, rollout_mse, persistence_mse; latents and state factors omitted for compactness"
+  },
+  {
+    "file": "results/rebuttal-scene/masked_2.json",
+    "source": "progress/evaluations/rebuttal-scene/masked_2.json",
+    "source_sha256": "28ce02abe5f873a723cf115ad9908e581b54d0b069e28441a0ca335d212e657a",
+    "sha256": "c2a1eaa4cb094729774ce92cf917569be5fb07da0baf492f5ae64f1e3b36bf95",
+    "transform": "repository absolute path replaced with ${REPO_ROOT}; otherwise unchanged"
+  },
+  {
+    "file": "results/rebuttal-scene/masked_2.npz",
+    "source": "progress/evaluations/rebuttal-scene/masked_2.npz",
+    "source_sha256": "598b958620c5cbd5722193131349271563f889b9e39e616a9979f823ca715d39",
+    "sha256": "b2e3d967f336f09d30b420cd0fc866bbef4a1e73bdcad721bf48f176ff8c86b0",
+    "transform": "Selected unchanged arrays: frame_ids, split, window_starts, window_episodes, rollout_mse, persistence_mse; latents and state factors omitted for compactness"
+  },
+  {
+    "file": "results/rebuttal-scene/masked_3072.json",
+    "source": "progress/evaluations/rebuttal-scene/masked_3072.json",
+    "source_sha256": "36d4487e7b2868749219a0fe881da79c97b4c2bbf973fddeb7eab3b28c76c157",
+    "sha256": "48bc9a48e9c1e0c9aee4805dfe15f0d9eb8bb937d5cc682b51998ceb67afeb6e",
+    "transform": "repository absolute path replaced with ${REPO_ROOT}; otherwise unchanged"
+  },
+  {
+    "file": "results/rebuttal-scene/masked_3072.npz",
+    "source": "progress/evaluations/rebuttal-scene/masked_3072.npz",
+    "source_sha256": "08f3653ac7c54358529014f9fec0cd2fc1fcf8033c07bf70baf044102ef781d9",
+    "sha256": "5611c64b17bf783acfc16d9062eee78298ec1cca5c4512f38f2e14b479bd2927",
+    "transform": "Selected unchanged arrays: frame_ids, split, window_starts, window_episodes, rollout_mse, persistence_mse; latents and state factors omitted for compactness"
+  },
+  {
+    "file": "results/rebuttal-scene/masked_action_nce_1.json",
+    "source": "progress/evaluations/rebuttal-scene/masked_action_nce_1.json",
+    "source_sha256": "db61374f674a3cc8e7bc42baec74095ed307d076fc67c748c46d6b9a7fef0c39",
+    "sha256": "14f1bb92975f315f8155dc46872b951ee3c47ba9d66dd2df44240b1db3b916dd",
+    "transform": "repository absolute path replaced with ${REPO_ROOT}; otherwise unchanged"
+  },
+  {
+    "file": "results/rebuttal-scene/masked_action_nce_1.npz",
+    "source": "progress/evaluations/rebuttal-scene/masked_action_nce_1.npz",
+    "source_sha256": "104e929da2403ba6c0d8c6197eceb7f7cff7d5dcb450d6668ca4355683301bed",
+    "sha256": "d8f9acf54a0b9ee3164e2b07541e9031c00a72dbbb597ab828d641dcfe986f55",
+    "transform": "Selected unchanged arrays: frame_ids, split, window_starts, window_episodes, rollout_mse, persistence_mse; latents and state factors omitted for compactness"
+  },
+  {
+    "file": "results/rebuttal-scene/masked_action_nce_2.json",
+    "source": "progress/evaluations/rebuttal-scene/masked_action_nce_2.json",
+    "source_sha256": "401741e38f7b1ef8571eb7ac9be938f67235f2ba03918a3a08cd64971a778482",
+    "sha256": "4e8c383ce338412ffa1fdc60b79ec0bca4daaf0a8fbd51f998d727b636726ee5",
+    "transform": "repository absolute path replaced with ${REPO_ROOT}; otherwise unchanged"
+  },
+  {
+    "file": "results/rebuttal-scene/masked_action_nce_2.npz",
+    "source": "progress/evaluations/rebuttal-scene/masked_action_nce_2.npz",
+    "source_sha256": "5de2d0b03bb21c42f231740a4f3eb8adb393d87cc0d5a1cdb0ddda8ab639becf",
+    "sha256": "040c987e230f2bc71ecdd548d8b4f147f2c0ea00b327ad2fde36619bbf33b268",
+    "transform": "Selected unchanged arrays: frame_ids, split, window_starts, window_episodes, rollout_mse, persistence_mse; latents and state factors omitted for compactness"
+  },
+  {
+    "file": "results/rebuttal-scene/masked_action_nce_3072.json",
+    "source": "progress/evaluations/rebuttal-scene/masked_action_nce_3072.json",
+    "source_sha256": "347c7e4c8cc338e8a1788eaafc702cc86786716257bf195b4e8768605496b564",
+    "sha256": "64a49885133f0e2260a58605fb65e5f51cbf3a704b1d15bcc9c24262148f6df0",
+    "transform": "repository absolute path replaced with ${REPO_ROOT}; otherwise unchanged"
+  },
+  {
+    "file": "results/rebuttal-scene/masked_action_nce_3072.npz",
+    "source": "progress/evaluations/rebuttal-scene/masked_action_nce_3072.npz",
+    "source_sha256": "0206ef109621a6a79db4efce7d2ec696a2fb6757941b56541779e694a50fd729",
+    "sha256": "c1145545af8ceaa7d18afebf4a1a6ddb7f0c6045a032338e48e3f4981a3c7d99",
+    "transform": "Selected unchanged arrays: frame_ids, split, window_starts, window_episodes, rollout_mse, persistence_mse; latents and state factors omitted for compactness"
+  },
+  {
+    "file": "results/rebuttal-scene/seed-summary.json",
+    "source": "progress/evaluations/rebuttal-scene/seed-summary.json",
+    "source_sha256": "84d222cb076310c57d643d6bae4a0bf7e111cc1ec78db6133a6c87adc7ff681f",
+    "sha256": "84d222cb076310c57d643d6bae4a0bf7e111cc1ec78db6133a6c87adc7ff681f",
+    "transform": "repository absolute path replaced with ${REPO_ROOT}; otherwise unchanged"
+  },
+  {
+    "file": "results/rebuttal-scene/sigreg_1.json",
+    "source": "progress/evaluations/rebuttal-scene/sigreg_1.json",
+    "source_sha256": "e65322421c7bc21beb99504ebdc0b83068c70efffa1e8d0e478d447dcad26bfc",
+    "sha256": "416fd0e165824d88cb0ad299bab90fed84fb5983a3bc1a64ccc7c7278378efd9",
+    "transform": "repository absolute path replaced with ${REPO_ROOT}; otherwise unchanged"
+  },
+  {
+    "file": "results/rebuttal-scene/sigreg_1.npz",
+    "source": "progress/evaluations/rebuttal-scene/sigreg_1.npz",
+    "source_sha256": "a0c65446ad5366562b43f965d4a580526b4e5ec89d16ea07f2bd3b7a8338af32",
+    "sha256": "5c6c0a7c7dd1ba517c5b6c9d74190e6e5066b0054e532a84973474f4de52a9b7",
+    "transform": "Selected unchanged arrays: frame_ids, split, window_starts, window_episodes, rollout_mse, persistence_mse; latents and state factors omitted for compactness"
+  },
+  {
+    "file": "results/rebuttal-scene/sigreg_2.json",
+    "source": "progress/evaluations/rebuttal-scene/sigreg_2.json",
+    "source_sha256": "53ff3752dfe75b05885836d42eafaaa2c97589624523013b7a72b171c4547897",
+    "sha256": "192a90a750f0c85c6a9c3bb0ab805af94516a301f5c7b2a9d7a0e94f45dbe8c8",
+    "transform": "repository absolute path replaced with ${REPO_ROOT}; otherwise unchanged"
+  },
+  {
+    "file": "results/rebuttal-scene/sigreg_2.npz",
+    "source": "progress/evaluations/rebuttal-scene/sigreg_2.npz",
+    "source_sha256": "f0a4fbf11f82728b35b9d7252c443d87ecfd518e5de039aa1636dd85e04c60cc",
+    "sha256": "f65aa0dde3adf1fd4e6c2b905a3483ca15bf9908afca475b37588d17b8fdc263",
+    "transform": "Selected unchanged arrays: frame_ids, split, window_starts, window_episodes, rollout_mse, persistence_mse; latents and state factors omitted for compactness"
+  },
+  {
+    "file": "results/rebuttal-scene/sigreg_3072.json",
+    "source": "progress/evaluations/rebuttal-scene/sigreg_3072.json",
+    "source_sha256": "644e87b391353574c3e00a681bcaad29660b0651346b2e5c04ab9fc737f1c9a5",
+    "sha256": "6a63bc934342efed61d79ffcb27499048604f871a6bb68a7ce87e9f3839c4acf",
+    "transform": "repository absolute path replaced with ${REPO_ROOT}; otherwise unchanged"
+  },
+  {
+    "file": "results/rebuttal-scene/sigreg_3072.npz",
+    "source": "progress/evaluations/rebuttal-scene/sigreg_3072.npz",
+    "source_sha256": "dfff8278d53d64beb51fddbf9e40d3cc4e7308a06ce5d7c3b3fb4cb3052e0638",
+    "sha256": "9cbc42d465b17a2160816db957b4d120e07e5d2c93243ece9bb1f69fd6ff4898",
+    "transform": "Selected unchanged arrays: frame_ids, split, window_starts, window_episodes, rollout_mse, persistence_mse; latents and state factors omitted for compactness"
+  },
+  {
+    "file": "results/rebuttal-scene/summary.json",
+    "source": "progress/evaluations/rebuttal-scene/summary.json",
+    "source_sha256": "d3a686ff659c6ddaff68b11a423ca93fb42cfde75c43ee03d0a65c19b8cb27a8",
+    "sha256": "d3a686ff659c6ddaff68b11a423ca93fb42cfde75c43ee03d0a65c19b8cb27a8",
+    "transform": "repository absolute path replaced with ${REPO_ROOT}; otherwise unchanged"
+  },
+  {
+    "file": "results/rebuttal-scene-eval/longer-goal-pairing-audit.json",
+    "source": "progress/evaluations/rebuttal-scene-eval/longer-goal-pairing-audit.json",
+    "source_sha256": "6835ecb391f7a0a1fd14c0a84b26e870d0a8828fe1a8aa9cc014540be139e51e",
+    "sha256": "6835ecb391f7a0a1fd14c0a84b26e870d0a8828fe1a8aa9cc014540be139e51e",
+    "transform": "repository absolute path replaced with ${REPO_ROOT}; otherwise unchanged"
+  },
+  {
+    "file": "results/rebuttal-scene-eval/masked_action_nce_1_offset100_seed43.txt",
+    "source": "progress/evaluations/rebuttal-scene-eval/masked_action_nce_1_offset100_seed43.txt",
+    "source_sha256": "7f8cfc537809c9173b7460ed73f218ceb922c1d59149953ccdde7a0cf4ae3a05",
+    "sha256": "fa53a0e593088d03e3a9f0a953ff3a2bca3afcb974e021073f49e70e5083844a",
+    "transform": "repository absolute path replaced with ${REPO_ROOT}; otherwise unchanged"
+  },
+  {
+    "file": "results/rebuttal-scene-eval/masked_action_nce_2_offset100_seed43.txt",
+    "source": "progress/evaluations/rebuttal-scene-eval/masked_action_nce_2_offset100_seed43.txt",
+    "source_sha256": "3ebc9721fb9c9b7b1003df84b0401ae3fd3a00307bf7103481506b1ad02a275a",
+    "sha256": "d6d7855adffe0da75fb0d5c7676634a892cad687192e5e4ca76b1815839f4e0e",
+    "transform": "repository absolute path replaced with ${REPO_ROOT}; otherwise unchanged"
+  },
+  {
+    "file": "results/rebuttal-scene-eval/masked_action_nce_3072_offset100_seed43.txt",
+    "source": "progress/evaluations/rebuttal-scene-eval/masked_action_nce_3072_offset100_seed43.txt",
+    "source_sha256": "5c6b3620c39afab330dff26a279696e74c75c470175be21793f96c33d9889c5c",
+    "sha256": "95374d68ca3503c8d0abf9deda0db92c041c413d41aae2f9ee1cf314ffc3ee93",
+    "transform": "repository absolute path replaced with ${REPO_ROOT}; otherwise unchanged"
+  },
+  {
+    "file": "results/rebuttal-scene-eval/nce3072_reproduction42.txt",
+    "source": "progress/evaluations/rebuttal-scene-eval/nce3072_reproduction42.txt",
+    "source_sha256": "61b80e66eaa297ce7c3a3abc5926da4f67c787ab42c176d107064127c783a68d",
+    "sha256": "7e637644693a09a07c2c352c87693d91f4a597957cf123f05ce8f065a7cf178f",
+    "transform": "repository absolute path replaced with ${REPO_ROOT}; otherwise unchanged"
+  },
+  {
+    "file": "results/rebuttal-scene-eval/nce3072_reproduction42_batch10.txt",
+    "source": "progress/evaluations/rebuttal-scene-eval/nce3072_reproduction42_batch10.txt",
+    "source_sha256": "6a642df464a618faf767d7d9875c0bdc1186cbe9a704e5e993c7a2705b20b5d2",
+    "sha256": "d06a90615edf5db64a49ff65415dea403040f9c9098d137cb2f4b9b059ac2600",
+    "transform": "repository absolute path replaced with ${REPO_ROOT}; otherwise unchanged"
+  },
+  {
+    "file": "results/rebuttal-scene-eval/random_offset100_seed43.txt",
+    "source": "progress/evaluations/rebuttal-scene-eval/random_offset100_seed43.txt",
+    "source_sha256": "de63f075d1fd7da5e5d0956e4fa9cd4cb83506998740c23c351f5c7dc59378ad",
+    "sha256": "41c38394600bd38ca1ff9950c8fa5756eb78bd25dc6d1b201125b6b52186c2d5",
+    "transform": "repository absolute path replaced with ${REPO_ROOT}; otherwise unchanged"
+  },
+  {
+    "file": "results/rebuttal-scene-eval/random_smoke.txt",
+    "source": "progress/evaluations/rebuttal-scene-eval/random_smoke.txt",
+    "source_sha256": "98a4568c2fa4a5d672f6b18fd50fd4038d13da04aa53d5ee356cb9af611abf3b",
+    "sha256": "1b251ca4f907c1fca2c04764e576c7f21312601a0ac5fea357572b530b4a573a",
+    "transform": "repository absolute path replaced with ${REPO_ROOT}; otherwise unchanged"
+  },
+  {
+    "file": "results/rebuttal-scene-eval/reproduction-audit.json",
+    "source": "progress/evaluations/rebuttal-scene-eval/reproduction-audit.json",
+    "source_sha256": "38d88524b7b1cc7b4850bbd3f99277b8c4cd36f36e4f31b96b1a82de446ea92c",
+    "sha256": "38d88524b7b1cc7b4850bbd3f99277b8c4cd36f36e4f31b96b1a82de446ea92c",
+    "transform": "repository absolute path replaced with ${REPO_ROOT}; otherwise unchanged"
+  },
+  {
+    "file": "results/rebuttal-scene-eval/sigreg_1_offset100_seed43.txt",
+    "source": "progress/evaluations/rebuttal-scene-eval/sigreg_1_offset100_seed43.txt",
+    "source_sha256": "18da51b3ee8c1fa10b4774c9c461719594adb14a04a1368aa4a18b671ea01be9",
+    "sha256": "72097b086cefe397f90f3e9fae3aa0f7627e91a56934d1d0f8e0a5a59eeb87aa",
+    "transform": "repository absolute path replaced with ${REPO_ROOT}; otherwise unchanged"
+  },
+  {
+    "file": "results/rebuttal-scene-eval/sigreg_2_offset100_seed43.txt",
+    "source": "progress/evaluations/rebuttal-scene-eval/sigreg_2_offset100_seed43.txt",
+    "source_sha256": "e77a4a176403112d91f5e2a646277c3f72b2f509c2b1a231d3384c0d73f8289d",
+    "sha256": "cc5472731d81f78b587a195ebc8e21988a54e789ed2006560ac0719ac7d4ecf0",
+    "transform": "repository absolute path replaced with ${REPO_ROOT}; otherwise unchanged"
+  },
+  {
+    "file": "results/rebuttal-scene-eval/sigreg_3072_offset100_seed43.txt",
+    "source": "progress/evaluations/rebuttal-scene-eval/sigreg_3072_offset100_seed43.txt",
+    "source_sha256": "b46c9c7b2eff6cfa022204dd20ebdd3cfa3914dc8e97a41577de1c5da0c56b00",
+    "sha256": "396824a349c8e128e8984672702e42e727f538c16a3645d8814c726163d639bf",
+    "transform": "repository absolute path replaced with ${REPO_ROOT}; otherwise unchanged"
+  },
+  {
+    "file": "results/rebuttal-sensitivity/batch256_seed43.txt",
+    "source": "progress/evaluations/rebuttal-sensitivity/batch256_seed43.txt",
+    "source_sha256": "8a5991da972950c61da3b3443fb89c1b4fdd494faae07ee7dec18a3fb2609b77",
+    "sha256": "444e62fd2c8c309f82be3fe354fb8fb2568b8025a0542960533481cfcd9b6c1c",
+    "transform": "repository absolute path replaced with ${REPO_ROOT}; otherwise unchanged"
+  },
+  {
+    "file": "results/rebuttal-sensitivity/batch64_seed43.txt",
+    "source": "progress/evaluations/rebuttal-sensitivity/batch64_seed43.txt",
+    "source_sha256": "ba08376da7b3d17965bb65d1d08a82f90d1109288190f355638b880056164772",
+    "sha256": "0532d90b89b36630ffbd24f9906fd8e078ac916f01700b12cf5a927c1672ced5",
+    "transform": "repository absolute path replaced with ${REPO_ROOT}; otherwise unchanged"
+  },
+  {
+    "file": "results/rebuttal-sensitivity/default_seed43.txt",
+    "source": "progress/evaluations/rebuttal-sensitivity/default_seed43.txt",
+    "source_sha256": "fc2b2c473c7c1e794dcf13fe93da8bd02da48ab3cea5e8f3f4237a2c58da4c1c",
+    "sha256": "3415ce4ce9ce5b53dba24ec3004cc96214e7de5978a0476cee9c0e51f64dda73",
+    "transform": "repository absolute path replaced with ${REPO_ROOT}; otherwise unchanged"
+  },
+  {
+    "file": "results/rebuttal-sensitivity/tau005_seed43.txt",
+    "source": "progress/evaluations/rebuttal-sensitivity/tau005_seed43.txt",
+    "source_sha256": "675793289f78db264d4d3069b204adb30f5e36c1353e3514f2ba0e95b4fce671",
+    "sha256": "ff3316f91af3d98836a03c0a005e42a892c268bcd327d61d7dfb123a18dde9be",
+    "transform": "repository absolute path replaced with ${REPO_ROOT}; otherwise unchanged"
+  },
+  {
+    "file": "results/rebuttal-sensitivity/tau020_seed43.txt",
+    "source": "progress/evaluations/rebuttal-sensitivity/tau020_seed43.txt",
+    "source_sha256": "1be8d3690a5fce3b83b2f634c9a04e02d81fb7775e954c664f365317b9581093",
+    "sha256": "c97399e630369ebb0e2818c53b617a19b021c66b6d3e9ae4f64523037f9223d5",
+    "transform": "repository absolute path replaced with ${REPO_ROOT}; otherwise unchanged"
+  },
+  {
+    "file": "results/rebuttal-sensitivity/training-completion.json",
+    "source": "progress/evaluations/rebuttal-sensitivity/training-completion.json",
+    "source_sha256": "1f5713683a27c26b9fc44cd7dcba110e33fe2c4a81ff266551a38bf655c5ee9a",
+    "sha256": "1f5713683a27c26b9fc44cd7dcba110e33fe2c4a81ff266551a38bf655c5ee9a",
+    "transform": "repository absolute path replaced with ${REPO_ROOT}; otherwise unchanged"
+  },
+  {
+    "file": "results/rebuttal-sensitivity/training-config-audit.json",
+    "source": "progress/evaluations/rebuttal-sensitivity/training-config-audit.json",
+    "source_sha256": "fe0f1ee0db69c6ceec991d7589e65af2f61eecdb21d9725e0f1b825b2a789c5e",
+    "sha256": "fe0f1ee0db69c6ceec991d7589e65af2f61eecdb21d9725e0f1b825b2a789c5e",
+    "transform": "repository absolute path replaced with ${REPO_ROOT}; otherwise unchanged"
+  },
+  {
+    "file": "results/rebuttal-sensitivity-summary.json",
+    "source": "progress/evaluations/rebuttal-sensitivity-summary.json",
+    "source_sha256": "a078e218ecf8e174d70343c4b7be25879b34f1e2d18b63b019399fd1723201f5",
+    "sha256": "a078e218ecf8e174d70343c4b7be25879b34f1e2d18b63b019399fd1723201f5",
+    "transform": "repository absolute path replaced with ${REPO_ROOT}; otherwise unchanged"
+  },
+  {
+    "file": "results/rebuttal-longer-goal-summary.json",
+    "source": "progress/evaluations/rebuttal-longer-goal-summary.json",
+    "source_sha256": "e701b151a607ebcafbc454ba20014b5f16a9f751350abdc53bc2985d67d02ed1",
+    "sha256": "e701b151a607ebcafbc454ba20014b5f16a9f751350abdc53bc2985d67d02ed1",
+    "transform": "repository absolute path replaced with ${REPO_ROOT}; otherwise unchanged"
+  },
+  {
+    "file": "configs/scene_sensitivity_batch256_s1/config.yaml",
+    "source": ".stable_worldmodel/rebuttal/scene_sensitivity_batch256_s1/config.yaml",
+    "source_sha256": "d1a935fdc94871b2e06a74439aee88dddda4374db15f91090c4dbc90697706ad",
+    "sha256": "d1a935fdc94871b2e06a74439aee88dddda4374db15f91090c4dbc90697706ad",
+    "transform": "repository absolute path replaced with ${REPO_ROOT}; otherwise unchanged"
+  },
+  {
+    "file": "configs/scene_sensitivity_batch64_s1/config.yaml",
+    "source": ".stable_worldmodel/rebuttal/scene_sensitivity_batch64_s1/config.yaml",
+    "source_sha256": "156d74357b87f454a7428a8f87148799497b300824986e990d830f0f348c8f19",
+    "sha256": "156d74357b87f454a7428a8f87148799497b300824986e990d830f0f348c8f19",
+    "transform": "repository absolute path replaced with ${REPO_ROOT}; otherwise unchanged"
+  },
+  {
+    "file": "configs/scene_sensitivity_default_s1/config.yaml",
+    "source": ".stable_worldmodel/rebuttal/scene_sensitivity_default_s1/config.yaml",
+    "source_sha256": "38241877170434f1356c7cf9a687aa932a1cb85923409399c9f5349764797c18",
+    "sha256": "38241877170434f1356c7cf9a687aa932a1cb85923409399c9f5349764797c18",
+    "transform": "repository absolute path replaced with ${REPO_ROOT}; otherwise unchanged"
+  },
+  {
+    "file": "configs/scene_sensitivity_tau005_s1/config.yaml",
+    "source": ".stable_worldmodel/rebuttal/scene_sensitivity_tau005_s1/config.yaml",
+    "source_sha256": "c8d44c04f4158b1525fe9c4b51962be0e69df7dbeba970c89054eb6a204556fe",
+    "sha256": "c8d44c04f4158b1525fe9c4b51962be0e69df7dbeba970c89054eb6a204556fe",
+    "transform": "repository absolute path replaced with ${REPO_ROOT}; otherwise unchanged"
+  },
+  {
+    "file": "configs/scene_sensitivity_tau020_s1/config.yaml",
+    "source": ".stable_worldmodel/rebuttal/scene_sensitivity_tau020_s1/config.yaml",
+    "source_sha256": "92727d307e1de03b993acdd776a6e761ab0bee23f937f10c5bc25ba36e79d11a",
+    "sha256": "92727d307e1de03b993acdd776a6e761ab0bee23f937f10c5bc25ba36e79d11a",
+    "transform": "repository absolute path replaced with ${REPO_ROOT}; otherwise unchanged"
+  },
+  {
+    "file": "configs/lewm_masked_action_nce_e10_s1/config.yaml",
+    "source": ".stable_worldmodel/scene/lewm_masked_action_nce_e10_s1/config.yaml",
+    "source_sha256": "c2feb0d9261efc55f5a5949e2188dc823f84290ebf52de1d27c797e0d91e723b",
+    "sha256": "c2feb0d9261efc55f5a5949e2188dc823f84290ebf52de1d27c797e0d91e723b",
+    "transform": "repository absolute path replaced with ${REPO_ROOT}; otherwise unchanged"
+  },
+  {
+    "file": "configs/lewm_masked_action_nce_e10_s2/config.yaml",
+    "source": ".stable_worldmodel/scene/lewm_masked_action_nce_e10_s2/config.yaml",
+    "source_sha256": "f0185876aea81e486c94cea33c5d925d737c073d7d6b0a9a027ea3b425583b96",
+    "sha256": "f0185876aea81e486c94cea33c5d925d737c073d7d6b0a9a027ea3b425583b96",
+    "transform": "repository absolute path replaced with ${REPO_ROOT}; otherwise unchanged"
+  },
+  {
+    "file": "configs/lewm_masked_action_nce_e10_s3072/config.yaml",
+    "source": ".stable_worldmodel/scene/lewm_masked_action_nce_e10_s3072/config.yaml",
+    "source_sha256": "29d918e815cd76baf663b322caa56fae53c595cc21b5dbf7f7bde762f6d3ecc1",
+    "sha256": "29d918e815cd76baf663b322caa56fae53c595cc21b5dbf7f7bde762f6d3ecc1",
+    "transform": "repository absolute path replaced with ${REPO_ROOT}; otherwise unchanged"
+  },
+  {
+    "file": "configs/lewm_masked_e10_s1/config.yaml",
+    "source": ".stable_worldmodel/scene/lewm_masked_e10_s1/config.yaml",
+    "source_sha256": "3ed0a485dd4628b26614b06e3ac01b193ec6d0e17731d643a68068badeafa7cc",
+    "sha256": "3ed0a485dd4628b26614b06e3ac01b193ec6d0e17731d643a68068badeafa7cc",
+    "transform": "repository absolute path replaced with ${REPO_ROOT}; otherwise unchanged"
+  },
+  {
+    "file": "configs/lewm_masked_e10_s2/config.yaml",
+    "source": ".stable_worldmodel/scene/lewm_masked_e10_s2/config.yaml",
+    "source_sha256": "23755e5492ad471dd5ad924e53e7f9bd32bd4377bc99ade4a0f8ed6637ce7c40",
+    "sha256": "23755e5492ad471dd5ad924e53e7f9bd32bd4377bc99ade4a0f8ed6637ce7c40",
+    "transform": "repository absolute path replaced with ${REPO_ROOT}; otherwise unchanged"
+  },
+  {
+    "file": "configs/lewm_masked_e10_s3072/config.yaml",
+    "source": ".stable_worldmodel/scene/lewm_masked_e10_s3072/config.yaml",
+    "source_sha256": "752b232ffb6160d549ecd8cd7a5cadb2512b08317440941dbaf4b371efc4b9f0",
+    "sha256": "752b232ffb6160d549ecd8cd7a5cadb2512b08317440941dbaf4b371efc4b9f0",
+    "transform": "repository absolute path replaced with ${REPO_ROOT}; otherwise unchanged"
+  },
+  {
+    "file": "configs/lewm_sigreg_e10_s1/config.yaml",
+    "source": ".stable_worldmodel/scene/lewm_sigreg_e10_s1/config.yaml",
+    "source_sha256": "444b5b81aed164780fd97f92a53e7491f3c8c2ed907a66044cdcfb6647cb4444",
+    "sha256": "444b5b81aed164780fd97f92a53e7491f3c8c2ed907a66044cdcfb6647cb4444",
+    "transform": "repository absolute path replaced with ${REPO_ROOT}; otherwise unchanged"
+  },
+  {
+    "file": "configs/lewm_sigreg_e10_s2/config.yaml",
+    "source": ".stable_worldmodel/scene/lewm_sigreg_e10_s2/config.yaml",
+    "source_sha256": "04d28f4274beb34fd872085da74bcc83d895732690cd8d94e6bfec8bd559a297",
+    "sha256": "04d28f4274beb34fd872085da74bcc83d895732690cd8d94e6bfec8bd559a297",
+    "transform": "repository absolute path replaced with ${REPO_ROOT}; otherwise unchanged"
+  },
+  {
+    "file": "configs/lewm_sigreg_e10_s3072/config.yaml",
+    "source": ".stable_worldmodel/scene/lewm_sigreg_e10_s3072/config.yaml",
+    "source_sha256": "ce065e0ea70353025199cd37b56ddbd4bb6e7a4ff3b40ea58be8444f11a4f415",
+    "sha256": "ce065e0ea70353025199cd37b56ddbd4bb6e7a4ff3b40ea58be8444f11a4f415",
+    "transform": "repository absolute path replaced with ${REPO_ROOT}; otherwise unchanged"
+  }
+]

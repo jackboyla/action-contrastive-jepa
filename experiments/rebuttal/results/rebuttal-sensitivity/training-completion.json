@@ -1,0 +1,22 @@
+{
+  "default": {
+    "checkpoint": ".stable_worldmodel/rebuttal/scene_sensitivity_default_s1/lewm_masked_action_nce_epoch_1_object.ckpt",
+    "bytes": 74247535
+  },
+  "tau020": {
+    "checkpoint": ".stable_worldmodel/rebuttal/scene_sensitivity_tau020_s1/lewm_masked_action_nce_epoch_1_object.ckpt",
+    "bytes": 74247535
+  },
+  "tau005": {
+    "checkpoint": ".stable_worldmodel/rebuttal/scene_sensitivity_tau005_s1/lewm_masked_action_nce_epoch_1_object.ckpt",
+    "bytes": 74247535
+  },
+  "batch256": {
+    "checkpoint": ".stable_worldmodel/rebuttal/scene_sensitivity_batch256_s1/lewm_masked_action_nce_epoch_1_object.ckpt",
+    "bytes": 74247535
+  },
+  "batch64": {
+    "checkpoint": ".stable_worldmodel/rebuttal/scene_sensitivity_batch64_s1/lewm_masked_action_nce_epoch_1_object.ckpt",
+    "bytes": 74247535
+  }
+}

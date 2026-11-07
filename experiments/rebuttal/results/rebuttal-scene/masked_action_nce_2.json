@@ -1,0 +1,93 @@
+{
+  "checkpoint": ".stable_worldmodel/scene/lewm_masked_action_nce_e10_s2/lewm_masked_action_nce_epoch_10_object.ckpt",
+  "sha256": "414c816aa39bce8f01b0f1d78e1575183e043b1cb36b631ee0c967b312b4cbc2",
+  "dataset": "${REPO_ROOT}/.stable_worldmodel/ogbench/visual_scene_play.h5",
+  "sample_seed": 20261106,
+  "probe_split_sizes": [
+    3593,
+    1197,
+    1199
+  ],
+  "probe_scope": "episode-held-out probe from encoder training collection; not encoder-OOD",
+  "probes": {
+    "cube_position": {
+      "alpha": 0.01,
+      "r2": [
+        0.5542615056037903,
+        0.5587540864944458,
+        0.9279155731201172
+      ]
+    },
+    "drawer": {
+      "alpha": 1.0,
+      "r2": [
+        0.5040210485458374
+      ]
+    },
+    "window": {
+      "alpha": 10.0,
+      "r2": [
+        0.4350903630256653
+      ]
+    },
+    "button_0": {
+      "alpha": 1.0,
+      "r2": [
+        0.36109036207199097
+      ],
+      "balanced_accuracy": 0.7805535575888352
+    },
+    "button_1": {
+      "alpha": 1.0,
+      "r2": [
+        0.3194911479949951
+      ],
+      "balanced_accuracy": 0.753057962997111
+    },
+    "cube_rotation": {
+      "alpha": 1000.0,
+      "r2": [
+        -0.007566751121662829,
+        -0.013516170358374158,
+        -0.04663920691261225,
+        -0.02223775120858762,
+        -0.01210849072529796,
+        -0.03597760163686181,
+        -0.07496973563507936,
+        -0.011675969330743774,
+        0.0002179516629533529
+      ]
+    }
+  },
+  "embedding_std_mean": 0.24180848896503448,
+  "participation_ratio": 7.724072382575761,
+  "normalization_variance": 0.061753105885205294,
+  "rollout_initial_observations": 1,
+  "normalization": "mean per-dimension variance on probe-training frames",
+  "rollouts": {
+    "1": {
+      "simulator_steps": 5,
+      "normalized_mse": 0.023641536012291908,
+      "persistence_normalized_mse": 0.5201324820518494,
+      "error_over_persistence": 0.04545291140675545
+    },
+    "3": {
+      "simulator_steps": 15,
+      "normalized_mse": 0.031183844432234764,
+      "persistence_normalized_mse": 1.420894742012024,
+      "error_over_persistence": 0.021946625784039497
+    },
+    "5": {
+      "simulator_steps": 25,
+      "normalized_mse": 0.03456294536590576,
+      "persistence_normalized_mse": 1.6852877140045166,
+      "error_over_persistence": 0.02050863206386566
+    },
+    "10": {
+      "simulator_steps": 50,
+      "normalized_mse": 0.046296801418066025,
+      "persistence_normalized_mse": 1.6672515869140625,
+      "error_over_persistence": 0.02776833437383175
+    }
+  }
+}
