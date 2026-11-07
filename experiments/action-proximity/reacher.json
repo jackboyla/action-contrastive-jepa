@@ -1,0 +1,2819 @@
+{
+  "task": "reacher",
+  "seed": 3072,
+  "batches": 100,
+  "batch_size": 128,
+  "transitions_per_window": 3,
+  "candidates": 384,
+  "negatives_per_positive": 383,
+  "distance": "RMS across flattened normalized action-block coordinates",
+  "ordered_pairs": true,
+  "threshold_inclusive": true,
+  "totals": {
+    "same_window": {
+      "denominator": 76800,
+      "numerators": {
+        "0.05": 0,
+        "0.1": 0,
+        "0.2": 0
+      }
+    },
+    "cross_sample": {
+      "denominator": 14630400,
+      "numerators": {
+        "0.05": 0,
+        "0.1": 0,
+        "0.2": 2
+      }
+    },
+    "cross_sample_same_episode": {
+      "denominator": 1332,
+      "numerators": {
+        "0.05": 0,
+        "0.1": 0,
+        "0.2": 0
+      }
+    }
+  },
+  "per_batch": [
+    {
+      "same_window": {
+        "denominator": 768,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample": {
+        "denominator": 146304,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample_same_episode": {
+        "denominator": 36,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      }
+    },
+    {
+      "same_window": {
+        "denominator": 768,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample": {
+        "denominator": 146304,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample_same_episode": {
+        "denominator": 0,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      }
+    },
+    {
+      "same_window": {
+        "denominator": 768,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample": {
+        "denominator": 146304,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample_same_episode": {
+        "denominator": 36,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      }
+    },
+    {
+      "same_window": {
+        "denominator": 768,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample": {
+        "denominator": 146304,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample_same_episode": {
+        "denominator": 18,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      }
+    },
+    {
+      "same_window": {
+        "denominator": 768,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample": {
+        "denominator": 146304,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample_same_episode": {
+        "denominator": 18,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      }
+    },
+    {
+      "same_window": {
+        "denominator": 768,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample": {
+        "denominator": 146304,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample_same_episode": {
+        "denominator": 0,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      }
+    },
+    {
+      "same_window": {
+        "denominator": 768,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample": {
+        "denominator": 146304,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample_same_episode": {
+        "denominator": 18,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      }
+    },
+    {
+      "same_window": {
+        "denominator": 768,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample": {
+        "denominator": 146304,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample_same_episode": {
+        "denominator": 18,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      }
+    },
+    {
+      "same_window": {
+        "denominator": 768,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample": {
+        "denominator": 146304,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample_same_episode": {
+        "denominator": 0,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      }
+    },
+    {
+      "same_window": {
+        "denominator": 768,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample": {
+        "denominator": 146304,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample_same_episode": {
+        "denominator": 0,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      }
+    },
+    {
+      "same_window": {
+        "denominator": 768,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample": {
+        "denominator": 146304,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample_same_episode": {
+        "denominator": 18,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      }
+    },
+    {
+      "same_window": {
+        "denominator": 768,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample": {
+        "denominator": 146304,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample_same_episode": {
+        "denominator": 18,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      }
+    },
+    {
+      "same_window": {
+        "denominator": 768,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample": {
+        "denominator": 146304,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample_same_episode": {
+        "denominator": 18,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      }
+    },
+    {
+      "same_window": {
+        "denominator": 768,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample": {
+        "denominator": 146304,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample_same_episode": {
+        "denominator": 0,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      }
+    },
+    {
+      "same_window": {
+        "denominator": 768,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample": {
+        "denominator": 146304,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample_same_episode": {
+        "denominator": 36,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      }
+    },
+    {
+      "same_window": {
+        "denominator": 768,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample": {
+        "denominator": 146304,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample_same_episode": {
+        "denominator": 0,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      }
+    },
+    {
+      "same_window": {
+        "denominator": 768,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample": {
+        "denominator": 146304,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample_same_episode": {
+        "denominator": 0,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      }
+    },
+    {
+      "same_window": {
+        "denominator": 768,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample": {
+        "denominator": 146304,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample_same_episode": {
+        "denominator": 0,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      }
+    },
+    {
+      "same_window": {
+        "denominator": 768,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample": {
+        "denominator": 146304,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample_same_episode": {
+        "denominator": 0,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      }
+    },
+    {
+      "same_window": {
+        "denominator": 768,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample": {
+        "denominator": 146304,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample_same_episode": {
+        "denominator": 36,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      }
+    },
+    {
+      "same_window": {
+        "denominator": 768,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample": {
+        "denominator": 146304,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample_same_episode": {
+        "denominator": 18,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      }
+    },
+    {
+      "same_window": {
+        "denominator": 768,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample": {
+        "denominator": 146304,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample_same_episode": {
+        "denominator": 0,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      }
+    },
+    {
+      "same_window": {
+        "denominator": 768,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample": {
+        "denominator": 146304,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample_same_episode": {
+        "denominator": 0,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      }
+    },
+    {
+      "same_window": {
+        "denominator": 768,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample": {
+        "denominator": 146304,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample_same_episode": {
+        "denominator": 18,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      }
+    },
+    {
+      "same_window": {
+        "denominator": 768,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample": {
+        "denominator": 146304,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample_same_episode": {
+        "denominator": 0,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      }
+    },
+    {
+      "same_window": {
+        "denominator": 768,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample": {
+        "denominator": 146304,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample_same_episode": {
+        "denominator": 18,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      }
+    },
+    {
+      "same_window": {
+        "denominator": 768,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample": {
+        "denominator": 146304,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample_same_episode": {
+        "denominator": 0,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      }
+    },
+    {
+      "same_window": {
+        "denominator": 768,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample": {
+        "denominator": 146304,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample_same_episode": {
+        "denominator": 0,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      }
+    },
+    {
+      "same_window": {
+        "denominator": 768,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample": {
+        "denominator": 146304,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample_same_episode": {
+        "denominator": 0,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      }
+    },
+    {
+      "same_window": {
+        "denominator": 768,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample": {
+        "denominator": 146304,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample_same_episode": {
+        "denominator": 0,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      }
+    },
+    {
+      "same_window": {
+        "denominator": 768,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample": {
+        "denominator": 146304,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample_same_episode": {
+        "denominator": 0,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      }
+    },
+    {
+      "same_window": {
+        "denominator": 768,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample": {
+        "denominator": 146304,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample_same_episode": {
+        "denominator": 36,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      }
+    },
+    {
+      "same_window": {
+        "denominator": 768,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample": {
+        "denominator": 146304,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample_same_episode": {
+        "denominator": 0,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      }
+    },
+    {
+      "same_window": {
+        "denominator": 768,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample": {
+        "denominator": 146304,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample_same_episode": {
+        "denominator": 0,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      }
+    },
+    {
+      "same_window": {
+        "denominator": 768,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample": {
+        "denominator": 146304,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample_same_episode": {
+        "denominator": 0,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      }
+    },
+    {
+      "same_window": {
+        "denominator": 768,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample": {
+        "denominator": 146304,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample_same_episode": {
+        "denominator": 0,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      }
+    },
+    {
+      "same_window": {
+        "denominator": 768,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample": {
+        "denominator": 146304,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample_same_episode": {
+        "denominator": 0,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      }
+    },
+    {
+      "same_window": {
+        "denominator": 768,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample": {
+        "denominator": 146304,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample_same_episode": {
+        "denominator": 18,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      }
+    },
+    {
+      "same_window": {
+        "denominator": 768,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample": {
+        "denominator": 146304,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample_same_episode": {
+        "denominator": 0,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      }
+    },
+    {
+      "same_window": {
+        "denominator": 768,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample": {
+        "denominator": 146304,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample_same_episode": {
+        "denominator": 36,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      }
+    },
+    {
+      "same_window": {
+        "denominator": 768,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample": {
+        "denominator": 146304,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample_same_episode": {
+        "denominator": 0,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      }
+    },
+    {
+      "same_window": {
+        "denominator": 768,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample": {
+        "denominator": 146304,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample_same_episode": {
+        "denominator": 18,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      }
+    },
+    {
+      "same_window": {
+        "denominator": 768,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample": {
+        "denominator": 146304,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample_same_episode": {
+        "denominator": 18,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      }
+    },
+    {
+      "same_window": {
+        "denominator": 768,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample": {
+        "denominator": 146304,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample_same_episode": {
+        "denominator": 18,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      }
+    },
+    {
+      "same_window": {
+        "denominator": 768,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample": {
+        "denominator": 146304,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample_same_episode": {
+        "denominator": 36,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      }
+    },
+    {
+      "same_window": {
+        "denominator": 768,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample": {
+        "denominator": 146304,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample_same_episode": {
+        "denominator": 18,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      }
+    },
+    {
+      "same_window": {
+        "denominator": 768,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample": {
+        "denominator": 146304,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample_same_episode": {
+        "denominator": 36,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      }
+    },
+    {
+      "same_window": {
+        "denominator": 768,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample": {
+        "denominator": 146304,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample_same_episode": {
+        "denominator": 18,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      }
+    },
+    {
+      "same_window": {
+        "denominator": 768,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample": {
+        "denominator": 146304,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample_same_episode": {
+        "denominator": 18,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      }
+    },
+    {
+      "same_window": {
+        "denominator": 768,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample": {
+        "denominator": 146304,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample_same_episode": {
+        "denominator": 0,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      }
+    },
+    {
+      "same_window": {
+        "denominator": 768,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample": {
+        "denominator": 146304,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample_same_episode": {
+        "denominator": 36,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      }
+    },
+    {
+      "same_window": {
+        "denominator": 768,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample": {
+        "denominator": 146304,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample_same_episode": {
+        "denominator": 18,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      }
+    },
+    {
+      "same_window": {
+        "denominator": 768,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample": {
+        "denominator": 146304,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample_same_episode": {
+        "denominator": 0,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      }
+    },
+    {
+      "same_window": {
+        "denominator": 768,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample": {
+        "denominator": 146304,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample_same_episode": {
+        "denominator": 0,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      }
+    },
+    {
+      "same_window": {
+        "denominator": 768,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample": {
+        "denominator": 146304,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample_same_episode": {
+        "denominator": 18,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      }
+    },
+    {
+      "same_window": {
+        "denominator": 768,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample": {
+        "denominator": 146304,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample_same_episode": {
+        "denominator": 36,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      }
+    },
+    {
+      "same_window": {
+        "denominator": 768,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample": {
+        "denominator": 146304,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample_same_episode": {
+        "denominator": 0,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      }
+    },
+    {
+      "same_window": {
+        "denominator": 768,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample": {
+        "denominator": 146304,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample_same_episode": {
+        "denominator": 36,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      }
+    },
+    {
+      "same_window": {
+        "denominator": 768,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample": {
+        "denominator": 146304,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample_same_episode": {
+        "denominator": 36,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      }
+    },
+    {
+      "same_window": {
+        "denominator": 768,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample": {
+        "denominator": 146304,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 2
+        }
+      },
+      "cross_sample_same_episode": {
+        "denominator": 36,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      }
+    },
+    {
+      "same_window": {
+        "denominator": 768,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample": {
+        "denominator": 146304,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample_same_episode": {
+        "denominator": 18,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      }
+    },
+    {
+      "same_window": {
+        "denominator": 768,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample": {
+        "denominator": 146304,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample_same_episode": {
+        "denominator": 18,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      }
+    },
+    {
+      "same_window": {
+        "denominator": 768,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample": {
+        "denominator": 146304,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample_same_episode": {
+        "denominator": 0,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      }
+    },
+    {
+      "same_window": {
+        "denominator": 768,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample": {
+        "denominator": 146304,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample_same_episode": {
+        "denominator": 18,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      }
+    },
+    {
+      "same_window": {
+        "denominator": 768,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample": {
+        "denominator": 146304,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample_same_episode": {
+        "denominator": 18,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      }
+    },
+    {
+      "same_window": {
+        "denominator": 768,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample": {
+        "denominator": 146304,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample_same_episode": {
+        "denominator": 0,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      }
+    },
+    {
+      "same_window": {
+        "denominator": 768,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample": {
+        "denominator": 146304,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample_same_episode": {
+        "denominator": 18,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      }
+    },
+    {
+      "same_window": {
+        "denominator": 768,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample": {
+        "denominator": 146304,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample_same_episode": {
+        "denominator": 18,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      }
+    },
+    {
+      "same_window": {
+        "denominator": 768,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample": {
+        "denominator": 146304,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample_same_episode": {
+        "denominator": 0,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      }
+    },
+    {
+      "same_window": {
+        "denominator": 768,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample": {
+        "denominator": 146304,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample_same_episode": {
+        "denominator": 36,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      }
+    },
+    {
+      "same_window": {
+        "denominator": 768,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample": {
+        "denominator": 146304,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample_same_episode": {
+        "denominator": 0,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      }
+    },
+    {
+      "same_window": {
+        "denominator": 768,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample": {
+        "denominator": 146304,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample_same_episode": {
+        "denominator": 18,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      }
+    },
+    {
+      "same_window": {
+        "denominator": 768,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample": {
+        "denominator": 146304,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample_same_episode": {
+        "denominator": 18,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      }
+    },
+    {
+      "same_window": {
+        "denominator": 768,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample": {
+        "denominator": 146304,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample_same_episode": {
+        "denominator": 0,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      }
+    },
+    {
+      "same_window": {
+        "denominator": 768,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample": {
+        "denominator": 146304,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample_same_episode": {
+        "denominator": 18,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      }
+    },
+    {
+      "same_window": {
+        "denominator": 768,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample": {
+        "denominator": 146304,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample_same_episode": {
+        "denominator": 0,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      }
+    },
+    {
+      "same_window": {
+        "denominator": 768,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample": {
+        "denominator": 146304,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample_same_episode": {
+        "denominator": 0,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      }
+    },
+    {
+      "same_window": {
+        "denominator": 768,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample": {
+        "denominator": 146304,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample_same_episode": {
+        "denominator": 18,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      }
+    },
+    {
+      "same_window": {
+        "denominator": 768,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample": {
+        "denominator": 146304,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample_same_episode": {
+        "denominator": 18,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      }
+    },
+    {
+      "same_window": {
+        "denominator": 768,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample": {
+        "denominator": 146304,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample_same_episode": {
+        "denominator": 18,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      }
+    },
+    {
+      "same_window": {
+        "denominator": 768,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample": {
+        "denominator": 146304,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample_same_episode": {
+        "denominator": 0,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      }
+    },
+    {
+      "same_window": {
+        "denominator": 768,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample": {
+        "denominator": 146304,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample_same_episode": {
+        "denominator": 18,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      }
+    },
+    {
+      "same_window": {
+        "denominator": 768,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample": {
+        "denominator": 146304,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample_same_episode": {
+        "denominator": 18,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      }
+    },
+    {
+      "same_window": {
+        "denominator": 768,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample": {
+        "denominator": 146304,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample_same_episode": {
+        "denominator": 18,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      }
+    },
+    {
+      "same_window": {
+        "denominator": 768,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample": {
+        "denominator": 146304,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample_same_episode": {
+        "denominator": 18,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      }
+    },
+    {
+      "same_window": {
+        "denominator": 768,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample": {
+        "denominator": 146304,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample_same_episode": {
+        "denominator": 0,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      }
+    },
+    {
+      "same_window": {
+        "denominator": 768,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample": {
+        "denominator": 146304,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample_same_episode": {
+        "denominator": 0,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      }
+    },
+    {
+      "same_window": {
+        "denominator": 768,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample": {
+        "denominator": 146304,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample_same_episode": {
+        "denominator": 36,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      }
+    },
+    {
+      "same_window": {
+        "denominator": 768,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample": {
+        "denominator": 146304,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample_same_episode": {
+        "denominator": 36,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      }
+    },
+    {
+      "same_window": {
+        "denominator": 768,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample": {
+        "denominator": 146304,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample_same_episode": {
+        "denominator": 0,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      }
+    },
+    {
+      "same_window": {
+        "denominator": 768,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample": {
+        "denominator": 146304,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample_same_episode": {
+        "denominator": 36,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      }
+    },
+    {
+      "same_window": {
+        "denominator": 768,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample": {
+        "denominator": 146304,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample_same_episode": {
+        "denominator": 18,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      }
+    },
+    {
+      "same_window": {
+        "denominator": 768,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample": {
+        "denominator": 146304,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample_same_episode": {
+        "denominator": 0,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      }
+    },
+    {
+      "same_window": {
+        "denominator": 768,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample": {
+        "denominator": 146304,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample_same_episode": {
+        "denominator": 18,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      }
+    },
+    {
+      "same_window": {
+        "denominator": 768,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample": {
+        "denominator": 146304,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample_same_episode": {
+        "denominator": 18,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      }
+    },
+    {
+      "same_window": {
+        "denominator": 768,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample": {
+        "denominator": 146304,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample_same_episode": {
+        "denominator": 0,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      }
+    },
+    {
+      "same_window": {
+        "denominator": 768,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample": {
+        "denominator": 146304,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample_same_episode": {
+        "denominator": 18,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      }
+    },
+    {
+      "same_window": {
+        "denominator": 768,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample": {
+        "denominator": 146304,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample_same_episode": {
+        "denominator": 18,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      }
+    },
+    {
+      "same_window": {
+        "denominator": 768,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample": {
+        "denominator": 146304,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample_same_episode": {
+        "denominator": 0,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      }
+    },
+    {
+      "same_window": {
+        "denominator": 768,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample": {
+        "denominator": 146304,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      },
+      "cross_sample_same_episode": {
+        "denominator": 0,
+        "numerators": {
+          "0.05": 0,
+          "0.1": 0,
+          "0.2": 0
+        }
+      }
+    }
+  ],
+  "resolved_train_config": {
+    "output_model_name": "lewm_masked_action_nce",
+    "subdir": "e5_action_proximity",
+    "num_workers": 8,
+    "train_split": 0.9,
+    "seed": 3072,
+    "img_size": 224,
+    "patch_size": 14,
+    "encoder_scale": "tiny",
+    "dump_object": true,
+    "runtime": {
+      "float32_matmul_precision": "high",
+      "cudnn_benchmark": true,
+      "sharing_strategy": "file_system",
+      "gpu_image_preprocess": true,
+      "stop_after_epoch": null
+    },
+    "trainer": {
+      "max_epochs": 10,
+      "devices": "auto",
+      "accelerator": "gpu",
+      "precision": "bf16-mixed",
+      "gradient_clip_val": 1.0,
+      "log_every_n_steps": 25
+    },
+    "checkpoint": {
+      "enabled": true,
+      "step_interval": 1000,
+      "time_interval_seconds": 600,
+      "save_best": true,
+      "monitor": "validate/loss",
+      "mode": "min",
+      "keep_last_n": 0,
+      "save_on_train_epoch_end": true,
+      "object_epoch_interval": 1
+    },
+    "resume": {
+      "mode": "auto",
+      "ckpt_path": null,
+      "prevent_restart_existing": true,
+      "allow_config_mismatch": false
+    },
+    "logging": {
+      "log_every_n_steps": 25,
+      "grad_norm_every_n_steps": 100,
+      "progress_bar": true,
+      "progress_refresh_steps": 25
+    },
+    "early_stopping": {
+      "enabled": true,
+      "monitor": "validate/loss",
+      "mode": "min",
+      "patience": 3,
+      "min_delta": 0.0,
+      "min_epochs": 5,
+      "strict": false
+    },
+    "loader": {
+      "batch_size": 128,
+      "num_workers": 8,
+      "persistent_workers": true,
+      "prefetch_factor": 4,
+      "pin_memory": true
+    },
+    "optimizer": {
+      "type": "AdamW",
+      "lr": 5e-05,
+      "weight_decay": 0.001
+    },
+    "scheduler": {
+      "type": "LinearWarmupCosineAnnealingLR",
+      "interval": "step",
+      "frequency": 1
+    },
+    "wandb": {
+      "enabled": "auto",
+      "config": {
+        "entity": null,
+        "project": "masked-transition-lewm",
+        "name": "lewm_masked_action_nce",
+        "id": "e5_action_proximity",
+        "resume": "allow",
+        "log_model": false
+      }
+    },
+    "wm": {
+      "type": "lewm_masked",
+      "prediction_mode": "masked_transition",
+      "history_size": 3,
+      "horizon": 1,
+      "num_preds": 1,
+      "embed_dim": 192
+    },
+    "predictor": {
+      "depth": 6,
+      "heads": 16,
+      "mlp_dim": 2048,
+      "dim_head": 64,
+      "dropout": 0.1,
+      "emb_dropout": 0.0
+    },
+    "loss": {
+      "sigreg": {
+        "weight": 0.0,
+        "kwargs": {
+          "knots": 17,
+          "num_proj": 1024
+        }
+      },
+      "masked": {
+        "mask_mode": "both",
+        "inverse_weight": 0.3,
+        "inverse_warmup_epochs": 0,
+        "forward_prob": 0.5,
+        "inverse_loss_type": "action_nce",
+        "action_nce_temperature": 0.1
+      }
+    },
+    "data": {
+      "dataset": {
+        "num_steps": 4,
+        "frameskip": 5,
+        "name": "dmc/reacher_random",
+        "keys_to_load": [
+          "pixels",
+          "action",
+          "observation"
+        ],
+        "keys_to_cache": [
+          "action",
+          "observation"
+        ]
+      }
+    },
+    "inverse": {
+      "hidden_dim": 512,
+      "depth": 2,
+      "dropout": 0.0
+    }
+  },
+  "omitted_columns": [
+    "pixels",
+    "observation"
+  ],
+  "normalization": {
+    "mean": [
+      3.5727661713249575e-05,
+      -0.0005056222437278566
+    ],
+    "sample_std": [
+      0.5774142250381039,
+      0.5771828236210833
+    ],
+    "constant_dimensions": [],
+    "constant_treatment": "training NaN-to-zero; original RMS denominator retained"
+  },
+  "dataset": {
+    "name": "dmc/reacher_random",
+    "bytes": 98905882624,
+    "action_sha256": "55b74b98595591ed455324b6ec98e54b3228eae734649169404095c60ad0fb6a",
+    "ep_len_sha256": "f8808e1ed6dd3bd317d31c1331fac9f9a0774a00f394b8c1ddcc3ce54dccf871",
+    "ep_offset_sha256": "7a9f1c5227656d7ceb6a72f0af53afaad310ea21ac5f20d8ba85e76028fcf1c5",
+    "full_file_hash": null
+  },
+  "source_sha256": {
+    "train.py": "939263eb191c4e419f51f02cc2e078409e7d4ecd6a8ddcc8039933650600a78b",
+    "utils.py": "cf5ea0ec638beab0cf76a7335a2a9545898087f69a484f0589391dae496a298a",
+    "stable_worldmodel/data/dataset.py": "8eea182267730a9bad95eb6412db58f66eb859ffc2e39e67aef078bc858ccf6f",
+    "scripts/action_proximity.py": "2ca689844a71c4ed88f2f79f2ff144dfaa3ee2cec2eab78b4d40437939a3a574"
+  },
+  "commit": "ab110a696d78abcea7d0d13aa6f7d2e3565fe268",
+  "environment": {
+    "python": "3.10.20 (main, Jun 23 2026, 15:20:26) [Clang 22.1.3 ]",
+    "torch": "2.14.1+cu130",
+    "numpy": "2.2.6",
+    "stable_worldmodel": "0.0.6"
+  },
+  "measurement_seconds": 0.4007620851043612,
+  "scope": "Action proximity only; does not establish behavioral equivalence or learned shortcuts."
+}

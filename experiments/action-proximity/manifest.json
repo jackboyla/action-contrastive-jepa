@@ -1,0 +1,28 @@
+{
+  "files": {
+    "../../scripts/action_proximity.py": "2ca689844a71c4ed88f2f79f2ff144dfaa3ee2cec2eab78b4d40437939a3a574",
+    "README.md": "3eb2811394f6c15bbc3d7181e52ded07f47386df39124bfb109c0cf92532ca77",
+    "verify.py": "2446c956a6fa20a76b8c3cbc52b7fd9499836f4cee51281445fd1adee65e8262",
+    "scene.json": "f4c09be9f221239f706ca9b0dfde66c175d2b975ef44427e49a2f331102a53a1",
+    "scene.npz": "6421c12247acee17c078944a5811ea43ea392a32bd69805bddedd8bd4a6e56ff",
+    "reacher.json": "dde403cdca171403971dd1d1926f35afe80d103098cacc51d9584328b5a21265",
+    "reacher.npz": "0fa1c606a4bcb2a348fc4cc2a538190f394161cb7cc7058ec1bc4da6ef335ec4"
+  },
+  "datasets": {
+    "reacher": {
+      "repository": "quentinll/lewm-reacher",
+      "revision": "e70a080d0d04c6072123c9ebd343acf7fff28dbf",
+      "url": "https://huggingface.co/datasets/quentinll/lewm-reacher/resolve/e70a080d0d04c6072123c9ebd343acf7fff28dbf/reacher.tar.zst",
+      "archive_bytes": 23750614946,
+      "archive_sha256": "4ff2385e49712caa89f21b8e0a246e2614b621d3f22cf2d1224d845e879a1cc2",
+      "archive_member": "reacher.h5",
+      "sha256": "85a7dddfa1801302abcb175a80a23bb69c78291dd977ce40d69aedcb9123da06",
+      "bytes": 98905882624
+    },
+    "scene": {
+      "name": "ogbench/visual_scene_play",
+      "full_file_sha256": null,
+      "column_hashes": "scene.json"
+    }
+  }
+}
