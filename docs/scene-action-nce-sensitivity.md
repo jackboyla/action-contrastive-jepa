@@ -1,37 +1,7 @@
 # Scene Action-NCE: ten-epoch sensitivity study
 
-## Status
-
-As of 2026-11-07 16:20 UTC, **2/15 training runs and 2/15 evaluations** are
-complete. At batch64/temperature.10, training seed3072 achieved68/100 and
-seed1 achieved72/100 successes. Both used identical100task row/episode/start
-identifiers. Saved configs, finalepoch10/updatecounts and boolean outcomes
-passed audit. Seed1 evaluation took464seconds and exited0. These are partial
-results; no grid-wide or seed-aggregate conclusion is drawn.
-
-Seed2 B64 training is active onGPU1 and has passed7,900updates. Seed1's live
-graphics placement was not sampled because its evaluation ended between
-scheduled checks. A read-only observer now records process/device evidence
-during subsequent evaluations; the explicit EGLsetting and prior standalone
-render verification remain in place.
-
-The first training took 7,976 seconds for 137,950 updates. Its final checkpoint
-passed CPU loading and finite-weight checks. The coordinated hold ended at
-13:42 UTC; the original queue resumed without duplication. Whole-study runtime
-is provisionally 37–47 hours including the completed 1h42m resource delay,
-pending measured larger-batch throughput. The proposed second GPU1 slot was
-cancelled before it delayed training. All holds are lifted; the original
-queue is active and paper studies have GPU priority. Seed1 has passed17,400
-updates. At15:49UTC root disk has478GiB free after an external storage change; study
-artifacts remain about84MiB against the6GiB budget. No cleanup was performed
-by this study. Seed1 remains active with122,600/137,950updates.
-
-The first evaluation used CUDA on GPU1 but EGL graphics on GPU0. Subsequent
-evaluations explicitly select EGL device1, whose UUID matches physicalGPU1.
-A locked render diagnostic verified PID2972400 appeared only on GPU1 with
-187MiB of graphics allocation and produced a nonzero image. No placement-only
-rerun is needed. The original evaluation saved complete results and exited0;
-its EGL cleanup warning occurred after saving and does not invalidate them.
+This protocol tests five settings across three training seeds. Complete-grid
+results remain pending; partial runs do not establish robustness.
 
 ## Frozen protocol
 
@@ -47,8 +17,8 @@ by validation or evaluation score. Do not resume the earlier one-epoch screen.
 | tau005 | 128 | .05 | .30 |
 | tau020 | 128 | .20 | .30 |
 
-Run settings in table order, each with training seeds 3072, 1, 2. Retrain all
-15 checkpoints; none is reused. Use `lewm_masked_action_nce`, `data=scene`,
+Run settings in table order, each with training seeds 3072, 1, 2. Train all
+15 checkpoints from scratch; do not resume the earlier screen. Use `lewm_masked_action_nce`, `data=scene`,
 the existing 90/10 split, and all other configuration defaults.
 
 Evaluate every checkpoint on the same 100 sampled tasks with evaluation seed
@@ -78,7 +48,7 @@ or completed run directory.
 export STABLEWM_HOME=/path/to/existing/cache
 export PYTHONPATH="$PWD"
 export CUDA_VISIBLE_DEVICES=1 MUJOCO_GL=egl
-# Verified on this workstation by EGL UUID vs nvidia-smi UUID; recheck elsewhere.
+# Match the EGL device UUID to the intended GPU before choosing this ordinal.
 export MUJOCO_EGL_DEVICE_ID=1
 export OMP_NUM_THREADS=4 OPENBLAS_NUM_THREADS=4 MKL_NUM_THREADS=4
 python_bin=/path/to/existing/venv/bin/python
@@ -112,10 +82,7 @@ MuJoCo indexes `eglQueryDevicesEXT()` for `MUJOCO_EGL_DEVICE_ID`; do not assume
 CUDA ordinals remap that list. Match EGL device UUIDs to `nvidia-smi` using
 [EGL_EXT_device_persistent_id](https://registry.khronos.org/EGL/extensions/EXT/EGL_EXT_device_persistent_id.txt),
 then verify a render process appears only on the intended physical GPU.
-For an already-running queue whose environment cannot be changed, the same
-supported variable can be set through Hydra's `hydra.job.env_set` in a local
-configuration override before the next evaluation. Machine-specific ordinals
-are not project defaults.
+Machine-specific ordinals are not project defaults.
 
 Execute long jobs in tmux. Acquire the shared GPU1 lock separately for each
 train/evaluation job. Check GPU activity, other processes, disk, and logs before
@@ -125,11 +92,9 @@ is disabled. Keep total study artifacts below 6 GiB. Raw outputs stay local.
 
 ## Verification and reporting
 
-The evaluator now persists sampled task identifiers without changing task
-selection or planning. Existing planning-artifact and configuration tests pass
-(12 tests). Full study integration and outcome audits are pending. Training
-process, real optimizer progress, GPU placement and resource use were verified;
-launch success alone was not treated as evidence of training completion.
+The evaluator records sampled task identifiers in its output. Audit these
+identifiers, resolved configurations, final checkpoint steps and all episode
+outcomes before reporting results.
 
 Report all 15 success counts and percentages, then the mean and sample standard
 deviation across the three training seeds for each setting. Shared evaluation
@@ -138,46 +103,22 @@ number of optimizer updates with batch size, so this does not isolate the
 number of contrastive negatives. No significance, broad robustness, or
 behavior-policy-shift conclusion follows from this study alone.
 
-## Proposed manuscript addition — pending results
-
-Appendix D replacement template (fill only after all audits pass):
-
-> We evaluated five predeclared batch-size/temperature settings at inverse-loss
-> weight 0.30 after ten training epochs, using training seeds 3072, 1, and 2.
-> Each final checkpoint used the same 100 short-goal Scene tasks (evaluation
-> seed 43, 25-step goal offset, 50-step budget). Table [pending] reports every
-> seed and the mean ± sample standard deviation across training seeds.
-> Batch-size changes also change optimizer update count under this fixed-epoch
-> protocol. These results concern this grid and short-goal protocol; they do
-> not establish comprehensive robustness.
-
-Main-text replacement template:
-
-> Appendix D reports a ten-epoch, three-training-seed Scene sensitivity study
-> across five predeclared batch-size/temperature settings on 100 shared
-> short-goal tasks. [Add a narrowly scoped numerical finding after audit.]
-
-These are proposed additions only. The paper, Google Doc, and Overleaf have
-not been edited. The earlier one-epoch results must not be relabeled as these
-pending ten-epoch results.
-
-## Shared-baseline amendment — 2026-11-07
+## Shared standalone Action-NCE controls
 
 Sensitivity is the sole producer of the default Action-NCE checkpoints
-(batch128, temperature.10, coefficient.30; seeds3072,1,2). The hybrid study
-will consume the same audited finalepoch10 checkpoints rather than train
+(batch 128, temperature .10, coefficient .30; seeds 3072, 1, 2). The hybrid study
+will consume the same audited final epoch-10 checkpoints rather than train
 separate default NCE replicas. These are shared baselines, not independent
-training replications. The sensitivity queue, grid, schedule, evaluation,
-and final-checkpoint rule remain unchanged. No default checkpoint is complete
-or accepted yet.
+training replications. The sensitivity grid, schedule, evaluation,
+and final-checkpoint rule remain unchanged.
 
 Each seed has a pre-training snapshot of its full resolved config (including
 the dataset-derived action dimension), raw and normalized-AST source hashes,
 Python/package versions, shared dataset SHA256 and file identity, GPU
 model/ordinal/UUID/driver, and thread/environment settings. The producer
 checks the live launch environment and final provenance against that snapshot.
-A completion attestation requires training exit0, fit_end at epoch10 and
-68,970updates, no resume, and the final checkpoint's SHA256 and byte size.
+A completion attestation requires training exit 0, fit_end at epoch 10 and
+68,970 updates, no resume, and the final checkpoint's SHA256 and byte size.
 The consumer independently validates the manifest and artifacts before use.
 
 Only run identity (`subdir`, `wandb.config.id/name`) is normalized in config
@@ -191,5 +132,4 @@ Producer checkpoints live at
 in the existing cache. Local atomic manifests are
 `progress/evaluations/shared-nce-s<seed>-launch.json` (predeclared only) and
 `shared-nce-s<seed>.json` (complete only after checks). No dataset or model
-copies are needed. Fair-study confirmations require a separate identity
-check after coefficient selection; this amendment does not alter selection.
+copies are needed. The fair-tuning study uses separate confirmations after coefficient selection.
