@@ -12,16 +12,39 @@ are finite (311 state tensors each). Seed 1 finished at 15:58 UTC.
 Seed 2 acquired GPU0 after the fair-tuning job and passed step 100/68,970
 at 16:11 UTC. Estimated completion: 18:20–18:30 UTC.
 
-No planning or probe results are available. The six standalone runs remain
-pending. Cross-study default NCE and conditional fair-default final runs
-are being checked before baseline launch; no reuse has been approved.
-One-epoch screening checkpoints are ineligible. Any reuse requires a
-complete config, seed, update-count, checkpoint, environment and provenance
-audit and parent coordination.
+No planning or probe results are available. Three SIGReg runs remain fresh.
+Sensitivity is now the sole producer of the three default-NCE checkpoints;
+none has yet been accepted. The consumer waits without holding a GPU lock.
 
-The first two hybrid runs each took about 2 hours 10 minutes after acquiring
-GPU0. Allow approximately 32–44 hours from the November 7 13:42 release for
-the whole study, including shared-GPU waits; this estimate remains uncertain.
+### Protocol amendment — 2026-11-07 16:29 UTC
+
+With parent authorization, use sensitivity's B128/temperature0.1/NCE0.30
+final models for seeds3072,1,2 as the NCE baseline. This is a **shared
+baseline, not an independent replication**. The fixed hybrid coefficients,
+three seeds, epoch10 selection, planning tasks and probes remain unchanged.
+Do not reuse fair-study selected models or one-epoch screening checkpoints.
+
+Each seed requires a predeclared launch manifest and a complete producer
+manifest, matching resolved scientific config, seed, epoch10,68,970updates,
+exit0, software/thread settings, training-code AST and shared dataset
+identity/hash. Check actual saved config, no-resume metadata, fit-end event,
+checkpoint bytes and SHA256 independently. Raw source hashes, physical GPU
+ordinal/UUID and checkout path remain recorded; only docstrings and run
+identifiers may differ in code/config comparison. Both GPUs must have the
+same model/driver. Missing or incomplete evidence waits; conflicting evidence
+fails explicitly. Do not silently skip or substitute a run.
+
+The idle follow-up driver was identity-checked and replaced to load the
+consumer logic. Active hybrid training and the original three-seed driver
+were untouched. The replacement removes all local NCE training launches.
+Its gate passed CPU fixture checks for absent/incomplete evidence and
+seed/update/hash/config/environment mismatches. No real NCE artifact has
+passed the gate yet.
+
+This avoids three duplicate training runs: about6.5GPU-hours at observed
+throughput and about223MB of final checkpoints. Remaining wall time is
+provisionally24–36hours from16:30UTC, depending on producer completion and
+shared-GPU waits; it is not a completion guarantee.
 
 The masked-transition implementation already adds SIGReg when its weight
 is positive. The new config inherits Action-NCE and sets SIGReg to 0.09.
@@ -42,8 +65,8 @@ The partial audit is not evidence of planning performance.
 - Batch 128, temperature 0.1, AdamW learning rate0.00005, weight decay0.001,
   train fraction0.9. Inherit remaining architecture, data and schedule
   settings from the respective configs.
-- Fresh standalone runs use the same worker, checkpoint and stopping
-  controls. Archived runs use different controls and are not reused.
+- Fresh SIGReg runs and shared sensitivity NCE runs use the same worker,
+  checkpoint and stopping controls. Archived runs are not reused.
 - Each model gets 100 goals per protocol, evaluation seed 43, batch 10:
   short offset 25/budget 50 and harder offset 100/budget 100.
   CEM uses 300 candidates, 30 iterations, 30 elites; horizon 5,
@@ -117,7 +140,8 @@ audits pass:
 
 > We evaluated a fixed combination of Action-NCE (coefficient 0.30) and
 > SIGReg (0.09) on Scene, using three training seeds and final ten-epoch
-> checkpoints. Against fresh matched standalone objectives, the combination
+> checkpoints. Against matched standalone objectives (with NCE checkpoints shared with
+> the sensitivity study), the combination
 > achieved [audited short-goal results] and [audited harder-goal results]
 > on 100 shared tasks per protocol. Static-factor probes showed [audited
 > factor-specific findings]. This experiment tests the specified combination;
