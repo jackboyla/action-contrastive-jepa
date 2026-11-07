@@ -1,0 +1,112 @@
+
+==== CONFIG ====
+cache_dir: null
+solver:
+  _target_: stable_worldmodel.solver.CEMSolver
+  model: ???
+  batch_size: 1
+  num_samples: 300
+  var_scale: 1.0
+  n_steps: 30
+  topk: 30
+  device: cuda
+  seed: ${seed}
+world:
+  env_name: swm/OGBScene-v0
+  num_envs: ${eval.num_eval}
+  max_episode_steps: ???
+  history_size: 1
+  frame_skip: 1
+  env_type: scene
+  ob_type: states
+  multiview: false
+  width: 64
+  height: 64
+  visualize_info: false
+  terminate_at_goal: true
+dataset:
+  stats: ${eval.dataset_name}
+  keys_to_cache:
+  - action
+seed: 42
+policy: scene/lewm_sigreg_e10_s2/lewm_epoch_10
+plan_config:
+  horizon: 5
+  receding_horizon: 5
+  action_block: 5
+eval:
+  num_eval: 50
+  env_batch_size: 10
+  goal_offset_steps: 25
+  eval_budget: 50
+  img_size: 224
+  dataset_name: ogbench/visual_scene_play
+  callables:
+  - method: set_state
+    args:
+      qpos:
+        value: qpos
+      qvel:
+        value: qvel
+      button_state_0:
+        value: button_state_0
+      button_state_1:
+        value: button_state_1
+  - method: set_cube_target_pos
+    args:
+      cube_id:
+        value: 0
+        in_dataset: false
+      target_pos:
+        value: goal_privileged_block_0_pos
+      target_quat:
+        value: goal_privileged_block_0_quat
+  - method: set_target_button_state
+    args:
+      button_id:
+        value: 0
+        in_dataset: false
+      target_state:
+        value: goal_button_state_0
+  - method: set_target_button_state
+    args:
+      button_id:
+        value: 1
+        in_dataset: false
+      target_state:
+        value: goal_button_state_1
+  - method: set_target_drawer_pos
+    args:
+      target_pos:
+        value: goal_privileged_drawer_pos
+  - method: set_target_window_pos
+    args:
+      target_pos:
+        value: goal_privileged_window_pos
+output:
+  filename: /workspace/long-horizon-world-model/.stable_worldmodel/evaluations/e6-short-v3/sigreg_train2_eval42/outcomes.txt
+  save_video: false
+  save_planning_artifacts: false
+  planning_artifacts_dir: null
+  metadata_path: /workspace/long-horizon-world-model/.stable_worldmodel/evaluations/e6-short-v3/sigreg_train2_eval42/tasks.json
+
+==== RESULTS ====
+metrics: {'success_rate': 62.0, 'episode_successes': array([ True, False,  True, False,  True, False,  True, False,  True,
+        True,  True,  True,  True, False, False,  True,  True, False,
+        True,  True,  True,  True, False,  True,  True, False,  True,
+        True, False, False, False, False,  True, False,  True, False,
+        True, False,  True, False,  True,  True,  True, False, False,
+        True,  True,  True,  True,  True]), 'seeds': None, 'start_row_indices': array([ 63795,  67896,  85918,  89240,  92130,  94169, 128106, 165221,
+       182530, 201449, 227228, 276737, 354510, 370767, 402394, 432970,
+       438836, 443394, 445668, 450362, 450439, 500328, 513203, 526446,
+       545406, 554561, 631641, 643828, 654526, 677895, 697329, 700504,
+       717440, 735706, 758079, 761108, 773894, 778373, 781533, 786035,
+       822724, 827605, 839703, 858272, 858545, 887854, 893116, 926721,
+       970676, 975569]), 'start_episode_ids': array([ 63,  67,  85,  89,  92,  94, 128, 165, 182, 201, 227, 276, 354,
+       370, 402, 432, 438, 443, 445, 450, 450, 500, 513, 526, 545, 554,
+       631, 643, 654, 677, 697, 700, 717, 735, 758, 761, 773, 778, 781,
+       786, 822, 827, 839, 858, 858, 887, 893, 926, 970, 975]), 'start_steps': array([795, 896, 918, 240, 130, 169, 106, 221, 530, 449, 228, 737, 510,
+       767, 394, 970, 836, 394, 668, 362, 439, 328, 203, 446, 406, 561,
+       641, 828, 526, 895, 329, 504, 440, 706,  79, 108, 894, 373, 533,
+        35, 724, 605, 703, 272, 545, 854, 116, 721, 676, 569])}
+evaluation_time: 514.4864633083344 seconds

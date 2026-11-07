@@ -1,0 +1,407 @@
+{
+  "complete": 28,
+  "expected": 28,
+  "rows": [
+    {
+      "job": "sigreg_train3072_eval42",
+      "state": "complete",
+      "method": "sigreg",
+      "training_seed": 3072,
+      "evaluation_seed": 42,
+      "successes": 28,
+      "episodes": 50,
+      "percent": 56.0,
+      "evaluation_seconds": 585.3526270389557
+    },
+    {
+      "job": "sigreg_train1_eval42",
+      "state": "complete",
+      "method": "sigreg",
+      "training_seed": 1,
+      "evaluation_seed": 42,
+      "successes": 30,
+      "episodes": 50,
+      "percent": 60.0,
+      "evaluation_seconds": 579.2171742916107
+    },
+    {
+      "job": "sigreg_train2_eval42",
+      "state": "complete",
+      "method": "sigreg",
+      "training_seed": 2,
+      "evaluation_seed": 42,
+      "successes": 31,
+      "episodes": 50,
+      "percent": 62.0,
+      "evaluation_seconds": 514.4864633083344
+    },
+    {
+      "job": "masked_train3072_eval42",
+      "state": "complete",
+      "method": "masked",
+      "training_seed": 3072,
+      "evaluation_seed": 42,
+      "successes": 42,
+      "episodes": 50,
+      "percent": 84.0,
+      "evaluation_seconds": 535.4122507572174
+    },
+    {
+      "job": "masked_train1_eval42",
+      "state": "complete",
+      "method": "masked",
+      "training_seed": 1,
+      "evaluation_seed": 42,
+      "successes": 37,
+      "episodes": 50,
+      "percent": 74.0,
+      "evaluation_seconds": 322.8392164707184
+    },
+    {
+      "job": "masked_train2_eval42",
+      "state": "complete",
+      "method": "masked",
+      "training_seed": 2,
+      "evaluation_seed": 42,
+      "successes": 37,
+      "episodes": 50,
+      "percent": 74.0,
+      "evaluation_seconds": 323.26403307914734
+    },
+    {
+      "job": "masked_action_nce_train3072_eval42",
+      "state": "complete",
+      "method": "masked_action_nce",
+      "training_seed": 3072,
+      "evaluation_seed": 42,
+      "successes": 38,
+      "episodes": 50,
+      "percent": 76.0,
+      "evaluation_seconds": 322.5990445613861
+    },
+    {
+      "job": "masked_action_nce_train1_eval42",
+      "state": "complete",
+      "method": "masked_action_nce",
+      "training_seed": 1,
+      "evaluation_seed": 42,
+      "successes": 41,
+      "episodes": 50,
+      "percent": 82.0,
+      "evaluation_seconds": 523.0169637203217
+    },
+    {
+      "job": "masked_action_nce_train2_eval42",
+      "state": "complete",
+      "method": "masked_action_nce",
+      "training_seed": 2,
+      "evaluation_seed": 42,
+      "successes": 41,
+      "episodes": 50,
+      "percent": 82.0,
+      "evaluation_seconds": 486.03405356407166
+    },
+    {
+      "job": "sigreg_train3072_eval43",
+      "state": "complete",
+      "method": "sigreg",
+      "training_seed": 3072,
+      "evaluation_seed": 43,
+      "successes": 32,
+      "episodes": 50,
+      "percent": 64.0,
+      "evaluation_seconds": 476.26946353912354
+    },
+    {
+      "job": "sigreg_train1_eval43",
+      "state": "complete",
+      "method": "sigreg",
+      "training_seed": 1,
+      "evaluation_seed": 43,
+      "successes": 30,
+      "episodes": 50,
+      "percent": 60.0,
+      "evaluation_seconds": 535.8930459022522
+    },
+    {
+      "job": "sigreg_train2_eval43",
+      "state": "complete",
+      "method": "sigreg",
+      "training_seed": 2,
+      "evaluation_seed": 43,
+      "successes": 30,
+      "episodes": 50,
+      "percent": 60.0,
+      "evaluation_seconds": 487.48934388160706
+    },
+    {
+      "job": "masked_train3072_eval43",
+      "state": "complete",
+      "method": "masked",
+      "training_seed": 3072,
+      "evaluation_seed": 43,
+      "successes": 33,
+      "episodes": 50,
+      "percent": 66.0,
+      "evaluation_seconds": 497.16881251335144
+    },
+    {
+      "job": "masked_train1_eval43",
+      "state": "complete",
+      "method": "masked",
+      "training_seed": 1,
+      "evaluation_seed": 43,
+      "successes": 32,
+      "episodes": 50,
+      "percent": 64.0,
+      "evaluation_seconds": 550.2022876739502
+    },
+    {
+      "job": "masked_train2_eval43",
+      "state": "complete",
+      "method": "masked",
+      "training_seed": 2,
+      "evaluation_seed": 43,
+      "successes": 32,
+      "episodes": 50,
+      "percent": 64.0,
+      "evaluation_seconds": 547.9541182518005
+    },
+    {
+      "job": "masked_action_nce_train3072_eval43",
+      "state": "complete",
+      "method": "masked_action_nce",
+      "training_seed": 3072,
+      "evaluation_seed": 43,
+      "successes": 29,
+      "episodes": 50,
+      "percent": 58.0,
+      "evaluation_seconds": 495.2278485298157
+    },
+    {
+      "job": "masked_action_nce_train1_eval43",
+      "state": "complete",
+      "method": "masked_action_nce",
+      "training_seed": 1,
+      "evaluation_seed": 43,
+      "successes": 33,
+      "episodes": 50,
+      "percent": 66.0,
+      "evaluation_seconds": 522.6353180408478
+    },
+    {
+      "job": "masked_action_nce_train2_eval43",
+      "state": "complete",
+      "method": "masked_action_nce",
+      "training_seed": 2,
+      "evaluation_seed": 43,
+      "successes": 31,
+      "episodes": 50,
+      "percent": 62.0,
+      "evaluation_seconds": 504.8867943286896
+    },
+    {
+      "job": "sigreg_train3072_eval44",
+      "state": "complete",
+      "method": "sigreg",
+      "training_seed": 3072,
+      "evaluation_seed": 44,
+      "successes": 30,
+      "episodes": 50,
+      "percent": 60.0,
+      "evaluation_seconds": 523.6074364185333
+    },
+    {
+      "job": "sigreg_train1_eval44",
+      "state": "complete",
+      "method": "sigreg",
+      "training_seed": 1,
+      "evaluation_seed": 44,
+      "successes": 32,
+      "episodes": 50,
+      "percent": 64.0,
+      "evaluation_seconds": 481.3017556667328
+    },
+    {
+      "job": "sigreg_train2_eval44",
+      "state": "complete",
+      "method": "sigreg",
+      "training_seed": 2,
+      "evaluation_seed": 44,
+      "successes": 35,
+      "episodes": 50,
+      "percent": 70.0,
+      "evaluation_seconds": 503.69478034973145
+    },
+    {
+      "job": "masked_train3072_eval44",
+      "state": "complete",
+      "method": "masked",
+      "training_seed": 3072,
+      "evaluation_seed": 44,
+      "successes": 26,
+      "episodes": 50,
+      "percent": 52.0,
+      "evaluation_seconds": 519.2861728668213
+    },
+    {
+      "job": "masked_train1_eval44",
+      "state": "complete",
+      "method": "masked",
+      "training_seed": 1,
+      "evaluation_seed": 44,
+      "successes": 25,
+      "episodes": 50,
+      "percent": 50.0,
+      "evaluation_seconds": 523.4400446414948
+    },
+    {
+      "job": "masked_train2_eval44",
+      "state": "complete",
+      "method": "masked",
+      "training_seed": 2,
+      "evaluation_seed": 44,
+      "successes": 29,
+      "episodes": 50,
+      "percent": 58.0,
+      "evaluation_seconds": 543.8675136566162
+    },
+    {
+      "job": "masked_action_nce_train3072_eval44",
+      "state": "complete",
+      "method": "masked_action_nce",
+      "training_seed": 3072,
+      "evaluation_seed": 44,
+      "successes": 29,
+      "episodes": 50,
+      "percent": 58.0,
+      "evaluation_seconds": 536.3791537284851
+    },
+    {
+      "job": "masked_action_nce_train1_eval44",
+      "state": "complete",
+      "method": "masked_action_nce",
+      "training_seed": 1,
+      "evaluation_seed": 44,
+      "successes": 26,
+      "episodes": 50,
+      "percent": 52.0,
+      "evaluation_seconds": 531.739777803421
+    },
+    {
+      "job": "masked_action_nce_train2_eval44",
+      "state": "complete",
+      "method": "masked_action_nce",
+      "training_seed": 2,
+      "evaluation_seed": 44,
+      "successes": 28,
+      "episodes": 50,
+      "percent": 56.0,
+      "evaluation_seconds": 535.3481652736664
+    },
+    {
+      "job": "random_eval42_n200",
+      "state": "complete",
+      "method": "random",
+      "training_seed": null,
+      "evaluation_seed": 42,
+      "successes": 92,
+      "episodes": 200,
+      "percent": 46.0,
+      "evaluation_seconds": 433.36748218536377
+    }
+  ],
+  "variability": {
+    "across_training_seeds/sigreg/42": {
+      "n": 3,
+      "mean": 59.333333333333336,
+      "sample_sd": 3.0550504633038935
+    },
+    "across_evaluation_seeds/sigreg/3072": {
+      "n": 3,
+      "mean": 60.0,
+      "sample_sd": 4.0
+    },
+    "across_evaluation_seeds/sigreg/1": {
+      "n": 3,
+      "mean": 61.333333333333336,
+      "sample_sd": 2.309401076758503
+    },
+    "across_evaluation_seeds/sigreg/2": {
+      "n": 3,
+      "mean": 64.0,
+      "sample_sd": 5.291502622129181
+    },
+    "across_training_seeds/masked/42": {
+      "n": 3,
+      "mean": 77.33333333333333,
+      "sample_sd": 5.773502691896258
+    },
+    "across_evaluation_seeds/masked/3072": {
+      "n": 3,
+      "mean": 67.33333333333333,
+      "sample_sd": 16.041612554021285
+    },
+    "across_evaluation_seeds/masked/1": {
+      "n": 3,
+      "mean": 62.666666666666664,
+      "sample_sd": 12.055427546683417
+    },
+    "across_evaluation_seeds/masked/2": {
+      "n": 3,
+      "mean": 65.33333333333333,
+      "sample_sd": 8.082903768654761
+    },
+    "across_training_seeds/masked_action_nce/42": {
+      "n": 3,
+      "mean": 80.0,
+      "sample_sd": 3.4641016151377544
+    },
+    "across_evaluation_seeds/masked_action_nce/3072": {
+      "n": 3,
+      "mean": 64.0,
+      "sample_sd": 10.392304845413264
+    },
+    "across_evaluation_seeds/masked_action_nce/1": {
+      "n": 3,
+      "mean": 66.66666666666667,
+      "sample_sd": 15.01110699893027
+    },
+    "across_evaluation_seeds/masked_action_nce/2": {
+      "n": 3,
+      "mean": 66.66666666666667,
+      "sample_sd": 13.613718571108091
+    },
+    "across_training_seeds/sigreg/43": {
+      "n": 3,
+      "mean": 61.333333333333336,
+      "sample_sd": 2.309401076758503
+    },
+    "across_training_seeds/masked/43": {
+      "n": 3,
+      "mean": 64.66666666666667,
+      "sample_sd": 1.1547005383792515
+    },
+    "across_training_seeds/masked_action_nce/43": {
+      "n": 3,
+      "mean": 62.0,
+      "sample_sd": 4.0
+    },
+    "across_training_seeds/sigreg/44": {
+      "n": 3,
+      "mean": 64.66666666666667,
+      "sample_sd": 5.033222956847166
+    },
+    "across_training_seeds/masked/44": {
+      "n": 3,
+      "mean": 53.333333333333336,
+      "sample_sd": 4.163331998932265
+    },
+    "across_training_seeds/masked_action_nce/44": {
+      "n": 3,
+      "mean": 55.333333333333336,
+      "sample_sd": 3.0550504633038935
+    }
+  },
+  "note": "Descriptive seed variability; shared tasks are not independent training repetitions."
+}

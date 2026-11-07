@@ -1,0 +1,172 @@
+
+==== CONFIG ====
+cache_dir: null
+solver:
+  _target_: stable_worldmodel.solver.CEMSolver
+  model: ???
+  batch_size: 1
+  num_samples: 300
+  var_scale: 1.0
+  n_steps: 30
+  topk: 30
+  device: cuda
+  seed: ${seed}
+world:
+  env_name: swm/OGBScene-v0
+  num_envs: ${eval.num_eval}
+  max_episode_steps: ???
+  history_size: 1
+  frame_skip: 1
+  env_type: scene
+  ob_type: states
+  multiview: false
+  width: 64
+  height: 64
+  visualize_info: false
+  terminate_at_goal: true
+dataset:
+  stats: ${eval.dataset_name}
+  keys_to_cache:
+  - action
+seed: 42
+policy: random
+plan_config:
+  horizon: 5
+  receding_horizon: 5
+  action_block: 5
+eval:
+  num_eval: 200
+  env_batch_size: 10
+  goal_offset_steps: 25
+  eval_budget: 50
+  img_size: 224
+  dataset_name: ogbench/visual_scene_play
+  callables:
+  - method: set_state
+    args:
+      qpos:
+        value: qpos
+      qvel:
+        value: qvel
+      button_state_0:
+        value: button_state_0
+      button_state_1:
+        value: button_state_1
+  - method: set_cube_target_pos
+    args:
+      cube_id:
+        value: 0
+        in_dataset: false
+      target_pos:
+        value: goal_privileged_block_0_pos
+      target_quat:
+        value: goal_privileged_block_0_quat
+  - method: set_target_button_state
+    args:
+      button_id:
+        value: 0
+        in_dataset: false
+      target_state:
+        value: goal_button_state_0
+  - method: set_target_button_state
+    args:
+      button_id:
+        value: 1
+        in_dataset: false
+      target_state:
+        value: goal_button_state_1
+  - method: set_target_drawer_pos
+    args:
+      target_pos:
+        value: goal_privileged_drawer_pos
+  - method: set_target_window_pos
+    args:
+      target_pos:
+        value: goal_privileged_window_pos
+  random_action_seed: 42
+output:
+  filename: /workspace/long-horizon-world-model/.stable_worldmodel/evaluations/e6-short-v4/random_eval42_n200/outcomes.txt
+  save_video: false
+  save_planning_artifacts: false
+  planning_artifacts_dir: null
+  metadata_path: /workspace/long-horizon-world-model/.stable_worldmodel/evaluations/e6-short-v4/random_eval42_n200/tasks.json
+
+==== RESULTS ====
+metrics: {'success_rate': 46.0, 'episode_successes': array([False,  True, False,  True, False, False,  True,  True,  True,
+        True,  True,  True, False, False, False,  True, False,  True,
+       False,  True,  True, False, False, False, False,  True, False,
+        True,  True, False, False,  True,  True, False, False,  True,
+        True, False, False,  True, False, False,  True, False, False,
+       False,  True,  True,  True,  True, False, False,  True, False,
+       False,  True, False, False,  True,  True, False,  True,  True,
+       False, False,  True, False,  True,  True,  True,  True,  True,
+        True,  True,  True,  True,  True, False, False,  True, False,
+       False, False,  True,  True, False,  True, False, False, False,
+       False,  True, False,  True,  True, False, False, False,  True,
+       False,  True, False, False,  True,  True,  True,  True, False,
+       False,  True,  True,  True,  True, False, False, False, False,
+       False, False, False, False, False, False,  True,  True, False,
+       False,  True, False, False, False,  True, False, False, False,
+        True, False, False,  True,  True, False, False,  True,  True,
+       False,  True, False,  True,  True,  True,  True,  True, False,
+       False, False, False, False, False, False, False,  True, False,
+        True,  True,  True, False,  True,  True, False, False, False,
+       False,  True, False, False,  True,  True, False, False,  True,
+        True, False,  True, False,  True,  True, False, False, False,
+       False, False,  True, False, False,  True, False, False,  True,
+        True, False]), 'seeds': None, 'start_row_indices': array([  7352,  22693,  30795,  34673,  37252,  43777,  58292,  63786,
+        67886,  76324,  79186,  85905,  87633,  89226,  90044,  90546,
+        92117,  94155,  97209, 106135, 114507, 118005, 126268, 128087,
+       129882, 139719, 139765, 152301, 154260, 160652, 161261, 165197,
+       166206, 166943, 182503, 189435, 194593, 199865, 201419, 214557,
+       226858, 227194, 233903, 238744, 239519, 245449, 276518, 276696,
+       277093, 281360, 288289, 293565, 301496, 303906, 312322, 321199,
+       325761, 330150, 334273, 338919, 342574, 347465, 354457, 361790,
+       363829, 366576, 370399, 370712, 381016, 387425, 402334, 406362,
+       408492, 409166, 410773, 417920, 432905, 434289, 435163, 436673,
+       437096, 438770, 439563, 443328, 445602, 446146, 450295, 450371,
+       458853, 461844, 462858, 466634, 469480, 471057, 471510, 475628,
+       495602, 497313, 497699, 500253, 501033, 504969, 505548, 513126,
+       526367, 545325, 546477, 553527, 554478, 555582, 557007, 559165,
+       564419, 565188, 565324, 568674, 574544, 602779, 607187, 629672,
+       630270, 631546, 634655, 636678, 643731, 654367, 654428, 661864,
+       664280, 664768, 668340, 669713, 677793, 682413, 682927, 683676,
+       686380, 696301, 696734, 697224, 700178, 700399, 705097, 717040,
+       717332, 722331, 735595, 743261, 744640, 757940, 759763, 760969,
+       764918, 767737, 771517, 773778, 778257, 780282, 780642, 781416,
+       783844, 785893, 786827, 794838, 795560, 796745, 804658, 804798,
+       813967, 821615, 822601, 827481, 832161, 832564, 832635, 839577,
+       841584, 853346, 855013, 855612, 858144, 858416, 887721, 892957,
+       897966, 900587, 905401, 917592, 922386, 926582, 938032, 940186,
+       959670, 961875, 967365, 970531, 975423, 982661, 992594, 996065]), 'start_episode_ids': array([  7,  22,  30,  34,  37,  43,  58,  63,  67,  76,  79,  85,  87,
+        89,  90,  90,  92,  94,  97, 106, 114, 118, 126, 128, 129, 139,
+       139, 152, 154, 160, 161, 165, 166, 166, 182, 189, 194, 199, 201,
+       214, 226, 227, 233, 238, 239, 245, 276, 276, 277, 281, 288, 293,
+       301, 303, 312, 321, 325, 330, 334, 338, 342, 347, 354, 361, 363,
+       366, 370, 370, 381, 387, 402, 406, 408, 409, 410, 417, 432, 434,
+       435, 436, 437, 438, 439, 443, 445, 446, 450, 450, 458, 461, 462,
+       466, 469, 471, 471, 475, 495, 497, 497, 500, 501, 504, 505, 513,
+       526, 545, 546, 553, 554, 555, 557, 559, 564, 565, 565, 568, 574,
+       602, 607, 629, 630, 631, 634, 636, 643, 654, 654, 661, 664, 664,
+       668, 669, 677, 682, 682, 683, 686, 696, 696, 697, 700, 700, 705,
+       717, 717, 722, 735, 743, 744, 757, 759, 760, 764, 767, 771, 773,
+       778, 780, 780, 781, 783, 785, 786, 794, 795, 796, 804, 804, 813,
+       821, 822, 827, 832, 832, 832, 839, 841, 853, 855, 855, 858, 858,
+       887, 892, 897, 900, 905, 917, 922, 926, 938, 940, 959, 961, 967,
+       970, 975, 982, 992, 996]), 'start_steps': array([352, 693, 795, 673, 252, 777, 292, 786, 886, 324, 186, 905, 633,
+       226,  44, 546, 117, 155, 209, 135, 507,   5, 268,  87, 882, 719,
+       765, 301, 260, 652, 261, 197, 206, 943, 503, 435, 593, 865, 419,
+       557, 858, 194, 903, 744, 519, 449, 518, 696,  93, 360, 289, 565,
+       496, 906, 322, 199, 761, 150, 273, 919, 574, 465, 457, 790, 829,
+       576, 399, 712,  16, 425, 334, 362, 492, 166, 773, 920, 905, 289,
+       163, 673,  96, 770, 563, 328, 602, 146, 295, 371, 853, 844, 858,
+       634, 480,  57, 510, 628, 602, 313, 699, 253,  33, 969, 548, 126,
+       367, 325, 477, 527, 478, 582,   7, 165, 419, 188, 324, 674, 544,
+       779, 187, 672, 270, 546, 655, 678, 731, 367, 428, 864, 280, 768,
+       340, 713, 793, 413, 927, 676, 380, 301, 734, 224, 178, 399,  97,
+        40, 332, 331, 595, 261, 640, 940, 763, 969, 918, 737, 517, 778,
+       257, 282, 642, 416, 844, 893, 827, 838, 560, 745, 658, 798, 967,
+       615, 601, 481, 161, 564, 635, 577, 584, 346,  13, 612, 144, 416,
+       721, 957, 966, 587, 401, 592, 386, 582,  32, 186, 670, 875, 365,
+       531, 423, 661, 594,  65])}
+evaluation_time: 433.36748218536377 seconds

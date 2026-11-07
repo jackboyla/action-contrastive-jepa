@@ -1,0 +1,1303 @@
+{
+  "complete": 28,
+  "expected": 28,
+  "final": true,
+  "audited_at": "20261107T225918Z",
+  "protocol_sha256": "f2b5c337ce4d66f4e9dbc1c0c54a8348ff5f65e0c7212de2ff9ea1704d68baf3",
+  "deadline_unix": 1794093009.87396,
+  "prior_gpu_seconds": 1800.0,
+  "accepted_worker_seconds": 14606.120356798172,
+  "cells": [
+    {
+      "job": {
+        "method": "sigreg",
+        "training_seed": 3072,
+        "checkpoint": "scene/lewm_sigreg_e10_s3072/lewm_epoch_10_object.ckpt",
+        "sha256": "b1565c0fb87056eed7d550f4fb231c7476b12a03156cb7bf43985996339cefbf",
+        "training_config_sha256": "ce065e0ea70353025199cd37b56ddbd4bb6e7a4ff3b40ea58be8444f11a4f415",
+        "eval_seed": 42,
+        "episodes": 50,
+        "name": "sigreg_train3072_eval42"
+      },
+      "state": "complete",
+      "call_id": "fc-01M6VGGF77JSJSTSRXKV8WA588",
+      "original_attempt": "e6-short-v3",
+      "app_id": "ap-vwtZ418h297kld92MER5fx",
+      "worker_task_id": "ta-01M6VKJ6RDKM8BVD6SYAAZ9HJR",
+      "source_commit": "ce2cba6b5d05fb5e86c7cee57a3a2383e2e8c773",
+      "supervisor_call_id": "fc-01M6VGE9C1KNF17G9CSQQ1JSFJ",
+      "original_volume_directory": "evaluations/e6-short-v3/sigreg_train3072_eval42",
+      "worker_seconds": 620.9244637489319,
+      "files": {
+        "tasks.json": {
+          "path": "sigreg_train3072_eval42/tasks.json",
+          "sha256": "eadf54f22728247b91217be0d0a790b8c754eb09ecf36722ab33fca3a1c7bbff"
+        },
+        "outcomes.txt": {
+          "path": "sigreg_train3072_eval42/outcomes.txt",
+          "sha256": "090b564e705686afdcd7239be30bdfc069360c9ea67aa1e1d628748c5a7fbb2d"
+        },
+        "runtime.json": {
+          "path": "sigreg_train3072_eval42/runtime.json",
+          "sha256": "29d9ea051f73c31b6ee8815abb0e8ecdaaddb4746d4a40375dedd93f34fc9cd9"
+        },
+        "gpu.txt": {
+          "path": "sigreg_train3072_eval42/gpu.txt",
+          "sha256": "4b0f0ef6d94119c3ca799759e78774cacaf6ff6e9726d09862b9eaf0b355fefd"
+        },
+        "packages.txt": {
+          "path": "packages.txt",
+          "sha256": "87ba163936938ae886c72ad47f4f069f453a57c448672377286e70cf4bdb1345"
+        }
+      },
+      "retained_eval_log_sha256": "f8de4208dc714e9e2ab90f4b23e7bbfa7cf55f5a1616fd3547268c1f3d90b266"
+    },
+    {
+      "job": {
+        "method": "sigreg",
+        "training_seed": 1,
+        "checkpoint": "scene/lewm_sigreg_e10_s1/lewm_epoch_10_object.ckpt",
+        "sha256": "93fff608fc6f200e636314b7d6c2fed160e48c3a34e814072b19fb61e80e8fff",
+        "training_config_sha256": "444b5b81aed164780fd97f92a53e7491f3c8c2ed907a66044cdcfb6647cb4444",
+        "eval_seed": 42,
+        "episodes": 50,
+        "name": "sigreg_train1_eval42"
+      },
+      "state": "complete",
+      "call_id": "fc-01M6VGGJREYFTB9WR07NXVY34Y",
+      "original_attempt": "e6-short-v3",
+      "app_id": "ap-vwtZ418h297kld92MER5fx",
+      "worker_task_id": "ta-01M6VKJ6RDKM8BVD6SYAAZ9HJR",
+      "source_commit": "ce2cba6b5d05fb5e86c7cee57a3a2383e2e8c773",
+      "supervisor_call_id": "fc-01M6VGE9C1KNF17G9CSQQ1JSFJ",
+      "original_volume_directory": "evaluations/e6-short-v3/sigreg_train1_eval42",
+      "worker_seconds": 605.9816038608551,
+      "files": {
+        "tasks.json": {
+          "path": "sigreg_train1_eval42/tasks.json",
+          "sha256": "892fd27da02e16a221344d80dc9e43b2fa60f758bac4c8eb90f1f8fd5fd60e1a"
+        },
+        "outcomes.txt": {
+          "path": "sigreg_train1_eval42/outcomes.txt",
+          "sha256": "f34678406a577737cadfaa238355ea959b214ada8233c1a2b5805e12537c49be"
+        },
+        "runtime.json": {
+          "path": "sigreg_train1_eval42/runtime.json",
+          "sha256": "24d3129c7281bb1163abc232d214d81602e081570539027d2de1c2b8f2353bbd"
+        },
+        "gpu.txt": {
+          "path": "sigreg_train1_eval42/gpu.txt",
+          "sha256": "b4f98131588fae35f9739899ad30f413906472d44c38f9b55ec065276cf7928e"
+        },
+        "packages.txt": {
+          "path": "packages.txt",
+          "sha256": "87ba163936938ae886c72ad47f4f069f453a57c448672377286e70cf4bdb1345"
+        }
+      },
+      "retained_eval_log_sha256": "d91fa7f2cb0675a7aab35bb03ecab8185e6ba60ebaccea33edb3758335be27e3"
+    },
+    {
+      "job": {
+        "method": "sigreg",
+        "training_seed": 2,
+        "checkpoint": "scene/lewm_sigreg_e10_s2/lewm_epoch_10_object.ckpt",
+        "sha256": "fb49110f7aa2c09b06a7c2bca01470c05beddf5b2b85e8c3a037925c2fa4063a",
+        "training_config_sha256": "04d28f4274beb34fd872085da74bcc83d895732690cd8d94e6bfec8bd559a297",
+        "eval_seed": 42,
+        "episodes": 50,
+        "name": "sigreg_train2_eval42"
+      },
+      "state": "complete",
+      "call_id": "fc-01M6VMQZ6C673C0SCK7R84MN10",
+      "original_attempt": "e6-short-v3",
+      "app_id": "ap-vwtZ418h297kld92MER5fx",
+      "worker_task_id": "ta-01M6VKJ6RDKM8BVD6SYAAZ9HJR",
+      "source_commit": "ce2cba6b5d05fb5e86c7cee57a3a2383e2e8c773",
+      "supervisor_call_id": "fc-01M6VGE9C1KNF17G9CSQQ1JSFJ",
+      "original_volume_directory": "evaluations/e6-short-v3/sigreg_train2_eval42",
+      "worker_seconds": 536.1338639259338,
+      "files": {
+        "tasks.json": {
+          "path": "sigreg_train2_eval42/tasks.json",
+          "sha256": "e97993fe901c049f13f7832db1a2ea0e8abb71351f4301fcf53c89b0d5b0876f"
+        },
+        "outcomes.txt": {
+          "path": "sigreg_train2_eval42/outcomes.txt",
+          "sha256": "f419f20d8bad7b8da661c5a80b1ec4bbc16750d1b1df35c8a6201c263765a966"
+        },
+        "runtime.json": {
+          "path": "sigreg_train2_eval42/runtime.json",
+          "sha256": "8b1bf908fc1d8f7958cf3e66af328166ed773299fe6e154c8a6c0826a4803197"
+        },
+        "gpu.txt": {
+          "path": "sigreg_train2_eval42/gpu.txt",
+          "sha256": "430931e84a6387e0d041b10fdec42e260b7375020d4c17944bf19178900e55fd"
+        },
+        "packages.txt": {
+          "path": "packages.txt",
+          "sha256": "87ba163936938ae886c72ad47f4f069f453a57c448672377286e70cf4bdb1345"
+        }
+      },
+      "retained_eval_log_sha256": "1079aebf9fc0d9676fce736d2ec4549780c79ae7af0d4598957229ff9b8b4a0c"
+    },
+    {
+      "job": {
+        "method": "masked",
+        "training_seed": 3072,
+        "checkpoint": "scene/lewm_masked_e10_s3072/lewm_masked_epoch_10_object.ckpt",
+        "sha256": "62ba9ea9313d5b2a36a254d2d31d4d4ee0e5c0bc659f7d7c105d14833a7d21bc",
+        "training_config_sha256": "752b232ffb6160d549ecd8cd7a5cadb2512b08317440941dbaf4b371efc4b9f0",
+        "eval_seed": 42,
+        "episodes": 50,
+        "name": "masked_train3072_eval42"
+      },
+      "state": "complete",
+      "call_id": "fc-01M6VMR22DR2PRP2EESZ5GKE1A",
+      "original_attempt": "e6-short-v3",
+      "app_id": "ap-vwtZ418h297kld92MER5fx",
+      "worker_task_id": "ta-01M6VN8TSC1CY39T0NY4207ZHR",
+      "source_commit": "ce2cba6b5d05fb5e86c7cee57a3a2383e2e8c773",
+      "supervisor_call_id": "fc-01M6VGE9C1KNF17G9CSQQ1JSFJ",
+      "original_volume_directory": "evaluations/e6-short-v3/masked_train3072_eval42",
+      "worker_seconds": 560.5146191120148,
+      "files": {
+        "tasks.json": {
+          "path": "masked_train3072_eval42/tasks.json",
+          "sha256": "775756ff1b55470a38fe690232fc3f8ebef20ff35e61d1bb86c4030916a3c5ee"
+        },
+        "outcomes.txt": {
+          "path": "masked_train3072_eval42/outcomes.txt",
+          "sha256": "bc4d770d93b917a33d4f4186f462fcd25e0ea8949b0b40669785567c59b7f7cf"
+        },
+        "runtime.json": {
+          "path": "masked_train3072_eval42/runtime.json",
+          "sha256": "ac5307bfb74135c65d11de2c7fc598293c00e9f7887651021fd644431028775f"
+        },
+        "gpu.txt": {
+          "path": "masked_train3072_eval42/gpu.txt",
+          "sha256": "dc110ca8b96405974d3e4421cf74febc181b09bba5b9224e470d817d67d08add"
+        },
+        "packages.txt": {
+          "path": "packages.txt",
+          "sha256": "87ba163936938ae886c72ad47f4f069f453a57c448672377286e70cf4bdb1345"
+        }
+      },
+      "retained_eval_log_sha256": "04502fc0ec4d6756db7c26a0c2a619236aedc5f2d1bb351c36f51257cbfb80cf"
+    },
+    {
+      "job": {
+        "method": "masked",
+        "training_seed": 1,
+        "checkpoint": "scene/lewm_masked_e10_s1/lewm_masked_epoch_10_object.ckpt",
+        "sha256": "02c735998384a8f4e82b1d865ac3e4d22ceeb68e2af6f4dd8e1d385849091deb",
+        "training_config_sha256": "3ed0a485dd4628b26614b06e3ac01b193ec6d0e17731d643a68068badeafa7cc",
+        "eval_seed": 42,
+        "episodes": 50,
+        "name": "masked_train1_eval42"
+      },
+      "state": "complete",
+      "call_id": "fc-01M6VQWDVKMQQ549EZJEP5SXR2",
+      "original_attempt": "e6-short-v4",
+      "app_id": "ap-0JsjhUBUtKnEv1I247J0ey",
+      "worker_task_id": "ta-01M6VR3QYNK2J1QEHK2S9FTBSR",
+      "source_commit": "2e331f857f43fd59fcd1c6ac7a8649d654f7aa4a",
+      "supervisor_call_id": "fc-01M6VQTGN5GJXMJRMXEJRH7CNR",
+      "original_volume_directory": "evaluations/e6-short-v4/masked_train1_eval42",
+      "worker_seconds": 341.42632579803467,
+      "files": {
+        "tasks.json": {
+          "path": "masked_train1_eval42/tasks.json",
+          "sha256": "ff871d24bf2d4912a2b7d28310da99f289e85346a92e2ef6bab78c6f86958ec7"
+        },
+        "outcomes.txt": {
+          "path": "masked_train1_eval42/outcomes.txt",
+          "sha256": "57f60301062b2393706bd85850f02c006f21b7eacee5df1591b954eab8e4d024"
+        },
+        "runtime.json": {
+          "path": "masked_train1_eval42/runtime.json",
+          "sha256": "d2464512311381809415ded2928966e30c8a21578d41bf67bdbb605e2d31ebab"
+        },
+        "gpu.txt": {
+          "path": "masked_train1_eval42/gpu.txt",
+          "sha256": "8b05c43e873d75132dff43a4a9053163e86cca5bbf540f4bf785fecdc04a7aae"
+        },
+        "packages.txt": {
+          "path": "packages.txt",
+          "sha256": "87ba163936938ae886c72ad47f4f069f453a57c448672377286e70cf4bdb1345"
+        }
+      },
+      "retained_eval_log_sha256": "4a521443281608e2d6547fa6fd7102c96643084adcf2af5cc08319daaf57af14"
+    },
+    {
+      "job": {
+        "method": "masked",
+        "training_seed": 2,
+        "checkpoint": "scene/lewm_masked_e10_s2/lewm_masked_epoch_10_object.ckpt",
+        "sha256": "f6da6016e6317b282da8fe1a90759ad25b7d612474d99d36fd8d2c88c155ec4b",
+        "training_config_sha256": "23755e5492ad471dd5ad924e53e7f9bd32bd4377bc99ade4a0f8ed6637ce7c40",
+        "eval_seed": 42,
+        "episodes": 50,
+        "name": "masked_train2_eval42"
+      },
+      "state": "complete",
+      "call_id": "fc-01M6VQWGN8BEG6QV1RRTRW0VSP",
+      "original_attempt": "e6-short-v4",
+      "app_id": "ap-0JsjhUBUtKnEv1I247J0ey",
+      "worker_task_id": "ta-01M6VR3QYNK2J1QEHK2S9FTBSR",
+      "source_commit": "2e331f857f43fd59fcd1c6ac7a8649d654f7aa4a",
+      "supervisor_call_id": "fc-01M6VQTGN5GJXMJRMXEJRH7CNR",
+      "original_volume_directory": "evaluations/e6-short-v4/masked_train2_eval42",
+      "worker_seconds": 337.75716376304626,
+      "files": {
+        "tasks.json": {
+          "path": "masked_train2_eval42/tasks.json",
+          "sha256": "debef07cf44c6ad92a258cd8a952c168a00e5a947ab4872c2b902560a2c0ed94"
+        },
+        "outcomes.txt": {
+          "path": "masked_train2_eval42/outcomes.txt",
+          "sha256": "fc49bf52870c613ffc9b2690ffa809a54f1819532d3c7ba855fd962adb2e9b50"
+        },
+        "runtime.json": {
+          "path": "masked_train2_eval42/runtime.json",
+          "sha256": "705fcff3a3a063329d258f49e402ab788cded690349bffb07edcbb488e8e6398"
+        },
+        "gpu.txt": {
+          "path": "masked_train2_eval42/gpu.txt",
+          "sha256": "67d90797478d9925b0da30757df00521df0f20d8111b4a9f2644d24e16ca98db"
+        },
+        "packages.txt": {
+          "path": "packages.txt",
+          "sha256": "87ba163936938ae886c72ad47f4f069f453a57c448672377286e70cf4bdb1345"
+        }
+      },
+      "retained_eval_log_sha256": "5f972844d42f5b613454ea1b8de352b3aa90a90200e0e6dd7e55b7717d53248a"
+    },
+    {
+      "job": {
+        "method": "masked_action_nce",
+        "training_seed": 3072,
+        "checkpoint": "scene/lewm_masked_action_nce_e10_s3072/lewm_masked_action_nce_epoch_10_object.ckpt",
+        "sha256": "e254be6ce88f739264f5f25838a77b6c1c0154a28e62cf8e41a533ef9d8400b6",
+        "training_config_sha256": "29d918e815cd76baf663b322caa56fae53c595cc21b5dbf7f7bde762f6d3ecc1",
+        "eval_seed": 42,
+        "episodes": 50,
+        "name": "masked_action_nce_train3072_eval42"
+      },
+      "state": "complete",
+      "call_id": "fc-01M6VRS1ADVVEFTV826P901GPV",
+      "original_attempt": "e6-short-v4",
+      "app_id": "ap-0JsjhUBUtKnEv1I247J0ey",
+      "worker_task_id": "ta-01M6VR3QYNK2J1QEHK2S9FTBSR",
+      "source_commit": "2e331f857f43fd59fcd1c6ac7a8649d654f7aa4a",
+      "supervisor_call_id": "fc-01M6VQTGN5GJXMJRMXEJRH7CNR",
+      "original_volume_directory": "evaluations/e6-short-v4/masked_action_nce_train3072_eval42",
+      "worker_seconds": 340.668758392334,
+      "files": {
+        "tasks.json": {
+          "path": "masked_action_nce_train3072_eval42/tasks.json",
+          "sha256": "34a03fc83dbb373be17ce1662a39d9c0d984d9f21ac7029e1f9635d85e0297a9"
+        },
+        "outcomes.txt": {
+          "path": "masked_action_nce_train3072_eval42/outcomes.txt",
+          "sha256": "502a1f023cac8717ec6e5c75b1e1c2dca8bcce7f2b44792b8c40ba0c71fb8d4c"
+        },
+        "runtime.json": {
+          "path": "masked_action_nce_train3072_eval42/runtime.json",
+          "sha256": "3ad1df6edd630b8a15d8764bc5ed1b467d6142670b6a665a585f2b95955e78a7"
+        },
+        "gpu.txt": {
+          "path": "masked_action_nce_train3072_eval42/gpu.txt",
+          "sha256": "5b058135640a1ae08e3849f7d1ede2bf62179e79f5fb52cb3987e77779c7aecf"
+        },
+        "packages.txt": {
+          "path": "packages.txt",
+          "sha256": "87ba163936938ae886c72ad47f4f069f453a57c448672377286e70cf4bdb1345"
+        }
+      },
+      "retained_eval_log_sha256": "d9b84fa78111ab5ca181ac5875744170183550369a6b9f1918aebd0febbe0b53"
+    },
+    {
+      "job": {
+        "method": "masked_action_nce",
+        "training_seed": 1,
+        "checkpoint": "scene/lewm_masked_action_nce_e10_s1/lewm_masked_action_nce_epoch_10_object.ckpt",
+        "sha256": "2ec006957198962c98fa7371a819d075fd288f8194cec1289e00b7489f2c25e4",
+        "training_config_sha256": "c2feb0d9261efc55f5a5949e2188dc823f84290ebf52de1d27c797e0d91e723b",
+        "eval_seed": 42,
+        "episodes": 50,
+        "name": "masked_action_nce_train1_eval42"
+      },
+      "state": "complete",
+      "call_id": "fc-01M6VRS48Z151CAKX2DMPS75QT",
+      "original_attempt": "e6-short-v4",
+      "app_id": "ap-0JsjhUBUtKnEv1I247J0ey",
+      "worker_task_id": "ta-01M6VT3F46KXRY64T3FFXPPG4R",
+      "source_commit": "2e331f857f43fd59fcd1c6ac7a8649d654f7aa4a",
+      "supervisor_call_id": "fc-01M6VQTGN5GJXMJRMXEJRH7CNR",
+      "original_volume_directory": "evaluations/e6-short-v4/masked_action_nce_train1_eval42",
+      "worker_seconds": 546.5480961799622,
+      "files": {
+        "tasks.json": {
+          "path": "masked_action_nce_train1_eval42/tasks.json",
+          "sha256": "a2ab1b1d9e840e275553b6c95acdd236e59562f8485a492b5c06d787c2e47626"
+        },
+        "outcomes.txt": {
+          "path": "masked_action_nce_train1_eval42/outcomes.txt",
+          "sha256": "47c1b32913a720c5655ecfec809fbc30c8c64503966fdb7da6d02094ee78e2d5"
+        },
+        "runtime.json": {
+          "path": "masked_action_nce_train1_eval42/runtime.json",
+          "sha256": "74299f72dd467d645d59bd6572f4260bad765a547d10ec9e3df0e44d8e8eae63"
+        },
+        "gpu.txt": {
+          "path": "masked_action_nce_train1_eval42/gpu.txt",
+          "sha256": "6ab0429002591e80d49e1df6701be4846652a121a099f6a682fa12db147cd022"
+        },
+        "packages.txt": {
+          "path": "packages.txt",
+          "sha256": "87ba163936938ae886c72ad47f4f069f453a57c448672377286e70cf4bdb1345"
+        }
+      },
+      "retained_eval_log_sha256": "76bfcc4f48acd05cbabe6174c7c151023e0a2fd70691c782cf3f662d9187d750"
+    },
+    {
+      "job": {
+        "method": "masked_action_nce",
+        "training_seed": 2,
+        "checkpoint": "scene/lewm_masked_action_nce_e10_s2/lewm_masked_action_nce_epoch_10_object.ckpt",
+        "sha256": "414c816aa39bce8f01b0f1d78e1575183e043b1cb36b631ee0c967b312b4cbc2",
+        "training_config_sha256": "f0185876aea81e486c94cea33c5d925d737c073d7d6b0a9a027ea3b425583b96",
+        "eval_seed": 42,
+        "episodes": 50,
+        "name": "masked_action_nce_train2_eval42"
+      },
+      "state": "complete",
+      "call_id": "fc-01M6VTMDZX5KTN43GDB14XW7HQ",
+      "original_attempt": "e6-short-v4",
+      "app_id": "ap-0JsjhUBUtKnEv1I247J0ey",
+      "worker_task_id": "ta-01M6VT3F46KXRY64T3FFXPPG4R",
+      "source_commit": "2e331f857f43fd59fcd1c6ac7a8649d654f7aa4a",
+      "supervisor_call_id": "fc-01M6VQTGN5GJXMJRMXEJRH7CNR",
+      "original_volume_directory": "evaluations/e6-short-v4/masked_action_nce_train2_eval42",
+      "worker_seconds": 509.638210773468,
+      "files": {
+        "tasks.json": {
+          "path": "masked_action_nce_train2_eval42/tasks.json",
+          "sha256": "419d601a4b5291ce7f70e6eb2272726b4961b9e3a6cf06e33810d82b8eedc319"
+        },
+        "outcomes.txt": {
+          "path": "masked_action_nce_train2_eval42/outcomes.txt",
+          "sha256": "71f81791249f5043e53b6ae49190d45ec01933a59eec45f0e5c1967b0aeb254c"
+        },
+        "runtime.json": {
+          "path": "masked_action_nce_train2_eval42/runtime.json",
+          "sha256": "68ec0f7d441758608026d0de4dfcd6aa7f263b3a7cb606aa6ba31dc0075872a2"
+        },
+        "gpu.txt": {
+          "path": "masked_action_nce_train2_eval42/gpu.txt",
+          "sha256": "f6d7c814320241b23597fc1a235f4e79320a3c0057ac97aab195cba14636a1a9"
+        },
+        "packages.txt": {
+          "path": "packages.txt",
+          "sha256": "87ba163936938ae886c72ad47f4f069f453a57c448672377286e70cf4bdb1345"
+        }
+      },
+      "retained_eval_log_sha256": "18965ffc8a540ff4c861e8f6e490a9a1cee22c17240ccf8833226e49acd34fb6"
+    },
+    {
+      "job": {
+        "method": "sigreg",
+        "training_seed": 3072,
+        "checkpoint": "scene/lewm_sigreg_e10_s3072/lewm_epoch_10_object.ckpt",
+        "sha256": "b1565c0fb87056eed7d550f4fb231c7476b12a03156cb7bf43985996339cefbf",
+        "training_config_sha256": "ce065e0ea70353025199cd37b56ddbd4bb6e7a4ff3b40ea58be8444f11a4f415",
+        "eval_seed": 43,
+        "episodes": 50,
+        "name": "sigreg_train3072_eval43"
+      },
+      "state": "complete",
+      "call_id": "fc-01M6VTMHCNP7X3K4V5D6H86RV7",
+      "original_attempt": "e6-short-v4",
+      "app_id": "ap-0JsjhUBUtKnEv1I247J0ey",
+      "worker_task_id": "ta-01M6VTXH9CD8BJ16420XT9SHWR",
+      "source_commit": "2e331f857f43fd59fcd1c6ac7a8649d654f7aa4a",
+      "supervisor_call_id": "fc-01M6VQTGN5GJXMJRMXEJRH7CNR",
+      "original_volume_directory": "evaluations/e6-short-v4/sigreg_train3072_eval43",
+      "worker_seconds": 500.5105755329132,
+      "files": {
+        "tasks.json": {
+          "path": "sigreg_train3072_eval43/tasks.json",
+          "sha256": "408bb08816bf2f2a16b66c6b060b62a2d8fdec7eea97c29e3a870c66892bfd28"
+        },
+        "outcomes.txt": {
+          "path": "sigreg_train3072_eval43/outcomes.txt",
+          "sha256": "092343693d67340f158e3b74e7981345cf7396f400b5542eaf5e9fae0db8c259"
+        },
+        "runtime.json": {
+          "path": "sigreg_train3072_eval43/runtime.json",
+          "sha256": "6a4682a7a7855debcb5769962236e860ecf618797e1cc7336c6d80a1338030cc"
+        },
+        "gpu.txt": {
+          "path": "sigreg_train3072_eval43/gpu.txt",
+          "sha256": "1a5c35cd5f064ddee08afb791f596025fb66e0e01949b0494affe4cc147c8471"
+        },
+        "packages.txt": {
+          "path": "packages.txt",
+          "sha256": "87ba163936938ae886c72ad47f4f069f453a57c448672377286e70cf4bdb1345"
+        }
+      },
+      "retained_eval_log_sha256": "4413f67a5453e30ecafe5cf5a1a730f9c8cb0a6f361fa58f466587efe421c948"
+    },
+    {
+      "job": {
+        "method": "sigreg",
+        "training_seed": 1,
+        "checkpoint": "scene/lewm_sigreg_e10_s1/lewm_epoch_10_object.ckpt",
+        "sha256": "93fff608fc6f200e636314b7d6c2fed160e48c3a34e814072b19fb61e80e8fff",
+        "training_config_sha256": "444b5b81aed164780fd97f92a53e7491f3c8c2ed907a66044cdcfb6647cb4444",
+        "eval_seed": 43,
+        "episodes": 50,
+        "name": "sigreg_train1_eval43"
+      },
+      "state": "complete",
+      "call_id": "fc-01M6VVD255J9AMJXF0FSDSJZ9H",
+      "original_attempt": "e6-short-v4",
+      "app_id": "ap-0JsjhUBUtKnEv1I247J0ey",
+      "worker_task_id": "ta-01M6VTXH9CD8BJ16420XT9SHWR",
+      "source_commit": "2e331f857f43fd59fcd1c6ac7a8649d654f7aa4a",
+      "supervisor_call_id": "fc-01M6VQTGN5GJXMJRMXEJRH7CNR",
+      "original_volume_directory": "evaluations/e6-short-v4/sigreg_train1_eval43",
+      "worker_seconds": 561.4516062736511,
+      "files": {
+        "tasks.json": {
+          "path": "sigreg_train1_eval43/tasks.json",
+          "sha256": "5c6bd17fc93f573ea08632f428319d73be63f7ed57345ec011f9c76b3d424aa8"
+        },
+        "outcomes.txt": {
+          "path": "sigreg_train1_eval43/outcomes.txt",
+          "sha256": "7b73b11c4cb8db07a6f02d7df494bc0409e57f521120e87b55d9aed0ea1792b4"
+        },
+        "runtime.json": {
+          "path": "sigreg_train1_eval43/runtime.json",
+          "sha256": "3f47ee9cf4665b6bfac27823ab593b28d180056b81117ed71f40826424ce9ca9"
+        },
+        "gpu.txt": {
+          "path": "sigreg_train1_eval43/gpu.txt",
+          "sha256": "f2c14b9da0828a72a3ab495301b19cc2d8479fd1f19e2d317ecc9e486c552fc9"
+        },
+        "packages.txt": {
+          "path": "packages.txt",
+          "sha256": "87ba163936938ae886c72ad47f4f069f453a57c448672377286e70cf4bdb1345"
+        }
+      },
+      "retained_eval_log_sha256": "f30cb4b84eb201868435d769113bc3d99fcb237d87548e547582e30b1235eefd"
+    },
+    {
+      "job": {
+        "method": "sigreg",
+        "training_seed": 2,
+        "checkpoint": "scene/lewm_sigreg_e10_s2/lewm_epoch_10_object.ckpt",
+        "sha256": "fb49110f7aa2c09b06a7c2bca01470c05beddf5b2b85e8c3a037925c2fa4063a",
+        "training_config_sha256": "04d28f4274beb34fd872085da74bcc83d895732690cd8d94e6bfec8bd559a297",
+        "eval_seed": 43,
+        "episodes": 50,
+        "name": "sigreg_train2_eval43"
+      },
+      "state": "complete",
+      "call_id": "fc-01M6VVD57C6WH8B4AHQJDWCQME",
+      "original_attempt": "e6-short-v4",
+      "app_id": "ap-0JsjhUBUtKnEv1I247J0ey",
+      "worker_task_id": "ta-01M6VWMH93J2HP14H9WX4KHPJR",
+      "source_commit": "2e331f857f43fd59fcd1c6ac7a8649d654f7aa4a",
+      "supervisor_call_id": "fc-01M6VQTGN5GJXMJRMXEJRH7CNR",
+      "original_volume_directory": "evaluations/e6-short-v4/sigreg_train2_eval43",
+      "worker_seconds": 511.3137638568878,
+      "files": {
+        "tasks.json": {
+          "path": "sigreg_train2_eval43/tasks.json",
+          "sha256": "9071d9a31a82fbca2eda202cef9277b61a795fb4b76c31c37a5a81182c475624"
+        },
+        "outcomes.txt": {
+          "path": "sigreg_train2_eval43/outcomes.txt",
+          "sha256": "5b50d955a897edd92d47e3413b2f373a48b470a0d46b1ac3b8da87ce4922f469"
+        },
+        "runtime.json": {
+          "path": "sigreg_train2_eval43/runtime.json",
+          "sha256": "df080f87d2c67a7cebf04856966736d164d205b6acb98fb7026ed8182e276047"
+        },
+        "gpu.txt": {
+          "path": "sigreg_train2_eval43/gpu.txt",
+          "sha256": "7a4893ccb76b0624ece4977b969ecd8c415daa09432363bd0d56f7209457306c"
+        },
+        "packages.txt": {
+          "path": "packages.txt",
+          "sha256": "87ba163936938ae886c72ad47f4f069f453a57c448672377286e70cf4bdb1345"
+        }
+      },
+      "retained_eval_log_sha256": "835e43bb591250a32efbf1b9fcefd60db62282dbaea0b47e6be66d8b4364e429"
+    },
+    {
+      "job": {
+        "method": "masked",
+        "training_seed": 3072,
+        "checkpoint": "scene/lewm_masked_e10_s3072/lewm_masked_epoch_10_object.ckpt",
+        "sha256": "62ba9ea9313d5b2a36a254d2d31d4d4ee0e5c0bc659f7d7c105d14833a7d21bc",
+        "training_config_sha256": "752b232ffb6160d549ecd8cd7a5cadb2512b08317440941dbaf4b371efc4b9f0",
+        "eval_seed": 43,
+        "episodes": 50,
+        "name": "masked_train3072_eval43"
+      },
+      "state": "complete",
+      "call_id": "fc-01M6VX4CRM7Q7DPHPTV8DXN400",
+      "original_attempt": "e6-short-v4",
+      "app_id": "ap-0JsjhUBUtKnEv1I247J0ey",
+      "worker_task_id": "ta-01M6VWMH93J2HP14H9WX4KHPJR",
+      "source_commit": "2e331f857f43fd59fcd1c6ac7a8649d654f7aa4a",
+      "supervisor_call_id": "fc-01M6VQTGN5GJXMJRMXEJRH7CNR",
+      "original_volume_directory": "evaluations/e6-short-v4/masked_train3072_eval43",
+      "worker_seconds": 523.4394323825836,
+      "files": {
+        "tasks.json": {
+          "path": "masked_train3072_eval43/tasks.json",
+          "sha256": "9fa06a21e4e6fae5b1610aa5d5de8e0e85202ffff05d616eeaa24fe930a97b89"
+        },
+        "outcomes.txt": {
+          "path": "masked_train3072_eval43/outcomes.txt",
+          "sha256": "6ee55a43786536005c1f5fbeefdfd9c15d52cae74f914cf3fdec8eb312105791"
+        },
+        "runtime.json": {
+          "path": "masked_train3072_eval43/runtime.json",
+          "sha256": "8eee39b9d6232e219ae4c34ebb3540229471f98009d4a0413a5f3af87f37780b"
+        },
+        "gpu.txt": {
+          "path": "masked_train3072_eval43/gpu.txt",
+          "sha256": "f1ab6117ef2e347b54d3eabde192390fa7879558df4b74beca8ab292f79d300e"
+        },
+        "packages.txt": {
+          "path": "packages.txt",
+          "sha256": "87ba163936938ae886c72ad47f4f069f453a57c448672377286e70cf4bdb1345"
+        }
+      },
+      "retained_eval_log_sha256": "dd34dd5a6148b52bf3fe1b51415c9bb84d28212619b447dd2a5c77aa0dc413f7"
+    },
+    {
+      "job": {
+        "method": "masked",
+        "training_seed": 1,
+        "checkpoint": "scene/lewm_masked_e10_s1/lewm_masked_epoch_10_object.ckpt",
+        "sha256": "02c735998384a8f4e82b1d865ac3e4d22ceeb68e2af6f4dd8e1d385849091deb",
+        "training_config_sha256": "3ed0a485dd4628b26614b06e3ac01b193ec6d0e17731d643a68068badeafa7cc",
+        "eval_seed": 43,
+        "episodes": 50,
+        "name": "masked_train1_eval43"
+      },
+      "state": "complete",
+      "call_id": "fc-01M6VX4FDZSDVHJ9MK97W4C2JW",
+      "original_attempt": "e6-short-v4",
+      "app_id": "ap-0JsjhUBUtKnEv1I247J0ey",
+      "worker_task_id": "ta-01M6VXBTEA3K61WPPER9DBSK9R",
+      "source_commit": "2e331f857f43fd59fcd1c6ac7a8649d654f7aa4a",
+      "supervisor_call_id": "fc-01M6VQTGN5GJXMJRMXEJRH7CNR",
+      "original_volume_directory": "evaluations/e6-short-v4/masked_train1_eval43",
+      "worker_seconds": 574.5915713310242,
+      "files": {
+        "tasks.json": {
+          "path": "masked_train1_eval43/tasks.json",
+          "sha256": "093d0a1c814fcf95ea6a4d5df034724c95411db7fe731ae242e6ecd11d81f411"
+        },
+        "outcomes.txt": {
+          "path": "masked_train1_eval43/outcomes.txt",
+          "sha256": "5ad34af719ff1756ef2b84cc33cf1f210b0e0a7c2cfd0d09c74dd8ac75713e08"
+        },
+        "runtime.json": {
+          "path": "masked_train1_eval43/runtime.json",
+          "sha256": "734a208fc9964a34ab907f25dc1c8fd272992817d067ca3d2ea1c81450e29d4b"
+        },
+        "gpu.txt": {
+          "path": "masked_train1_eval43/gpu.txt",
+          "sha256": "36432f6eb288ff20141cdf84ba9ae4da1ea2abc853af69a9b939b8a255100732"
+        },
+        "packages.txt": {
+          "path": "packages.txt",
+          "sha256": "87ba163936938ae886c72ad47f4f069f453a57c448672377286e70cf4bdb1345"
+        }
+      },
+      "retained_eval_log_sha256": "e9b4a2c637507c11b66ecd49adfa7dab96fb6b87864e3c4a18c27e22835e2ccc"
+    },
+    {
+      "job": {
+        "method": "masked",
+        "training_seed": 2,
+        "checkpoint": "scene/lewm_masked_e10_s2/lewm_masked_epoch_10_object.ckpt",
+        "sha256": "f6da6016e6317b282da8fe1a90759ad25b7d612474d99d36fd8d2c88c155ec4b",
+        "training_config_sha256": "23755e5492ad471dd5ad924e53e7f9bd32bd4377bc99ade4a0f8ed6637ce7c40",
+        "eval_seed": 43,
+        "episodes": 50,
+        "name": "masked_train2_eval43"
+      },
+      "state": "complete",
+      "call_id": "fc-01M6VXXJYGAER6EM76FN59CSCB",
+      "original_attempt": "e6-short-v4",
+      "app_id": "ap-0JsjhUBUtKnEv1I247J0ey",
+      "worker_task_id": "ta-01M6VXBTEA3K61WPPER9DBSK9R",
+      "source_commit": "2e331f857f43fd59fcd1c6ac7a8649d654f7aa4a",
+      "supervisor_call_id": "fc-01M6VQTGN5GJXMJRMXEJRH7CNR",
+      "original_volume_directory": "evaluations/e6-short-v4/masked_train2_eval43",
+      "worker_seconds": 572.6149456501007,
+      "files": {
+        "tasks.json": {
+          "path": "masked_train2_eval43/tasks.json",
+          "sha256": "24fbb228a340ac8e56f3758db8c6596e80ecf17f28a89d1d019123b450b70f76"
+        },
+        "outcomes.txt": {
+          "path": "masked_train2_eval43/outcomes.txt",
+          "sha256": "57000941ce8c7555cb30384f3ed15837b24993314640f258fc73bff4acfa9618"
+        },
+        "runtime.json": {
+          "path": "masked_train2_eval43/runtime.json",
+          "sha256": "f20f8294a1296e5a201da92076ab93c36f28205ff6563a25631108b63f5e8b19"
+        },
+        "gpu.txt": {
+          "path": "masked_train2_eval43/gpu.txt",
+          "sha256": "3407aed036073b0b3635658c609bffe5256ed5ef1fc3347c2bd90da807f741f6"
+        },
+        "packages.txt": {
+          "path": "packages.txt",
+          "sha256": "87ba163936938ae886c72ad47f4f069f453a57c448672377286e70cf4bdb1345"
+        }
+      },
+      "retained_eval_log_sha256": "69c9bfe49f8821a23d7273bf0b6df6594604138f76e30ecb4b35c85400fc8b45"
+    },
+    {
+      "job": {
+        "method": "masked_action_nce",
+        "training_seed": 3072,
+        "checkpoint": "scene/lewm_masked_action_nce_e10_s3072/lewm_masked_action_nce_epoch_10_object.ckpt",
+        "sha256": "e254be6ce88f739264f5f25838a77b6c1c0154a28e62cf8e41a533ef9d8400b6",
+        "training_config_sha256": "29d918e815cd76baf663b322caa56fae53c595cc21b5dbf7f7bde762f6d3ecc1",
+        "eval_seed": 43,
+        "episodes": 50,
+        "name": "masked_action_nce_train3072_eval43"
+      },
+      "state": "complete",
+      "call_id": "fc-01M6VXXNMAQJGQSM170F2PKD57",
+      "original_attempt": "e6-short-v4",
+      "app_id": "ap-0JsjhUBUtKnEv1I247J0ey",
+      "worker_task_id": "ta-01M6VXXSQQ8YJCTNTZHS8KQYXR",
+      "source_commit": "2e331f857f43fd59fcd1c6ac7a8649d654f7aa4a",
+      "supervisor_call_id": "fc-01M6VQTGN5GJXMJRMXEJRH7CNR",
+      "original_volume_directory": "evaluations/e6-short-v4/masked_action_nce_train3072_eval43",
+      "worker_seconds": 519.2418146133423,
+      "files": {
+        "tasks.json": {
+          "path": "masked_action_nce_train3072_eval43/tasks.json",
+          "sha256": "da09b6a8f08e9a7c6ae126b430c595db92301dade6321f4a359e119d515ee335"
+        },
+        "outcomes.txt": {
+          "path": "masked_action_nce_train3072_eval43/outcomes.txt",
+          "sha256": "83661a1e0234bc4b5705ab2a02b63b3494c57007b9723397c5cf2b9d2a7a4478"
+        },
+        "runtime.json": {
+          "path": "masked_action_nce_train3072_eval43/runtime.json",
+          "sha256": "5268ff70fb90186c10da70a9347c3f3717abed1c35500c25d7d4fa2fcfa09457"
+        },
+        "gpu.txt": {
+          "path": "masked_action_nce_train3072_eval43/gpu.txt",
+          "sha256": "a74a96e6b2bf42a957d6f195d1092ce9e1258ff5b8915aba78f91c0a3ac262a8"
+        },
+        "packages.txt": {
+          "path": "packages.txt",
+          "sha256": "87ba163936938ae886c72ad47f4f069f453a57c448672377286e70cf4bdb1345"
+        }
+      },
+      "retained_eval_log_sha256": "f64b57e66274ab0d95a131be1b40ff5aceaac7919fb5bcb1f5d5151f4c7f2897"
+    },
+    {
+      "job": {
+        "method": "masked_action_nce",
+        "training_seed": 1,
+        "checkpoint": "scene/lewm_masked_action_nce_e10_s1/lewm_masked_action_nce_epoch_10_object.ckpt",
+        "sha256": "2ec006957198962c98fa7371a819d075fd288f8194cec1289e00b7489f2c25e4",
+        "training_config_sha256": "c2feb0d9261efc55f5a5949e2188dc823f84290ebf52de1d27c797e0d91e723b",
+        "eval_seed": 43,
+        "episodes": 50,
+        "name": "masked_action_nce_train1_eval43"
+      },
+      "state": "complete",
+      "call_id": "fc-01M6VYF7ZY9ATGVV0YW23WTHN0",
+      "original_attempt": "e6-short-v4",
+      "app_id": "ap-0JsjhUBUtKnEv1I247J0ey",
+      "worker_task_id": "ta-01M6VYF8C8WAFKKEKX9V61NXBR",
+      "source_commit": "2e331f857f43fd59fcd1c6ac7a8649d654f7aa4a",
+      "supervisor_call_id": "fc-01M6VQTGN5GJXMJRMXEJRH7CNR",
+      "original_volume_directory": "evaluations/e6-short-v4/masked_action_nce_train1_eval43",
+      "worker_seconds": 547.3898689746857,
+      "files": {
+        "tasks.json": {
+          "path": "masked_action_nce_train1_eval43/tasks.json",
+          "sha256": "f99650a9bd2997d8983a3bb264eebb91e1a9baf35ba855747b6cce56d6ce1e69"
+        },
+        "outcomes.txt": {
+          "path": "masked_action_nce_train1_eval43/outcomes.txt",
+          "sha256": "2b014e173a4dbfe9d6e5c7f569c4082de40cfeac9245e5dc44f14b809acb1c19"
+        },
+        "runtime.json": {
+          "path": "masked_action_nce_train1_eval43/runtime.json",
+          "sha256": "1f2bb80c03c9cbd7a9b3fd1b0a743d490380a300f53e1e27c15e20cf6d5615f4"
+        },
+        "gpu.txt": {
+          "path": "masked_action_nce_train1_eval43/gpu.txt",
+          "sha256": "5bf27b2305181defb6615bda0a997b4ed0fdfe50c43d17728101f4d7fddc24ad"
+        },
+        "packages.txt": {
+          "path": "packages.txt",
+          "sha256": "87ba163936938ae886c72ad47f4f069f453a57c448672377286e70cf4bdb1345"
+        }
+      },
+      "retained_eval_log_sha256": "8f75cfac57237f52d5841874049c854d42d0971c4e7c3b6f56ce16bf217c8762"
+    },
+    {
+      "job": {
+        "method": "masked_action_nce",
+        "training_seed": 2,
+        "checkpoint": "scene/lewm_masked_action_nce_e10_s2/lewm_masked_action_nce_epoch_10_object.ckpt",
+        "sha256": "414c816aa39bce8f01b0f1d78e1575183e043b1cb36b631ee0c967b312b4cbc2",
+        "training_config_sha256": "f0185876aea81e486c94cea33c5d925d737c073d7d6b0a9a027ea3b425583b96",
+        "eval_seed": 43,
+        "episodes": 50,
+        "name": "masked_action_nce_train2_eval43"
+      },
+      "state": "complete",
+      "call_id": "fc-01M6VYFARTF99DM08RFN8DGFYT",
+      "original_attempt": "e6-short-v4",
+      "app_id": "ap-0JsjhUBUtKnEv1I247J0ey",
+      "worker_task_id": "ta-01M6VYF8C8WAFKKEKX9V61NXBR",
+      "source_commit": "2e331f857f43fd59fcd1c6ac7a8649d654f7aa4a",
+      "supervisor_call_id": "fc-01M6VQTGN5GJXMJRMXEJRH7CNR",
+      "original_volume_directory": "evaluations/e6-short-v4/masked_action_nce_train2_eval43",
+      "worker_seconds": 530.6159806251526,
+      "files": {
+        "tasks.json": {
+          "path": "masked_action_nce_train2_eval43/tasks.json",
+          "sha256": "470901f8506ba7d14f62ed78bbc1eed946394413154941ba0e32a0182906e019"
+        },
+        "outcomes.txt": {
+          "path": "masked_action_nce_train2_eval43/outcomes.txt",
+          "sha256": "5a002f6e78093643500af5615635119451529cf073b5758ae13758c9b0c14653"
+        },
+        "runtime.json": {
+          "path": "masked_action_nce_train2_eval43/runtime.json",
+          "sha256": "9dfd63a418b567e61b0e167b6ec587ab313e05f5156f879cfde67e9a164f8a30"
+        },
+        "gpu.txt": {
+          "path": "masked_action_nce_train2_eval43/gpu.txt",
+          "sha256": "3d70fb2fcddc3c271310d18d72f9fc5f0746d80c8520aa6adf0239fbd73699ce"
+        },
+        "packages.txt": {
+          "path": "packages.txt",
+          "sha256": "87ba163936938ae886c72ad47f4f069f453a57c448672377286e70cf4bdb1345"
+        }
+      },
+      "retained_eval_log_sha256": "107f30f3adb8d53733fb3d678b28796f80828b16ee9562a5f209fd195593f78b"
+    },
+    {
+      "job": {
+        "method": "sigreg",
+        "training_seed": 3072,
+        "checkpoint": "scene/lewm_sigreg_e10_s3072/lewm_epoch_10_object.ckpt",
+        "sha256": "b1565c0fb87056eed7d550f4fb231c7476b12a03156cb7bf43985996339cefbf",
+        "training_config_sha256": "ce065e0ea70353025199cd37b56ddbd4bb6e7a4ff3b40ea58be8444f11a4f415",
+        "eval_seed": 44,
+        "episodes": 50,
+        "name": "sigreg_train3072_eval44"
+      },
+      "state": "complete",
+      "call_id": "fc-01M6VZGEMXN996K5WDAF7F47F8",
+      "original_attempt": "e6-short-v4",
+      "app_id": "ap-0JsjhUBUtKnEv1I247J0ey",
+      "worker_task_id": "ta-01M6VYF8C8WAFKKEKX9V61NXBR",
+      "source_commit": "2e331f857f43fd59fcd1c6ac7a8649d654f7aa4a",
+      "supervisor_call_id": "fc-01M6VQTGN5GJXMJRMXEJRH7CNR",
+      "original_volume_directory": "evaluations/e6-short-v4/sigreg_train3072_eval44",
+      "worker_seconds": 545.2598659992218,
+      "files": {
+        "tasks.json": {
+          "path": "sigreg_train3072_eval44/tasks.json",
+          "sha256": "16da624a12fc6bdc2b474e1e1578fefc819807a02b6b3fe55432b87190bd4f44"
+        },
+        "outcomes.txt": {
+          "path": "sigreg_train3072_eval44/outcomes.txt",
+          "sha256": "b568f8da90c0dff59bc4afae5ac5b1e6776b9fd167359ef69012b5855164a191"
+        },
+        "runtime.json": {
+          "path": "sigreg_train3072_eval44/runtime.json",
+          "sha256": "94d2a5b9f6fb59d6cfe1638700fe6ca69ccc0d0c336ac84efa810e1dfb071cb2"
+        },
+        "gpu.txt": {
+          "path": "sigreg_train3072_eval44/gpu.txt",
+          "sha256": "c02e5c2dcbd4502e9601530e9c6ff9e093abfab099c372d24508962b4ab7d22c"
+        },
+        "packages.txt": {
+          "path": "packages.txt",
+          "sha256": "87ba163936938ae886c72ad47f4f069f453a57c448672377286e70cf4bdb1345"
+        }
+      },
+      "retained_eval_log_sha256": "e995f81ad82fa7b87f20eb344d256d7b1ad7c297ea463200a0e838c8770f029c"
+    },
+    {
+      "job": {
+        "method": "sigreg",
+        "training_seed": 1,
+        "checkpoint": "scene/lewm_sigreg_e10_s1/lewm_epoch_10_object.ckpt",
+        "sha256": "93fff608fc6f200e636314b7d6c2fed160e48c3a34e814072b19fb61e80e8fff",
+        "training_config_sha256": "444b5b81aed164780fd97f92a53e7491f3c8c2ed907a66044cdcfb6647cb4444",
+        "eval_seed": 44,
+        "episodes": 50,
+        "name": "sigreg_train1_eval44"
+      },
+      "state": "complete",
+      "call_id": "fc-01M6VZGHJNJ8N2ZZ7HWWGR6M7F",
+      "original_attempt": "e6-short-v4",
+      "app_id": "ap-0JsjhUBUtKnEv1I247J0ey",
+      "worker_task_id": "ta-01M6VYF8C8WAFKKEKX9V61NXBR",
+      "source_commit": "2e331f857f43fd59fcd1c6ac7a8649d654f7aa4a",
+      "supervisor_call_id": "fc-01M6VQTGN5GJXMJRMXEJRH7CNR",
+      "original_volume_directory": "evaluations/e6-short-v4/sigreg_train1_eval44",
+      "worker_seconds": 505.91340017318726,
+      "files": {
+        "tasks.json": {
+          "path": "sigreg_train1_eval44/tasks.json",
+          "sha256": "8278ecbf0e4c757cf7b2a6f76032adc0f21fe247b13617da57d40c1fa1416893"
+        },
+        "outcomes.txt": {
+          "path": "sigreg_train1_eval44/outcomes.txt",
+          "sha256": "ab29f5e4399f9dbb283a290bf530abf42933f1e59328cc24a6315a1e673e3185"
+        },
+        "runtime.json": {
+          "path": "sigreg_train1_eval44/runtime.json",
+          "sha256": "6492b4099d303fd9f4bb68ede57e08d6de7a34de1d4b74ab724d99098bbcc8a4"
+        },
+        "gpu.txt": {
+          "path": "sigreg_train1_eval44/gpu.txt",
+          "sha256": "74a310e640d21b99ad2706681bb635e62ae22ccfb39fcab5aa5758777d330d15"
+        },
+        "packages.txt": {
+          "path": "packages.txt",
+          "sha256": "87ba163936938ae886c72ad47f4f069f453a57c448672377286e70cf4bdb1345"
+        }
+      },
+      "retained_eval_log_sha256": "cb9a64735f04db0686061c3e23c8eff1c6784b36aeddaa04bc1bcb72623514d2"
+    },
+    {
+      "job": {
+        "method": "sigreg",
+        "training_seed": 2,
+        "checkpoint": "scene/lewm_sigreg_e10_s2/lewm_epoch_10_object.ckpt",
+        "sha256": "fb49110f7aa2c09b06a7c2bca01470c05beddf5b2b85e8c3a037925c2fa4063a",
+        "training_config_sha256": "04d28f4274beb34fd872085da74bcc83d895732690cd8d94e6bfec8bd559a297",
+        "eval_seed": 44,
+        "episodes": 50,
+        "name": "sigreg_train2_eval44"
+      },
+      "state": "complete",
+      "call_id": "fc-01M6W0GQM4D11VZEYJ5PH9XS5Z",
+      "original_attempt": "e6-short-v4",
+      "app_id": "ap-0JsjhUBUtKnEv1I247J0ey",
+      "worker_task_id": "ta-01M6VYF8C8WAFKKEKX9V61NXBR",
+      "source_commit": "2e331f857f43fd59fcd1c6ac7a8649d654f7aa4a",
+      "supervisor_call_id": "fc-01M6VQTGN5GJXMJRMXEJRH7CNR",
+      "original_volume_directory": "evaluations/e6-short-v4/sigreg_train2_eval44",
+      "worker_seconds": 525.1024606227875,
+      "files": {
+        "tasks.json": {
+          "path": "sigreg_train2_eval44/tasks.json",
+          "sha256": "ca59d549fc4781fc8a8420592d77d160f26da2a51636b24df9baef472de4d32b"
+        },
+        "outcomes.txt": {
+          "path": "sigreg_train2_eval44/outcomes.txt",
+          "sha256": "1783e27c71dbb148d8f70280af4bda187b5559ded3684f11dcb515b94b1d88b7"
+        },
+        "runtime.json": {
+          "path": "sigreg_train2_eval44/runtime.json",
+          "sha256": "d2647766ddda9a64e1740eab7c54e6805698f7b08bbbf9f5e6c40377cd8f198d"
+        },
+        "gpu.txt": {
+          "path": "sigreg_train2_eval44/gpu.txt",
+          "sha256": "d2d26f7a2b45ef6024412e1ae22ace53bf56c1c6acea6d9da50cc33f7d2b573a"
+        },
+        "packages.txt": {
+          "path": "packages.txt",
+          "sha256": "87ba163936938ae886c72ad47f4f069f453a57c448672377286e70cf4bdb1345"
+        }
+      },
+      "retained_eval_log_sha256": "a789aef841574adf9a0fceec2fa49b0aa9665b7e52340998cdd16f9f381cdf3e"
+    },
+    {
+      "job": {
+        "method": "masked",
+        "training_seed": 3072,
+        "checkpoint": "scene/lewm_masked_e10_s3072/lewm_masked_epoch_10_object.ckpt",
+        "sha256": "62ba9ea9313d5b2a36a254d2d31d4d4ee0e5c0bc659f7d7c105d14833a7d21bc",
+        "training_config_sha256": "752b232ffb6160d549ecd8cd7a5cadb2512b08317440941dbaf4b371efc4b9f0",
+        "eval_seed": 44,
+        "episodes": 50,
+        "name": "masked_train3072_eval44"
+      },
+      "state": "complete",
+      "call_id": "fc-01M6W0GTATNV9YPFF2E6A33C3E",
+      "original_attempt": "e6-short-v4",
+      "app_id": "ap-0JsjhUBUtKnEv1I247J0ey",
+      "worker_task_id": "ta-01M6W0VJ0R5V0TPSNAX5CADBKR",
+      "source_commit": "2e331f857f43fd59fcd1c6ac7a8649d654f7aa4a",
+      "supervisor_call_id": "fc-01M6VQTGN5GJXMJRMXEJRH7CNR",
+      "original_volume_directory": "evaluations/e6-short-v4/masked_train3072_eval44",
+      "worker_seconds": 542.3966660499573,
+      "files": {
+        "tasks.json": {
+          "path": "masked_train3072_eval44/tasks.json",
+          "sha256": "185fe2467ba473a94981d949e9c241db1553003e1693cb85a921c7daa81bc753"
+        },
+        "outcomes.txt": {
+          "path": "masked_train3072_eval44/outcomes.txt",
+          "sha256": "bd04fad934e912317139535a4abdd2a3b752afdf65867b2494579cbeb3e643a9"
+        },
+        "runtime.json": {
+          "path": "masked_train3072_eval44/runtime.json",
+          "sha256": "5d3c851e3c8287e6712341d272c9e240ea85748b7e8fc4bbcba70d3891fd01a4"
+        },
+        "gpu.txt": {
+          "path": "masked_train3072_eval44/gpu.txt",
+          "sha256": "1e10e21732a3625b1f2caf936cb0d82880222e51aa0bd5049738c8dc1eb10966"
+        },
+        "packages.txt": {
+          "path": "packages.txt",
+          "sha256": "87ba163936938ae886c72ad47f4f069f453a57c448672377286e70cf4bdb1345"
+        }
+      },
+      "retained_eval_log_sha256": "f0be4b5ea78f080e4b1040ea0da58a16a58f9a58d42537098cb744ee7fe6cfa3"
+    },
+    {
+      "job": {
+        "method": "masked",
+        "training_seed": 1,
+        "checkpoint": "scene/lewm_masked_e10_s1/lewm_masked_epoch_10_object.ckpt",
+        "sha256": "02c735998384a8f4e82b1d865ac3e4d22ceeb68e2af6f4dd8e1d385849091deb",
+        "training_config_sha256": "3ed0a485dd4628b26614b06e3ac01b193ec6d0e17731d643a68068badeafa7cc",
+        "eval_seed": 44,
+        "episodes": 50,
+        "name": "masked_train1_eval44"
+      },
+      "state": "complete",
+      "call_id": "fc-01M6W1CFSHD6BYJBV7ECXHQ4VJ",
+      "original_attempt": "e6-short-v4",
+      "app_id": "ap-0JsjhUBUtKnEv1I247J0ey",
+      "worker_task_id": "ta-01M6W1CG0VE4QXYKDREVRG3PBR",
+      "source_commit": "2e331f857f43fd59fcd1c6ac7a8649d654f7aa4a",
+      "supervisor_call_id": "fc-01M6VQTGN5GJXMJRMXEJRH7CNR",
+      "original_volume_directory": "evaluations/e6-short-v4/masked_train1_eval44",
+      "worker_seconds": 545.5748660564423,
+      "files": {
+        "tasks.json": {
+          "path": "masked_train1_eval44/tasks.json",
+          "sha256": "ef7fb30f94a86a69afc7d88460b51d7d1a16e3a96d2de7c0b3b7478a3292820c"
+        },
+        "outcomes.txt": {
+          "path": "masked_train1_eval44/outcomes.txt",
+          "sha256": "27be3013d48dce7da43c0bbcfa1498af0a2e3af3651e8c52c7cf5103e08ab0c1"
+        },
+        "runtime.json": {
+          "path": "masked_train1_eval44/runtime.json",
+          "sha256": "071a9a22f48d46b3b856aea7804bab9eafb9c059a0cb6b504ec9c2c0f08e5446"
+        },
+        "gpu.txt": {
+          "path": "masked_train1_eval44/gpu.txt",
+          "sha256": "8a2d327e330acec81ece729db241eded8d6d383da93de5c73e5e15009cd074ee"
+        },
+        "packages.txt": {
+          "path": "packages.txt",
+          "sha256": "87ba163936938ae886c72ad47f4f069f453a57c448672377286e70cf4bdb1345"
+        }
+      },
+      "retained_eval_log_sha256": "2da0f662937540ef34d3d07965bd6f2b5ba92b1ffe656386ea5d6e6ab426c368"
+    },
+    {
+      "job": {
+        "method": "masked",
+        "training_seed": 2,
+        "checkpoint": "scene/lewm_masked_e10_s2/lewm_masked_epoch_10_object.ckpt",
+        "sha256": "f6da6016e6317b282da8fe1a90759ad25b7d612474d99d36fd8d2c88c155ec4b",
+        "training_config_sha256": "23755e5492ad471dd5ad924e53e7f9bd32bd4377bc99ade4a0f8ed6637ce7c40",
+        "eval_seed": 44,
+        "episodes": 50,
+        "name": "masked_train2_eval44"
+      },
+      "state": "complete",
+      "call_id": "fc-01M6W1CJ91XB8X2BV7AFXGBGPK",
+      "original_attempt": "e6-short-v4",
+      "app_id": "ap-0JsjhUBUtKnEv1I247J0ey",
+      "worker_task_id": "ta-01M6W1FYT01REKANSYDHSNTBMR",
+      "source_commit": "2e331f857f43fd59fcd1c6ac7a8649d654f7aa4a",
+      "supervisor_call_id": "fc-01M6VQTGN5GJXMJRMXEJRH7CNR",
+      "original_volume_directory": "evaluations/e6-short-v4/masked_train2_eval44",
+      "worker_seconds": 569.7232189178467,
+      "files": {
+        "tasks.json": {
+          "path": "masked_train2_eval44/tasks.json",
+          "sha256": "b39c6c114bd1de9a99e29fe68c74e3d3b13a66d4b64343d58b8437d7e4ec9936"
+        },
+        "outcomes.txt": {
+          "path": "masked_train2_eval44/outcomes.txt",
+          "sha256": "85310da5a2fcd0b23e72ed857b9e056d961e93d2afe6bda10e61e81d528b2589"
+        },
+        "runtime.json": {
+          "path": "masked_train2_eval44/runtime.json",
+          "sha256": "2a7d14789c13b4b12c66776362681db2497a5ba35b6c1eb044faed383fd977cb"
+        },
+        "gpu.txt": {
+          "path": "masked_train2_eval44/gpu.txt",
+          "sha256": "6ce848d8959c6289b19f7e61aca29da0697a41e7b97f2f30a3844b24a29bd19c"
+        },
+        "packages.txt": {
+          "path": "packages.txt",
+          "sha256": "87ba163936938ae886c72ad47f4f069f453a57c448672377286e70cf4bdb1345"
+        }
+      },
+      "retained_eval_log_sha256": "647d15d667eb0a7573fab27860916b4a4bfb466bd0589af3a4cb1f365a186def"
+    },
+    {
+      "job": {
+        "method": "masked_action_nce",
+        "training_seed": 3072,
+        "checkpoint": "scene/lewm_masked_action_nce_e10_s3072/lewm_masked_action_nce_epoch_10_object.ckpt",
+        "sha256": "e254be6ce88f739264f5f25838a77b6c1c0154a28e62cf8e41a533ef9d8400b6",
+        "training_config_sha256": "29d918e815cd76baf663b322caa56fae53c595cc21b5dbf7f7bde762f6d3ecc1",
+        "eval_seed": 44,
+        "episodes": 50,
+        "name": "masked_action_nce_train3072_eval44"
+      },
+      "state": "complete",
+      "call_id": "fc-01M6W21TD4E8HVPGV3HRXXB42W",
+      "original_attempt": "e6-short-v4",
+      "app_id": "ap-0JsjhUBUtKnEv1I247J0ey",
+      "worker_task_id": "ta-01M6W2214KXKYQJ8C9P74NJDQR",
+      "source_commit": "2e331f857f43fd59fcd1c6ac7a8649d654f7aa4a",
+      "supervisor_call_id": "fc-01M6VQTGN5GJXMJRMXEJRH7CNR",
+      "original_volume_directory": "evaluations/e6-short-v4/masked_action_nce_train3072_eval44",
+      "worker_seconds": 558.5410430431366,
+      "files": {
+        "tasks.json": {
+          "path": "masked_action_nce_train3072_eval44/tasks.json",
+          "sha256": "4549ff56475126e527e8789de27bc06c7467e665695d4c911b81467eb14b463a"
+        },
+        "outcomes.txt": {
+          "path": "masked_action_nce_train3072_eval44/outcomes.txt",
+          "sha256": "e9d562c03feca852302a3cf886dc04a96d94262157c120e68c525044e953c34c"
+        },
+        "runtime.json": {
+          "path": "masked_action_nce_train3072_eval44/runtime.json",
+          "sha256": "d2960a1b0893f415ae5946ee840c0486989b7d7d36deebe4d55257cff6beba35"
+        },
+        "gpu.txt": {
+          "path": "masked_action_nce_train3072_eval44/gpu.txt",
+          "sha256": "60fdca64a59c241c55911642c05e3edbb61e1051b033d09d68e39b1dc52c24df"
+        },
+        "packages.txt": {
+          "path": "packages.txt",
+          "sha256": "87ba163936938ae886c72ad47f4f069f453a57c448672377286e70cf4bdb1345"
+        }
+      },
+      "retained_eval_log_sha256": "c7ef9a51cc612f875d5569026cb6caf0af9065f25f8057fb56fa8f88d4beda04"
+    },
+    {
+      "job": {
+        "method": "masked_action_nce",
+        "training_seed": 1,
+        "checkpoint": "scene/lewm_masked_action_nce_e10_s1/lewm_masked_action_nce_epoch_10_object.ckpt",
+        "sha256": "2ec006957198962c98fa7371a819d075fd288f8194cec1289e00b7489f2c25e4",
+        "training_config_sha256": "c2feb0d9261efc55f5a5949e2188dc823f84290ebf52de1d27c797e0d91e723b",
+        "eval_seed": 44,
+        "episodes": 50,
+        "name": "masked_action_nce_train1_eval44"
+      },
+      "state": "complete",
+      "call_id": "fc-01M6W21VJ0AYPZ6EJH41R0JTD9",
+      "original_attempt": "e6-short-v4",
+      "app_id": "ap-0JsjhUBUtKnEv1I247J0ey",
+      "worker_task_id": "ta-01M6W22F48REBZBBGA9W991RZR",
+      "source_commit": "2e331f857f43fd59fcd1c6ac7a8649d654f7aa4a",
+      "supervisor_call_id": "fc-01M6VQTGN5GJXMJRMXEJRH7CNR",
+      "original_volume_directory": "evaluations/e6-short-v4/masked_action_nce_train1_eval44",
+      "worker_seconds": 555.5924291610718,
+      "files": {
+        "tasks.json": {
+          "path": "masked_action_nce_train1_eval44/tasks.json",
+          "sha256": "c73207e392fa501ab6c1ac05b8c3b88b9188477018899fe20acbb242a5b13e31"
+        },
+        "outcomes.txt": {
+          "path": "masked_action_nce_train1_eval44/outcomes.txt",
+          "sha256": "fa77858ea4a8b15b02f8f832954f8e941ce4047baecd08fc73c1b7b739c47294"
+        },
+        "runtime.json": {
+          "path": "masked_action_nce_train1_eval44/runtime.json",
+          "sha256": "0bf62eac2f317318eca5298438493b598a7b3c1827cd6d81a79490ce2c2163b5"
+        },
+        "gpu.txt": {
+          "path": "masked_action_nce_train1_eval44/gpu.txt",
+          "sha256": "392ed7c34f1ed1fbb695d11c7026ed482f5c642c9891e66437137653af918fae"
+        },
+        "packages.txt": {
+          "path": "packages.txt",
+          "sha256": "87ba163936938ae886c72ad47f4f069f453a57c448672377286e70cf4bdb1345"
+        }
+      },
+      "retained_eval_log_sha256": "8752ef527aa997bd4010afc938f7db2be00484c6d30b46bedc963f9fd61ae142"
+    },
+    {
+      "job": {
+        "method": "masked_action_nce",
+        "training_seed": 2,
+        "checkpoint": "scene/lewm_masked_action_nce_e10_s2/lewm_masked_action_nce_epoch_10_object.ckpt",
+        "sha256": "414c816aa39bce8f01b0f1d78e1575183e043b1cb36b631ee0c967b312b4cbc2",
+        "training_config_sha256": "f0185876aea81e486c94cea33c5d925d737c073d7d6b0a9a027ea3b425583b96",
+        "eval_seed": 44,
+        "episodes": 50,
+        "name": "masked_action_nce_train2_eval44"
+      },
+      "state": "complete",
+      "call_id": "fc-01M6W2KMHWYY4GHGAJ5VAB56Y3",
+      "original_attempt": "e6-short-v4",
+      "app_id": "ap-0JsjhUBUtKnEv1I247J0ey",
+      "worker_task_id": "ta-01M6W2214KXKYQJ8C9P74NJDQR",
+      "source_commit": "2e331f857f43fd59fcd1c6ac7a8649d654f7aa4a",
+      "supervisor_call_id": "fc-01M6VQTGN5GJXMJRMXEJRH7CNR",
+      "original_volume_directory": "evaluations/e6-short-v4/masked_action_nce_train2_eval44",
+      "worker_seconds": 557.7331445217133,
+      "files": {
+        "tasks.json": {
+          "path": "masked_action_nce_train2_eval44/tasks.json",
+          "sha256": "6b6561cda69a0df2386d597e03391b3a200361c5b2cfa04da1bee9848727a1d9"
+        },
+        "outcomes.txt": {
+          "path": "masked_action_nce_train2_eval44/outcomes.txt",
+          "sha256": "89c59b801adc7092c0a4364f3c03ae2d5a4a93757ad6b724875c81c9e93eb291"
+        },
+        "runtime.json": {
+          "path": "masked_action_nce_train2_eval44/runtime.json",
+          "sha256": "8e1d8e236d3200c30aef547f06346ec2956574a6ce99e3dfab1236c85bc80548"
+        },
+        "gpu.txt": {
+          "path": "masked_action_nce_train2_eval44/gpu.txt",
+          "sha256": "477274de17354fdf25401b0394dea28379d15fb6ac4ace817e162da800775e98"
+        },
+        "packages.txt": {
+          "path": "packages.txt",
+          "sha256": "87ba163936938ae886c72ad47f4f069f453a57c448672377286e70cf4bdb1345"
+        }
+      },
+      "retained_eval_log_sha256": "05a288c7769535d80d42e5eccd6974759ec527e5c5e93f080e8ecf4de33720b0"
+    },
+    {
+      "job": {
+        "name": "random_eval42_n200",
+        "eval_seed": 42,
+        "episodes": 200,
+        "method": "random",
+        "checkpoint": null
+      },
+      "state": "complete",
+      "call_id": "fc-01M6W2KNWMT6BK447ZZS29V61Y",
+      "original_attempt": "e6-short-v4",
+      "app_id": "ap-0JsjhUBUtKnEv1I247J0ey",
+      "worker_task_id": "ta-01M6W2YARW2GBB4STV155ZQEER",
+      "source_commit": "2e331f857f43fd59fcd1c6ac7a8649d654f7aa4a",
+      "supervisor_call_id": "fc-01M6VQTGN5GJXMJRMXEJRH7CNR",
+      "original_volume_directory": "evaluations/e6-short-v4/random_eval42_n200",
+      "worker_seconds": 459.52059745788574,
+      "files": {
+        "tasks.json": {
+          "path": "random_eval42_n200/tasks.json",
+          "sha256": "01c3c2c53f62de3756cf523d77f6c581752e7f702ac5b6c203ceb979e367b70e"
+        },
+        "outcomes.txt": {
+          "path": "random_eval42_n200/outcomes.txt",
+          "sha256": "f3862aca0e68ecbb6f513a42b5cc59f597d6fb43d7f6eaa14f28eb007bc47d17"
+        },
+        "runtime.json": {
+          "path": "random_eval42_n200/runtime.json",
+          "sha256": "b7a3767689fb5ac22577c921d4bb88329fa8519f74f41659f4f5577f8f7e6135"
+        },
+        "gpu.txt": {
+          "path": "random_eval42_n200/gpu.txt",
+          "sha256": "b9bedaa0b3c793a2ca24301fbb5d9d12ca655e1cb86672f52001c6c9a41e5665"
+        },
+        "packages.txt": {
+          "path": "packages.txt",
+          "sha256": "87ba163936938ae886c72ad47f4f069f453a57c448672377286e70cf4bdb1345"
+        }
+      },
+      "retained_eval_log_sha256": "e3a46639fbf2e0cb764c5d8c71a216a9acb7893567bc5feb13e4cbfbddb8080f"
+    }
+  ],
+  "volume": "multi-future-lewm-cache",
+  "task_ids_encoding": "SHA-256 of UTF-8 json.dumps(ids, sort_keys=True, separators=(\",\", \":\")); ids has start_rows, goal_rows, episode_ids, start_steps.",
+  "independent_task_ids_sha256": {
+    "42_50": "04c75fea44866343fb01fb26dfa89bb758dbc62f4499c47671649af9cfd3ceeb",
+    "43_50": "895f91f0e3cb9846934170b64484bc38fbd2b5bb1d069106114f8e355c3cb04f",
+    "44_50": "5da7de5c70be34da24e17bf31174838f2257e880865da3f3c90f5bc5d7b18853",
+    "42_200": "87c62a7f54d52484e15e8d7b33b910539e14c95f6827e5a2b472fb6afc6ef8e5"
+  },
+  "task_ids_audit": "Independently reconstructed from the frozen HDF5 episode/step arrays, using sorted without-replacement selection from 975000 valid starts. No image data was copied.",
+  "sources": {
+    "ce2cba6b5d05fb5e86c7cee57a3a2383e2e8c773": {
+      "eval.py": "1d31673af80102a58e83763089be99c7d986151f060b7e7178e1009cc599f7ff",
+      "jepa.py": "3318948f56a754af61c169fbb77a0f516d2c30c44f715449d45800f97c2cbfcd",
+      "module.py": "c4291ee87fe7fcb0d62be43afb9f907547a7d7fd59ca937449968f27b4e019b4",
+      "modal_app.py": "93424d0288ecbcf3aecc70028be2db324445fc5565320fc6c681fabdc3fe5a33",
+      "experiments/e6/runner.py": "b534cd3212ca1c786d05390e745db28195ffc1749fda35491687db994adcbdbc"
+    },
+    "2e331f857f43fd59fcd1c6ac7a8649d654f7aa4a": {
+      "eval.py": "1d31673af80102a58e83763089be99c7d986151f060b7e7178e1009cc599f7ff",
+      "jepa.py": "3318948f56a754af61c169fbb77a0f516d2c30c44f715449d45800f97c2cbfcd",
+      "module.py": "c4291ee87fe7fcb0d62be43afb9f907547a7d7fd59ca937449968f27b4e019b4",
+      "modal_app.py": "a1041b9a554c26426d66a08141fd9898e306da4fb9a2ace707d88ba1ae14a304",
+      "experiments/e6/runner.py": "b534cd3212ca1c786d05390e745db28195ffc1749fda35491687db994adcbdbc"
+    }
+  },
+  "incomplete_evaluations": [
+    {
+      "job": "masked_train1_eval42",
+      "original_attempt": "e6-short-v3",
+      "app_id": "ap-vwtZ418h297kld92MER5fx",
+      "call_id": "fc-01M6VNT6QG80HF0GFX86A2NTHY",
+      "worker_task_id": "ta-01M6VN8TSC1CY39T0NY4207ZHR",
+      "source_commit": "ce2cba6b5d05fb5e86c7cee57a3a2383e2e8c773",
+      "original_volume_directory": "evaluations/e6-short-v3/masked_train1_eval42",
+      "runtime": {
+        "path": "incomplete/runtime.json",
+        "sha256": "ff9825c339acd33f2f629486e6315366b4c7f85032c6bfdd70edde1c33c44ac0"
+      },
+      "retained_eval_log_sha256": "f0677777887cdffee9f0a7631a54f27acc0ad42f817bdb4e674976ab5d1e0eb0",
+      "raw_completed_batch_lines": [
+        "[eval b1/5] [########################] 100.0% 50/50 | 0.51 it/s | 01:38<00:00 | success_rate=90.0%",
+        "[eval b2/5] [########################] 100.0% 50/50 | 0.53 it/s | 01:34<00:00 | success_rate=70.0%",
+        "[eval b3/5] [########################] 100.0% 50/50 | 0.54 it/s | 01:33<00:00 | success_rate=80.0%"
+      ],
+      "batch_successes": [
+        9,
+        7,
+        8
+      ],
+      "batch_episodes": 10,
+      "reason": "Supervisor preemption interrupted the evaluator; restart then failed on a lazy Modal FunctionCall handle. No complete outcome vector or exit status was written. The old app and outstanding calls were reconciled before the fresh v4 evaluation."
+    }
+  ],
+  "attempt_disposition": {
+    "e6-short-v1": "No accepted outcomes or observed GPU evaluation; owned pending calls and app stopped.",
+    "e6-short-v2": "No accepted outcomes or observed GPU evaluation; owned pending calls and app stopped.",
+    "e6-short-v3": "Four complete cells retained byte-identically. One interrupted evaluation is recorded separately; its paired call never started. App stopped before v4.",
+    "e6-short-v4": "Inherited four complete cells and completed all 24 remaining cells, including the seeded random control. No score-based stopping or duplicate accepted cells."
+  },
+  "budget_accounted_seconds": 16406.120356798172,
+  "budget_note": "1800 seconds reserve covers earlier uncertain/partial work and overhead; accepted worker elapsed times are counted separately. This is budget accounting, not measured provider billing.",
+  "last_worker_end_unix": 1794091923.7594275
+}
