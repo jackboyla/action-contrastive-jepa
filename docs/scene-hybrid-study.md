@@ -10,6 +10,12 @@ total elapsed time remains approximately 36–48 hours with shared-GPU contentio
 The latest audit covers 1,062 finite logged training records; both losses remain
 positive. Disk space remains 43 GiB free.
 
+A coordinated resource hold now prevents the queues from launching further
+jobs. The current trainer continues to completion; another workload then has
+both GPUs for approximately three hours. Queues resume only after explicit
+coordination release. This is an intentional scheduling pause, not a failed
+experiment; the total ETA will be revised after release.
+
 The masked-transition implementation already adds SIGReg when its weight
 is positive. The new config inherits Action-NCE and sets SIGReg to 0.09.
 The existing Action-NCE config remains unchanged.
