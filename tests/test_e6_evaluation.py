@@ -81,7 +81,8 @@ def test_dataset_metadata_names_the_goal_rows_loaded_from_hdf5(dataset_evaluatio
     assert metadata["metrics"]["episode_successes"] == [True] * cfg.eval.num_eval
 
 
-def test_supervisor_projection_excludes_provider_queue_delay(tmp_path, monkeypatch):
+@pytest.mark.parametrize("interruption", [None, "completed_cell", "ambiguous_dispatch"])
+def test_supervisor_projection_and_restart_receipts(tmp_path, monkeypatch, interruption):
     # Execute the shipped body without importing Modal decorators or contacting its service.
     module = ast.parse((ROOT / "modal_app.py").read_text())
     function = next(node for node in module.body
@@ -89,7 +90,10 @@ def test_supervisor_projection_excludes_provider_queue_delay(tmp_path, monkeypat
     function.decorator_list = []
     code = compile(ast.fix_missing_locations(ast.Module(body=[function], type_ignores=[])),
                    str(ROOT / "modal_app.py"), "exec")
-    now, calls = [0.], []
+    now, calls, interrupted = [0.], [], [False]
+
+    class Preempted(BaseException):
+        pass
 
     class Call:
         def __init__(self, job):
@@ -97,6 +101,9 @@ def test_supervisor_projection_excludes_provider_queue_delay(tmp_path, monkeypat
             self.object_id = job["name"]
 
         def get(self, timeout):
+            if interruption == "completed_cell" and self is calls[1] and not interrupted[0]:
+                interrupted[0] = True
+                raise Preempted()
             if self is calls[0]:
                 now[0] += 1500  # Provider delay, before either GPU starts working.
             now[0] += 10
@@ -105,23 +112,47 @@ def test_supervisor_projection_excludes_provider_queue_delay(tmp_path, monkeypat
         def cancel(self, **kwargs):
             pytest.fail("Successful jobs should not be cancelled")
 
-    def spawn(job):
+    def spawn(job, attempt):
         call = Call(job)
         calls.append(call)
+        if interruption == "ambiguous_dispatch" and not interrupted[0]:
+            interrupted[0] = True
+            raise Preempted()
         return call
 
     monkeypatch.setattr(runner, "verify_assets", lambda cache: {})
     namespace = {
         "STABLEWM_HOME": tmp_path, "REPO_DIR": ROOT,
-        "time": SimpleNamespace(monotonic=lambda: now[0]),
+        "time": SimpleNamespace(time=lambda: now[0]),
+        "modal": SimpleNamespace(current_function_call_id=lambda: "supervisor-1",
+                                 FunctionCall=SimpleNamespace(from_id=lambda ident: next(
+                                     call for call in calls if call.object_id == ident))),
         "volume": SimpleNamespace(reload=lambda: None, commit=lambda: None),
         "subprocess": SimpleNamespace(run=lambda *args, **kwargs: None),
         "run_e6_job": SimpleNamespace(spawn=spawn),
     }
     exec(code, namespace)
-    status = namespace["run_e6_supervisor"]()
+    run = namespace["run_e6_supervisor"]
+    if interruption:
+        with pytest.raises(Preempted):
+            run("test-attempt", prior_gpu_seconds=600)
+        before = json.loads((tmp_path / "evaluations/test-attempt/status.json").read_text())
+    status = run("test-attempt", prior_gpu_seconds=600)
+    if interruption:
+        assert status['deadline_unix'] == before['deadline_unix']
+    if interruption == "ambiguous_dispatch":
+        assert status['state'] == 'failed'
+        assert len(calls) == 1
+        assert 'Ambiguous dispatch' in status['failures'][0]['error']
+        return
     assert status["state"] == "complete"
     assert [call.job for call in calls] == runner.jobs()
     assert len(status["completed"]) == 28
-    assert status["spent_gpu_seconds"] == 280
-    assert status["projected_gpu_seconds"] == 280
+    assert status["spent_gpu_seconds"] == 880
+    assert status["projected_gpu_seconds"] == 880
+
+    assert run("test-attempt", prior_gpu_seconds=600) == status
+    assert len(calls) == 28
+    namespace['modal'].current_function_call_id = lambda: 'different-supervisor'
+    with pytest.raises(ValueError, match='another call'):
+        run("test-attempt", prior_gpu_seconds=600)

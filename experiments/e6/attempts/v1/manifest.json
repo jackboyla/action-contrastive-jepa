@@ -1,0 +1,13 @@
+{
+  "outcome": "CPU supervisor preempted; restart failed on existing directory. Both GPU calls remained pending; no evaluation output. Own calls cancelled and app stopped before corrected deployment.",
+  "completed_cells": 0,
+  "gpu_evaluations_observed": 0,
+  "prior_gpu_seconds_reserved": 600,
+  "transformations": "None: status and logs retained verbatim; cancellation/source JSON are contemporaneous local receipts.",
+  "sha256": {
+    "source.json": "c76af3a3f130f21e24367031f4b997cfc6ca3eee67a02aa369ef6a7e1a39d4df",
+    "status.json": "173048e36466752583f46405fcd8e7bd70b090593de063c7947ac0ce5cecc4af",
+    "cancellation.json": "b4cc53d0ce3d9c02628f5e9155cd846fc52cf5d32cc0f2ad505c9f7c8c5c4105",
+    "modal.log": "b0b77416a9f1f81683edaf976fe304c3b65c4edc8f1ae528111b3c64b038a538"
+  }
+}

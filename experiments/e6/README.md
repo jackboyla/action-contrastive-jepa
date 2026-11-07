@@ -27,7 +27,7 @@ Run from the repository root with authenticated Modal access and the original
 assets in `multi-future-lewm-cache`:
 
 ```bash
-nohup .venv/bin/modal run --detach modal_app.py::e6 > /tmp/e6-short-v1.log 2>&1 &
+nohup .venv/bin/modal run --detach modal_app.py::e6 --attempt e6-short-v2 --prior-gpu-seconds 600 > /tmp/e6-short-v2.log 2>&1 &
 ```
 
 The CPU supervisor hashes the dataset, all nine checkpoints and their training
@@ -40,14 +40,17 @@ the remaining matrix stays pending. A separate six-hour wall-clock deadline
 starts before the first GPU submission, includes queue time, and bounds total
 GPU time at concurrency two, with shutdown allowance.
 Infrastructure failures pause further launches and retain every attempted
-outcome; no score controls scheduling. The output directory must not already
-exist, preventing accidental duplicate launches or overwrites.
+outcome; no score controls scheduling. An attempt directory belongs to one supervisor call. On preemption the same
+call reattaches to saved worker call IDs, skips recorded completions and retains
+its original deadline. A separate invocation cannot take over that directory.
+A dispatch intent without a saved call ID is ambiguous: the supervisor fails
+closed for manual reconciliation instead of spawning another job.
 
 Modal provides bounded capacity when local GPUs are occupied. A failed or
 budget-blocked run retains its completed cells; inspect them before planning
 any continuation so they are not silently repeated.
 
-Outputs live under `evaluations/e6-short-v1` on the volume: supervisor status,
+Outputs live under `evaluations/<attempt>` on the volume: supervisor status,
 call IDs, exact commands, raw logs/outcomes, resolved evaluation configs,
 start/goal row IDs, episode IDs, success vectors, runtime, package versions,
 GPU/driver details and source/checkpoint hashes. Retain all failures and all
@@ -57,3 +60,10 @@ seed and across evaluation seeds within each checkpoint. Shared tasks are not
 independent training-seed repetitions; avoid significance claims from pooled
 episodes. Fresh Modal runtime may differ from the archive: these results are
 matched repeated evaluations, not replacements for archived headline numbers.
+
+The command above reserves 600 GPU-seconds for prior-attempt uncertainty; this
+is a budget allowance, not a claim of observed computation. Before a new
+attempt, verify the previous app has no running or pending workers, retain its
+raw receipts, and reconcile every completed cell. Never rerun accepted cells.
+`--prior-gpu-seconds` reduces both the projection budget and the wall deadline.
+The runner does not automatically restart incomplete worker evaluations.
