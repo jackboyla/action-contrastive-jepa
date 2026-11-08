@@ -85,3 +85,43 @@ Run long jobs in tmux with logs. Retain final model objects and record failures
 without dropping trials. Before reporting, audit all resolved configurations,
 completed steps, checkpoint identities, matched goal/probe samples and outcomes.
 Report all methods regardless of the direction of the result.
+
+## Bounded evaluation scheduling trial
+
+As of 2026-11-08 12:40 UTC, all nine final checkpoints, ten planning
+results, and five probes have passed the local audits. The study is incomplete.
+The default Action-NCE checkpoints are shared with the sensitivity study,
+not independent training replications.
+
+One authorized trial pairs the pending Action-NCE seed 1 short and hard
+planning evaluations beneath a single exclusive GPU0 lock. Scientific commands,
+checkpoints, seed 43, 100 tasks per protocol, batch size 10, and four CPU threads
+per worker stay fixed. Later cells remain serial. The trial is waiting for the
+lock; no throughput improvement has been measured.
+
+`scripts/run_eval_pair.py SPEC.json` accepts a local JSON object with `lock`,
+`cwd`, the full frozen `env`, `report`, and exactly two `jobs`. Each job supplies
+an `argv` array and absolute `log` and `output` paths. Keep specs and reports
+outside version control, particularly environment values. The runner acquires
+the lock itself and keeps it until both processes exit, including when one fails.
+Children inherit the lock descriptor. Existing trial receipts and nonempty
+job logs prevent accidental reruns; successful outputs require audit before any
+separate continuation resumes unfinished work.
+
+The second worker starts only after at least 30 seconds and the first CEM solve,
+verified physical GPU0 compute/graphics placement, at least 12 GiB GPU free
+memory (8 GiB admission allowance plus 4 GiB reserve), and 16 GiB available
+host RAM. The observed roughly 4 GiB single-worker usage is a snapshot, not a
+peak bound. A failed admission check keeps the pair serial. The allowance cannot
+guarantee a future peak; sampled free memory below 4 GiB flags the trial as risky.
+The runner never kills a successful sibling to optimize throughput.
+
+The local report retains launch/end times, exit codes, placement evidence,
+sampled peak total GPU memory, and pair makespan. Samples occur every two seconds
+only while the trial owns the lock; transient peaks can escape sampling.
+Compare pair makespan and per-job elapsed times against the original serial
+seed 3072 timings (449.789 s short, 925.199 s hard). This is an approximate
+cross-seed scheduling comparison, not a paired speedup estimate. Do not expand
+parallel scheduling without useful measured aggregate gain, safe headroom, and
+matching config/task/outcome audits. Keep intentional pause and lock-wait time
+separate from compute timing.
