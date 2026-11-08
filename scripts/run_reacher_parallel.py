@@ -197,8 +197,13 @@ class Dispatcher:
         checkpoint = folder / f'{job["model"]}_epoch_10_object.ckpt'
         assert list(folder.glob('*_object.ckpt')) == [checkpoint]
         assert checkpoint.stat().st_size > 1_000_000
-        write(self.records / f'{job["label"]}-training-audit.json', dict(
-            optimizer_steps=ends[0]['global_step'], checkpoint_sha256=sha256(checkpoint)))
+        result = dict(optimizer_steps=ends[0]['global_step'], checkpoint_sha256=sha256(checkpoint))
+        path = self.records / f'{job["label"]}-training-audit.json'
+        if path.exists():
+            assert json.loads(path.read_text()) == result
+        else:
+            write(path, result)
+        return result
 
     def adopt(self, job):
         saved = self.cfg['adopt']
@@ -218,10 +223,13 @@ class Dispatcher:
         assert json.loads(receipt.read_text())['exit'] == 0
         self.audit_training(job)
 
+    def claim_stage(self, job, stage, gpu):
+        reserve(self.records / f'{job["label"]}-{stage}-claim.json', dict(gpu=gpu, utc=time.time()))
+
     def run_stage(self, job, stage, gpu):
         self.check()
         label = job['label']
-        reserve(self.records / f'{label}-{stage}-claim.json', dict(gpu=gpu, utc=time.time()))
+        self.claim_stage(job, stage, gpu)
         self.state(label, stage=stage, gpu=gpu, status='waiting_lock')
         with Path(self.cfg['locks'][str(gpu)]).open('a') as lock:
             fcntl.flock(lock, fcntl.LOCK_EX)
