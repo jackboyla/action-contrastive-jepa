@@ -6,6 +6,7 @@ from pathlib import Path
 import platform
 import signal
 import subprocess
+import sys
 import threading
 import time
 
@@ -47,7 +48,7 @@ def verify_assets(cache):
     return dict(assets)
 
 
-def run_job(job, cache, output, deadline_unix):
+def _run_job(job, cache, output, deadline_unix):
     if time.time() >= deadline_unix:
         raise TimeoutError('E6 attempt deadline expired before evaluation')
     output.mkdir(parents=True, exist_ok=False)
@@ -85,23 +86,13 @@ def run_job(job, cache, output, deadline_unix):
     # The child shares stdout with Modal; retain an independent raw log as well.
     with (output / 'eval.log').open('w') as log:
         process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
-                                   text=True, start_new_session=True,
+                                   text=True,
                                    env={**os.environ, 'PYTHONUNBUFFERED': '1'})
-        expired = threading.Event()
-
         def stop_evaluator():
             try:
-                os.killpg(process.pid, signal.SIGKILL)
+                process.kill()
             except ProcessLookupError:
                 pass
-
-        def expire():
-            expired.set()
-            stop_evaluator()
-
-        timer = threading.Timer(max(0, deadline_unix - time.time()), expire)
-        timer.daemon = True
-        timer.start()
         try:
             for line in process.stdout:
                 print(line, end='', flush=True)
@@ -112,14 +103,70 @@ def run_job(job, cache, output, deadline_unix):
             stop_evaluator()
             process.wait()
             raise
-        finally:
-            timer.cancel()
     record['elapsed_seconds'] = time.time() - record['started_unix']
     (output / 'runtime.json').write_text(json.dumps(record, indent=2) + '\n')
-    if expired.is_set():
-        raise TimeoutError('E6 attempt deadline terminated the evaluator process group')
     if record['returncode']:
         raise RuntimeError(f"{job['name']} exited {record['returncode']}")
     result = json.loads((output / 'tasks.json').read_text())
     assert len(result['metrics']['episode_successes']) == job['episodes']
     return record
+
+
+def run_job(job, cache, output, deadline_unix):
+    """Bound local setup and evaluation together, including blocking file/tool I/O.
+
+    Modal startup, volume reload/commit and provider teardown remain outside this
+    local process boundary. This does not change the attempt deadline or budget.
+    """
+    if time.time() >= deadline_unix:
+        raise TimeoutError('E6 attempt deadline expired before worker setup')
+    command = [sys.executable, os.path.abspath(__file__), '--worker',
+               json.dumps(job), os.path.abspath(cache), os.path.abspath(output), str(deadline_unix)]
+    expired = threading.Event()
+
+    def stop_worker():
+        try:
+            os.killpg(process.pid, signal.SIGKILL)
+        except ProcessLookupError:
+            pass
+
+    def expire():
+        expired.set()
+        stop_worker()
+
+    timer = None
+    record = None
+    process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+                               text=True, start_new_session=True,
+                               env={**os.environ, 'PYTHONUNBUFFERED': '1'})
+    try:
+        timer = threading.Timer(max(0, deadline_unix - time.time()), expire)
+        timer.daemon = True
+        timer.start()
+        for line in process.stdout:
+            if line.startswith('E6_WORKER_RESULT '):
+                record = json.loads(line.removeprefix('E6_WORKER_RESULT '))
+            else:
+                print(line, end='', flush=True)
+        returncode = process.wait()
+    finally:
+        if timer is not None:
+            timer.cancel()
+        # Also reap/terminate on caller cancellation or a setup/evaluation failure.
+        stop_worker()
+        process.wait()
+        process.stdout.close()
+    if expired.is_set() or (returncode and time.time() >= deadline_unix):
+        raise TimeoutError('E6 attempt deadline terminated worker setup/evaluation process group')
+    if returncode:
+        raise RuntimeError(f"{job['name']} worker exited {returncode}")
+    if record is None or record.get('job') != job or record.get('returncode') != 0:
+        raise RuntimeError(f"{job['name']} worker returned no valid completion record")
+    return record
+
+
+if __name__ == '__main__':
+    if len(sys.argv) != 6 or sys.argv[1] != '--worker':
+        raise SystemExit('Internal E6 worker entrypoint requires job, cache, output and deadline')
+    result = _run_job(json.loads(sys.argv[2]), Path(sys.argv[3]), Path(sys.argv[4]), float(sys.argv[5]))
+    print('E6_WORKER_RESULT ' + json.dumps(result), flush=True)
