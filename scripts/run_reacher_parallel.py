@@ -101,6 +101,30 @@ def bridge(handoff, label, stage):
         time.sleep(10)
 
 
+def locked_child(lock_fd, command):
+    """Hold the inherited lock until even orphaned, exec'd descendants exit."""
+    import ctypes
+    libc = ctypes.CDLL(None, use_errno=True)
+    if libc.prctl(36, 1, 0, 0, 0) != 0:  # Linux PR_SET_CHILD_SUBREAPER
+        error = ctypes.get_errno()
+        raise OSError(error, os.strerror(error))
+    os.fstat(lock_fd)
+    # A group cancellation reaches the scientific child too. Keep its lock
+    # while reaping descendants; caught handlers reset to defaults on exec.
+    for sig in (signal.SIGTERM, signal.SIGINT, signal.SIGHUP):
+        signal.signal(sig, lambda *_: None)
+    proc = subprocess.Popen(command, pass_fds=(lock_fd,))
+    try:
+        returncode = proc.wait()
+    finally:
+        while True:
+            try:
+                os.waitpid(-1, 0)
+            except ChildProcessError:
+                break
+    return returncode if returncode >= 0 else 128 - returncode
+
+
 class Dispatcher:
     def __init__(self, handoff):
         global TEMP_DIR
@@ -218,21 +242,26 @@ class Dispatcher:
             env = dict(os.environ, **self.manifest['environment'],
                        STABLEWM_HOME=str(self.cache), PYTHONPATH=str(self.root))
             env.update(CUDA_VISIBLE_DEVICES=str(gpu), MUJOCO_EGL_DEVICE_ID=str(gpu))
+            locked = [self.cfg['python'], str(Path(__file__).resolve()),
+                      '--lock-fd', str(lock.fileno()), '--']
             if stage == 'train':
                 assert not (self.cache / job['subdir']).exists(), 'Refuse training restart'
             else:
                 self.audit_training(job)
-                subprocess.run([self.cfg['python'], str(Path(__file__).resolve()), '--egl', str(gpu)],
-                               env=env, cwd=self.root, check=True)
+                subprocess.run(locked + [self.cfg['python'], str(Path(__file__).resolve()), '--egl', str(gpu)],
+                               env=env, cwd=self.root, pass_fds=(lock.fileno(),),
+                               start_new_session=True, check=True)
             command = [self.cfg['python'], *job[stage]]
             started = time.time()
             with (self.logs / f'{label}-{stage}.log').open('x') as log:
-                proc = subprocess.Popen(command, cwd=self.root, env=env, stdout=log,
-                                        stderr=subprocess.STDOUT, start_new_session=True)
-                write(self.records / f'{label}-{stage}-launch.json', dict(
-                    process=identity(proc.pid), gpu=gpu, uuid=uuid, command=command,
-                    environment={k: env[k] for k in self.manifest['environment']}, utc=started))
+                proc = None
                 try:
+                    proc = subprocess.Popen(locked + command, cwd=self.root, env=env, stdout=log,
+                                            stderr=subprocess.STDOUT, start_new_session=True,
+                                            pass_fds=(lock.fileno(),))
+                    write(self.records / f'{label}-{stage}-launch.json', dict(
+                        process=identity(proc.pid), gpu=gpu, uuid=uuid, command=command,
+                        environment={k: env[k] for k in self.manifest['environment']}, utc=started))
                     while proc.poll() is None:
                         self.budget()
                         self.state(label, stage=stage, gpu=gpu, status='running', pid=proc.pid)
@@ -251,9 +280,10 @@ class Dispatcher:
                         time.sleep(15)
                 except BaseException:
                     # This is only the child started above, never the adopted tree.
-                    if proc.poll() is None:
-                        os.killpg(proc.pid, signal.SIGTERM)
-                    proc.wait()
+                    if proc is not None:
+                        if proc.poll() is None:
+                            os.killpg(proc.pid, signal.SIGTERM)
+                        proc.wait()
                     raise
             assert proc.returncode == 0, f'{label} {stage} exit {proc.returncode}'
             if stage == 'train':
@@ -333,7 +363,12 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(__doc__)
     parser.add_argument('--handoff', type=Path)
     parser.add_argument('--egl', type=int)
+    parser.add_argument('--lock-fd', type=int)
+    parser.add_argument('command', nargs=argparse.REMAINDER)
     args = parser.parse_args()
+    if args.lock_fd is not None:
+        assert args.command[0] == '--'
+        raise SystemExit(locked_child(args.lock_fd, args.command[1:]))
     if args.egl is not None:
         egl(args.egl)
     else:

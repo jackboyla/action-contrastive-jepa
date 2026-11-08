@@ -45,3 +45,12 @@ a cell. GPU locks remain exclusive, and only CUDA/EGL placement differs from the
 frozen environment. The dispatcher enforces the existing 6 GiB output limit and
 10 GiB free-space floor. Measure aggregate throughput before assuming a speedup:
 both lanes read the same dataset and can compete for storage bandwidth.
+
+Each new stage runs under a Linux child subreaper that inherits only that GPU's
+lock descriptor. It holds the lock until the command and all descendants exit,
+including descendants that start new sessions or close inherited descriptors.
+The launch receipt's `process` identifies this supervisor; `command` records the
+scientific command it starts. Dispatcher death leaves the supervisor and lock
+intact. Setup or monitoring failures cancel only that new stage's process group
+and wait for the supervisor to reap it; an escaped descendant keeps the lock
+held until it exits. The adopted training retains its existing supervision.
