@@ -46,6 +46,7 @@ leave that GPU idle temporarily.
 Before retirement, the controller requires the incumbent's kernel `flock`
 waiter records for each pending lane, matching `waiting_lock` state and claims,
 and no conflicting post-lock health, launch, log or scientific-output evidence.
+While unclaimed work remains, both lanes must reach their pre-launch flocks.
 It tracks scientific roots and descendants through recorded identities,
 ancestry, commands and process groups/sessions, and checks CUDA/EGL inventory.
 The original training wrapper and flock must have exited naturally. A missing
@@ -82,6 +83,7 @@ The new owner identity lives in `dispatch/continuation/owner-acquired.json`.
 ## Failure limits
 
 A crash after fencing can leave the keeper holding GPU locks indefinitely.
+Failure to write the keeper's error receipt also retains those locks.
 After retirement, failure leaves the generation blocked until explicit evidence
 reconciliation; invoking the controller again refuses the existing generation.
 Do not delete receipts or the generation directory, unlock another process's

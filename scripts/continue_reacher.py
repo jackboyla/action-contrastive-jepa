@@ -231,6 +231,8 @@ class Continuation(parallel.Dispatcher):
             assert gpu not in lanes
             lanes[gpu] = dict(job=job, stage=stage)
             claims[f'{label}-{stage}'] = sha256(path)
+        if pending and set(lanes) != {0, 1}:
+            raise Waiting('Both lanes must reach pre-launch flocks before pending work transfers')
         return dict(lanes=lanes, pending=pending, completed=completed, claims=claims)
 
     def idle_actors(self, rows, tracked):
@@ -376,10 +378,12 @@ def keeper(d, channel, locks):
         if released:
             event(d.generation, 'barrier-released-controller-lost', error=repr(error))
             return
-        event(d.generation, 'barrier-blocked', error=repr(error))
-        # After a controller loss, only explicit reconciliation can release this fence.
-        while True:
-            time.sleep(60)
+        try:
+            event(d.generation, 'barrier-blocked', error=repr(error))
+        finally:
+            # Receipt storage may fail too; it must not release an acquired fence.
+            while True:
+                time.sleep(60)
 
 
 def successor(d, channel):

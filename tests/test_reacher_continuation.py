@@ -25,7 +25,9 @@ def wait_for(predicate, timeout=10):
 @pytest.fixture
 def study(tmp_path, request):
     root = tmp_path
-    active = getattr(request, 'param', '') == 'active'
+    mode = getattr(request, 'param', '')
+    active = mode == 'active'
+    if mode == 'delayed-claim': (root/'delayed-claim').touch()
     if active: (root/'with-science').touch()
     for name in ('records', 'logs', 'cache', 'bin'):
         (root / name).mkdir()
@@ -60,6 +62,18 @@ if sys.argv[1]=='incumbent':
         fcntl.flock(owner,fcntl.LOCK_EX)
         c.parallel.reserve(root/'records/owner.json',{{'process':c.parallel.identity(os.getpid())}})
         def lane(gpu):
+            if gpu == 0 and (root/'delayed-claim').exists():
+                while not (root/'allow-next-claim').exists(): time.sleep(.01)
+                name='cell2'
+                c.parallel.reserve(root/f'records/{{name}}-train-claim.json',{{'gpu':gpu}})
+                state=json.loads((root/'records/parallel-status.json').read_text())
+                state['jobs'][name]={{'status':'waiting_lock','stage':'train','gpu':gpu}}
+                c.parallel.write(root/'records/parallel-status.json',state)
+                with (root/'gpu0.lock').open('a') as lock:
+                    fcntl.flock(lock,fcntl.LOCK_EX)
+                    (root/'incumbent-advanced-0').touch()
+                    while True: time.sleep(1)
+                return
             if gpu==0 and (root/'with-science').exists():
                 with (root/'gpu0.lock').open('a') as lock:
                     fcntl.flock(lock,fcntl.LOCK_EX)
@@ -110,7 +124,11 @@ c.audit_run=lambda job,*a:{{'label':job['label']}}
 c.summarize=lambda rows:{{'labels':[r['label'] for r in rows]}}
 original_event=c.event
 def event(folder,name,**values):
-    original_event(folder,name,**values)
+    try:
+        original_event(folder,name,**values)
+    except OSError:
+        (root/f'failed-{{name}}').touch()
+        raise
     fault=root/'fault'
     if fault.exists() and fault.read_text()==name:
         (root/f'paused-{{name}}').touch()
@@ -158,6 +176,10 @@ c.main()
         'adopt':dict(parent=code.parallel.identity(legacy.pid),trainer=science,wrapper=dead,flock=dead)},
         manifest={'jobs':jobs,'configs':{j['label']:{} for j in jobs},'environment':{}})
     (root/'request.json').write_text(json.dumps(request))
+    if mode == 'delayed-claim':
+        for suffix, value in [('claim', {'gpu':0}), ('exit', {'exit':0})]:
+            code.parallel.reserve(root/f'records/cell1-eval-{suffix}.json', value)
+        code.parallel.reserve(root/'records/cell1-audit.json', {'label':'cell1'})
     original = {str(p):p.read_bytes() for p in (root/'records').glob('*') if p.is_file() and p.name != 'parallel-status.json'}
     try:
         yield root, start, held, incumbent, legacy, original
@@ -239,6 +261,52 @@ def test_controller_crash_never_replays_or_releases_before_ready(study, phase):
     retry=start('control',str(root/'request.json'))
     assert retry.wait(timeout=5)!=0
     assert not (gen/'dispatch-started.json').exists()
+
+
+def test_receipt_write_failure_keeps_barriers(study):
+    root,start,held,incumbent,legacy,original=study
+    proc=launch_controller(study,'guarded')
+    wait_for(lambda:(root/'paused-guarded').exists())
+    gen=root/'records/continuation'
+    keeper=json.loads((gen/'barrier-owner.json').read_text())['process']
+    gen.chmod(0o555)
+    try:
+        proc.kill()
+        proc.wait(timeout=5)
+        wait_for(lambda:(root/'failed-barrier-blocked').exists())
+        deadline=time.monotonic()+.2
+        while time.monotonic()<deadline:
+            current=code.parallel.identity(keeper['pid'])
+            assert all(current[k]==keeper[k] for k in ('starttime','cwd','cmdline'))
+            assert_locked(root,True)
+            time.sleep(.01)
+        assert not (gen/'ready.json').exists()
+        assert not (root/'incumbent-advanced-0').exists()
+        assert not (root/'incumbent-advanced-1').exists()
+    finally:
+        gen.chmod(0o755)
+
+
+@pytest.mark.parametrize('study', ['delayed-claim'], indirect=True)
+def test_waits_for_both_lanes_before_certifying_pending_work(study):
+    root,start,held,incumbent,legacy,original=study
+    proc=launch_controller(study)
+    wait_for(lambda:(root/'waiting-1').exists())
+    gen=root/'records/continuation'
+    # One completed lane is still between stages; its next claim is not frozen.
+    deadline=time.monotonic()+.2
+    while time.monotonic()<deadline:
+        assert not (gen/'certificate.json').exists()
+        assert incumbent.poll() is None and legacy.poll() is None
+        time.sleep(.01)
+    (root/'allow-next-claim').touch()
+    wait_for(lambda:(gen/'complete.json').exists(),20)
+    assert proc.wait(timeout=5)==0
+    cert=json.loads((gen/'certificate.json').read_text())
+    assert cert['frontier']['lanes']['0']['job']['label']=='cell2'
+    assert cert['frontier']['lanes']['1']['job']['label']=='cell0'
+    assert [j['label'] for j in cert['frontier']['pending']]==['cell3','cell4','cell5']
+    for path,data in original.items(): assert Path(path).read_bytes()==data
 
 
 @pytest.mark.parametrize('evidence', ['launch','empty-log','output'])
