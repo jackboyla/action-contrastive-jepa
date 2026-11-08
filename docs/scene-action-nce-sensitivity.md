@@ -1,7 +1,79 @@
 # Scene Action-NCE: ten-epoch sensitivity study
 
-This protocol tests five settings across three training seeds. Complete-grid
-results remain pending; partial runs do not establish robustness.
+All 15 predeclared runs completed on 8 November 2026. Each final epoch-10
+checkpoint was evaluated on the same 100 short recorded-goal tasks. The results
+describe this grid and protocol; they do not establish comprehensive robustness.
+
+## Results
+
+Successes out of 100 (also percentages). Columns identify **training seeds**;
+the evaluation seed is 43 throughout. Mean and sample SD summarize three
+training runs, not 300 independent goals.
+
+| Batch | Temperature | Seed 3072 | Seed 1 | Seed 2 | Mean ± sample SD (%) | Updates per run |
+|---:|---:|---:|---:|---:|---:|---:|
+| 64 | .10 | 68 | 72 | 74 | 71.33 ± 3.06 | 137,950 |
+| 128 | .10 | 66 | 69 | 74 | 69.67 ± 4.04 | 68,970 |
+| 256 | .10 | 72 | 63 | 71 | 68.67 ± 4.93 | 34,480 |
+| 128 | .05 | 75 | 70 | 69 | 71.33 ± 3.21 | 68,970 |
+| 128 | .20 | 69 | 73 | 74 | 72.00 ± 2.65 | 68,970 |
+
+The five observed means span 68.67–72.00%. At fixed batch 128, the three
+temperature means span 69.67–72.00%. The three-seed design and single shared
+goal sample do not support a significance or comprehensive robustness claim.
+Batch comparisons also change optimizer updates because epochs are fixed;
+they do not isolate the number of contrastive negatives. No setting or
+checkpoint was selected from these results.
+
+[Audited results](scene-action-nce-sensitivity-results.json) contain all 1,500
+boolean outcomes, the common 100 task identifiers, final checkpoint SHA256s,
+update counts, and unrounded summaries. The audit compared full resolved
+training configurations after removing only seed, run identity, batch size
+and temperature; evaluation configurations matched after removing only policy
+and output path. Every run started at step zero without resume, reached epoch
+10 with the expected updates, and exited successfully in training and evaluation.
+All 15 task-index, episode-ID and start-step arrays matched exactly.
+
+The results JSON records each run's training commit. Training code and configs
+are identical across those commits; use `8197969ce1e525547aa532d2484ad6dfde358996`
+for reproduction. All runs used the shared Scene HDF5 identified in the JSON
+and an RTX 5090 on physical GPU1.
+The first evaluation also allocated EGL graphics on GPU0; its result was
+retained. Later evaluations used explicit MuJoCo EGL device selection;
+actual evaluation processes confirmed compute and graphics on GPU1. No scientific
+configuration changed. The queue took 36.25 hours, including coordinated
+resource holds; the 8 November training pause alone lasted 2,596.678 seconds.
+Those pauses are wall time, not evidence of slower training. Final model
+objects total about 1.04 GiB; study artifacts stayed below the 6 GiB budget.
+
+## Proposed manuscript text
+
+These are proposed replacements for author review; they have not been applied
+to the paper.
+
+**Main text:** “In a predeclared Scene short-goal sensitivity study, five
+batch-size/temperature settings averaged 68.7–72.0% success across three
+training seeds at the final tenth epoch (Appendix D). These results describe
+this grid; fixed-epoch batch comparisons also change the number of optimizer
+updates.”
+
+**Appendix D:** “We trained Action-NCE from scratch for ten epochs at inverse
+coefficient 0.30, varying batch size over {64, 128, 256} at temperature 0.10
+and temperature over {0.05, 0.10, 0.20} at batch size 128. The shared default
+cell gives five settings, each trained with seeds 3072, 1 and 2. We evaluated
+only final epoch-10 checkpoints on the same 100 short recorded-goal tasks
+(evaluation seed 43; goal offset 25, execution budget 50), using CEM with
+300 samples, 30 iterations and 30 elites, and horizon/action-block/receding
+horizon of 5. All predeclared runs completed. Table [above] reports every
+seed and the mean ± sample SD across training seeds. The default mean was
+69.67%; the five setting means ranged from 68.67% to 72.00%. The goals are
+shared across models, not independent repetitions across seeds. Fixed epochs
+give 137,950, 68,970 and 34,480 updates for batches 64, 128 and 256, respectively,
+so the batch experiment does not isolate negative-set size. This single
+short-goal protocol and three training seeds do not establish comprehensive
+robustness or statistical significance. The three default Action-NCE
+checkpoints are also used as controls in the hybrid study and are not
+independent training replications.”
 
 ## Frozen protocol
 
@@ -36,6 +108,8 @@ Expected update counts are 137,950 / 68,970 / 34,480 for batches 64 / 128 / 256.
 
 ## Reproduction
 
+For the reported experiment, use a separate checkout of source commit
+`8197969ce1e525547aa532d2484ad6dfde358996`; do not change a running checkout.
 Use the existing dataset cache and Python environment. `STABLEWM_HOME` points
 to the cache containing `ogbench/visual_scene_play`; no dataset copy is needed.
 Run from this checkout so `train.py`, `eval.py`, and local imports use this code.
@@ -107,7 +181,7 @@ behavior-policy-shift conclusion follows from this study alone.
 
 Sensitivity is the sole producer of the default Action-NCE checkpoints
 (batch 128, temperature .10, coefficient .30; seeds 3072, 1, 2). The hybrid study
-will consume the same audited final epoch-10 checkpoints rather than train
+accepted the same three audited final epoch-10 checkpoints instead of training
 separate default NCE replicas. These are shared baselines, not independent
 training replications. The sensitivity grid, schedule, evaluation,
 and final-checkpoint rule remain unchanged.
