@@ -1,7 +1,7 @@
 # Fixed Action-NCE + SIGReg Scene study
 
 This protocol tests a fixed combination against matched standalone objectives.
-Planning and probe comparisons remain pending.
+The completed three-seed results and proposed manuscript text are in [the results report](scene-hybrid-results.md).
 
 ## Frozen protocol
 
