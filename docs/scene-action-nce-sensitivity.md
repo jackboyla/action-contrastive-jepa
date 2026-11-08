@@ -34,8 +34,10 @@ and output path. Every run started at step zero without resume, reached epoch
 10 with the expected updates, and exited successfully in training and evaluation.
 All 15 task-index, episode-ID and start-step arrays matched exactly.
 
-Training used source commit `8197969ce1e525547aa532d2484ad6dfde358996`, the shared
-Scene HDF5 identified in the results JSON, and an RTX 5090 on physical GPU1.
+The results JSON records each run's training commit. Training code and configs
+are identical across those commits; use `8197969ce1e525547aa532d2484ad6dfde358996`
+for reproduction. All runs used the shared Scene HDF5 identified in the JSON
+and an RTX 5090 on physical GPU1.
 The first evaluation also allocated EGL graphics on GPU0; its result was
 retained. Later evaluations used explicit MuJoCo EGL device selection;
 actual evaluation processes confirmed compute and graphics on GPU1. No scientific

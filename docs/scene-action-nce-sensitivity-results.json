@@ -117,7 +117,8 @@
           "checkpoint_bytes": 74247854,
           "final_epoch": 10,
           "train_exit_code": 0,
-          "eval_exit_code": 0
+          "eval_exit_code": 0,
+          "recorded_training_commit": "fd2739203122c13becbdd4f2db90ae393bfe17f1"
         },
         {
           "seed": 1,
@@ -231,7 +232,8 @@
           "checkpoint_bytes": 74247854,
           "final_epoch": 10,
           "train_exit_code": 0,
-          "eval_exit_code": 0
+          "eval_exit_code": 0,
+          "recorded_training_commit": "db5dc7383f1b271d6cd3d92627fd345988eeca94"
         },
         {
           "seed": 2,
@@ -345,7 +347,8 @@
           "checkpoint_bytes": 74247854,
           "final_epoch": 10,
           "train_exit_code": 0,
-          "eval_exit_code": 0
+          "eval_exit_code": 0,
+          "recorded_training_commit": "41caffea82885d1a89c48fd2fa4fdafdaf38572b"
         }
       ],
       "mean": 71.33333333333333,
@@ -468,7 +471,8 @@
           "checkpoint_bytes": 74247854,
           "final_epoch": 10,
           "train_exit_code": 0,
-          "eval_exit_code": 0
+          "eval_exit_code": 0,
+          "recorded_training_commit": "8197969ce1e525547aa532d2484ad6dfde358996"
         },
         {
           "seed": 1,
@@ -582,7 +586,8 @@
           "checkpoint_bytes": 74247854,
           "final_epoch": 10,
           "train_exit_code": 0,
-          "eval_exit_code": 0
+          "eval_exit_code": 0,
+          "recorded_training_commit": "8197969ce1e525547aa532d2484ad6dfde358996"
         },
         {
           "seed": 2,
@@ -696,7 +701,8 @@
           "checkpoint_bytes": 74247854,
           "final_epoch": 10,
           "train_exit_code": 0,
-          "eval_exit_code": 0
+          "eval_exit_code": 0,
+          "recorded_training_commit": "8197969ce1e525547aa532d2484ad6dfde358996"
         }
       ],
       "mean": 69.66666666666667,
@@ -819,7 +825,8 @@
           "checkpoint_bytes": 74247854,
           "final_epoch": 10,
           "train_exit_code": 0,
-          "eval_exit_code": 0
+          "eval_exit_code": 0,
+          "recorded_training_commit": "8197969ce1e525547aa532d2484ad6dfde358996"
         },
         {
           "seed": 1,
@@ -933,7 +940,8 @@
           "checkpoint_bytes": 74247854,
           "final_epoch": 10,
           "train_exit_code": 0,
-          "eval_exit_code": 0
+          "eval_exit_code": 0,
+          "recorded_training_commit": "8197969ce1e525547aa532d2484ad6dfde358996"
         },
         {
           "seed": 2,
@@ -1047,7 +1055,8 @@
           "checkpoint_bytes": 74247854,
           "final_epoch": 10,
           "train_exit_code": 0,
-          "eval_exit_code": 0
+          "eval_exit_code": 0,
+          "recorded_training_commit": "8197969ce1e525547aa532d2484ad6dfde358996"
         }
       ],
       "mean": 68.66666666666667,
@@ -1170,7 +1179,8 @@
           "checkpoint_bytes": 74247854,
           "final_epoch": 10,
           "train_exit_code": 0,
-          "eval_exit_code": 0
+          "eval_exit_code": 0,
+          "recorded_training_commit": "8197969ce1e525547aa532d2484ad6dfde358996"
         },
         {
           "seed": 1,
@@ -1284,7 +1294,8 @@
           "checkpoint_bytes": 74247854,
           "final_epoch": 10,
           "train_exit_code": 0,
-          "eval_exit_code": 0
+          "eval_exit_code": 0,
+          "recorded_training_commit": "8197969ce1e525547aa532d2484ad6dfde358996"
         },
         {
           "seed": 2,
@@ -1398,7 +1409,8 @@
           "checkpoint_bytes": 74247854,
           "final_epoch": 10,
           "train_exit_code": 0,
-          "eval_exit_code": 0
+          "eval_exit_code": 0,
+          "recorded_training_commit": "8197969ce1e525547aa532d2484ad6dfde358996"
         }
       ],
       "mean": 71.33333333333333,
@@ -1521,7 +1533,8 @@
           "checkpoint_bytes": 74247854,
           "final_epoch": 10,
           "train_exit_code": 0,
-          "eval_exit_code": 0
+          "eval_exit_code": 0,
+          "recorded_training_commit": "8197969ce1e525547aa532d2484ad6dfde358996"
         },
         {
           "seed": 1,
@@ -1635,7 +1648,8 @@
           "checkpoint_bytes": 74247854,
           "final_epoch": 10,
           "train_exit_code": 0,
-          "eval_exit_code": 0
+          "eval_exit_code": 0,
+          "recorded_training_commit": "8197969ce1e525547aa532d2484ad6dfde358996"
         },
         {
           "seed": 2,
@@ -1749,7 +1763,8 @@
           "checkpoint_bytes": 74247854,
           "final_epoch": 10,
           "train_exit_code": 0,
-          "eval_exit_code": 0
+          "eval_exit_code": 0,
+          "recorded_training_commit": "8197969ce1e525547aa532d2484ad6dfde358996"
         }
       ],
       "mean": 72.0,
@@ -2066,7 +2081,7 @@
   },
   "schema_version": 1,
   "completed_utc": "2026-11-08T22:03:30Z",
-  "training_code_commit": "8197969ce1e525547aa532d2484ad6dfde358996",
+  "reproduction_commit": "8197969ce1e525547aa532d2484ad6dfde358996",
   "eval_seed": 43,
   "dataset_sha256": "9433f6372eee1f9791dff1da66677b6c043c6f0c6dd3b1ce9fbef0842e6fed70",
   "inverse_coefficient": 0.3,
