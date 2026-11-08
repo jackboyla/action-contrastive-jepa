@@ -173,7 +173,7 @@ and coordinated pauses extended the overall run across November 7–8. Retained
 study training artifacts occupy about 0.84 GiB; datasets and environments were
 shared. The experiment used no cloud jobs.
 
-The execution checkout remained at reviewed head
+The final execution checkout is at reviewed head
 `bdb04750813d43b114172052d8be23505bbf7f89`; the training/evaluation sources match
 the frozen training-code commit above. Local evidence resides in the execution
 checkout's `progress/evaluations/training-audit.json`, `final-audit-summary.json`,
