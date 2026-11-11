@@ -178,7 +178,9 @@
           "history_size": 3,
           "horizon": 1,
           "num_preds": 1,
-          "embed_dim": 192
+          "embed_dim": 192,
+          "action_dim": 2,
+          "observation_dim": 6
         },
         "predictor": {
           "depth": 6,
@@ -302,7 +304,9 @@
           "history_size": 3,
           "horizon": 1,
           "num_preds": 1,
-          "embed_dim": 192
+          "embed_dim": 192,
+          "action_dim": 2,
+          "observation_dim": 6
         },
         "predictor": {
           "depth": 6,
