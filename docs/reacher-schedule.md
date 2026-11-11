@@ -63,11 +63,14 @@ alone does not establish general objective superiority.
 
 ## Local execution constraints
 
-GPU1 starts only after the entire existing sensitivity study passes its
-15-training/15-evaluation artifact audit. A free per-job lock, an exited process,
-or an elapsed ETA is insufficient. Then acquire the shared GPU1 lock separately
-for each job. Validate CUDA and EGL placement on physical GPU1. Preserve other
-studies, bound experiment output to 6 GiB and retain at least 10 GiB free disk.
-Keep machine-specific waiters, monitoring state and research logs under
-`progress/`, outside commits. Publish results only after the full six-run audit;
-this protocol is not a completed result.
+E1 started after the entire sensitivity study passed its 15-training/15-evaluation
+artifact audit. Both local GPUs were authorized, with one independent stage per
+GPU and a shared exclusive lock acquired separately for each job. Verify CUDA
+and EGL placement on the assigned physical GPU. Preserve other studies, bound
+experiment output to 6 GiB and retain at least 10 GiB free disk. Keep
+machine-specific waiters, monitoring state and research logs under `progress/`,
+outside commits.
+
+All six runs completed and passed the full audit. See the
+[results and limitations](reacher-schedule-results.md) and
+[per-task outcomes and provenance](reacher-schedule-results.json).
